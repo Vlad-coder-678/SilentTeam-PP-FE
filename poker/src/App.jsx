@@ -1,16 +1,15 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import './App.css';
 
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
-import MainPage from './pages/MainPage';
-import LobbyPage from './pages/LobbyPage';
-import GamePage from './pages/GamePage';
-import GameResultPage from './pages/GameResultPage';
-import NotFoundPage from './pages/NotFoundPage';
+import MainPage from './pages/MainPage/MainPage';
+import LobbyPage from './pages/LobbyPage/LobbyPage';
+import GamePage from './pages/GamePage/GamePage';
+import GameResultPage from './pages/GameResultPage/GameResultPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const location = useLocation();

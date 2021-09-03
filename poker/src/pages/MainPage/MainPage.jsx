@@ -1,6 +1,6 @@
 import React from 'react';
 import m from './MainPage.module.scss';
-import MainPageTitle from '../components/MainPageTitle';
+import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 
 const MainPage = () => (
   <div className={m.MainPage_wrap}>

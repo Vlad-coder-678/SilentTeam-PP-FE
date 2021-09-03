@@ -1,5 +1,5 @@
 import React from 'react';
-import cards from '../assets/images/cards.png';
+import cards from '../../assets/images/cards.png';
 import m from './MainPageTitle.module.scss';
 
 const MainPageTitle = () => (
