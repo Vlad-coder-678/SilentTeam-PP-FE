@@ -1,0 +1,17 @@
+{
+  "extends": ["plugin:import/react", "prettier", "airbnb-base"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": { "requireConfigFile": false },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "semi": ["error", "always"]
+  }
+}
