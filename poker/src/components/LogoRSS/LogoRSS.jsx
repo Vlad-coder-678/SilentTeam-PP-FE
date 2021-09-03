@@ -1,5 +1,5 @@
 import React from 'react';
-import logoSchool from '../assets/images/rs_school_js_white.svg';
+import logoSchool from '../../assets/images/rs_school_js_white.svg';
 import l from './LogoRSS.module.scss';
 
 const LogoRSS = () => (

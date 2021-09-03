@@ -1,7 +1,7 @@
 import React from 'react';
-import LogoRSS from './LogoRSS';
+import LogoRSS from '../LogoRSS/LogoRSS';
 import f from './Footer.module.scss';
-import FooterTeamLink from './FooterTeamLink';
+import FooterTeamLink from '../FooterTeamLink/FooterTeamLink';
 
 const teams = [
   {
