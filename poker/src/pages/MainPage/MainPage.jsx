@@ -28,7 +28,7 @@ const MainPage = () => {
         <GeneralButton
           label={'Start new game'}
           onClick={handleCreateNewGame}
-          primaryBG={1}
+          primaryBG
         />
       </div>
       <h3>OR:</h3>
@@ -40,7 +40,7 @@ const MainPage = () => {
         <GeneralButton
           label={'Connect'}
           onClick={handleConnectToGame}
-          primaryBG={1}
+          primaryBG
         />
       </div>
     </div>
