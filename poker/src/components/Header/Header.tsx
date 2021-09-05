@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Logo from '../Logo/Logo';
 
 import h from './Header.module.scss';
 
-const Header = () => (
+const Header: FC = () => (
   <div className={h.Header_wrapper}>
     <div className={h.Header_topLine}></div>
     <div className={h.Header_bottomLine}>
