@@ -29,5 +29,8 @@
     "browser": true,
     "node": true
   },
-  "plugins": ["@typescript-eslint", "react-hooks"]
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks"
+  ]
 }
