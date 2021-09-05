@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
-import Header from './components/Header/Header.tsx';
+import Header from './components/Header/Header';
 
-import MainPage from './pages/MainPage/MainPage.tsx';
-import LobbyPage from './pages/LobbyPage/LobbyPage.tsx';
-import GamePage from './pages/GamePage/GamePage.tsx';
-import GameResultPage from './pages/GameResultPage/GameResultPage.tsx';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
+import MainPage from './pages/MainPage/MainPage';
+import LobbyPage from './pages/LobbyPage/LobbyPage';
+import GamePage from './pages/GamePage/GamePage';
+import GameResultPage from './pages/GameResultPage/GameResultPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
-import Footer from './components/Footer/Footer.tsx';
+import Footer from './components/Footer/Footer';
 
 const App: FC = () => {
-  const location: string = useLocation();
+  const location = useLocation();
 
   return (
     <div className="App">
