@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import LogoRSS from '../LogoRSS/LogoRSS';
 import f from './Footer.module.scss';
 import FooterTeamLink from '../FooterTeamLink/FooterTeamLink';
 
-const teams = [
+interface Team {
+  name: string;
+  position: string;
+  url: string;
+}
+
+const teams: Team[] = [
   {
     name: 'anatoliyak',
     position: 'mentor/teamlead',
@@ -26,7 +32,7 @@ const teams = [
   },
 ];
 
-const Footer = () => (
+const Footer: FC = () => (
   <div className={f.Footer_wrap}>
     <div className={f.Footer_item}>
       Made by

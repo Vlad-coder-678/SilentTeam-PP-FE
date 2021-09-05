@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import f from './FooterTeamLink.module.scss';
 import gitLogo from '../../assets/images/gitHubLink.svg';
 
-const FooterTeamLink = ({ url, imgAlt }) => (
+interface Props {
+    url: string;
+    imgAlt: string;
+}
+
+const FooterTeamLink: FC<Props> = ({ url, imgAlt }) => (
   <a href={url} rel="noreferrer" target="_blank">
     <div className={f.FooterTeamLink}>
       <img src={gitLogo} alt={imgAlt} />

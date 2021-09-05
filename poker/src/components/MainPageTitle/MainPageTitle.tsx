@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import cards from '../../assets/images/cards.png';
 import m from './MainPageTitle.module.scss';
 
-const MainPageTitle = () => (
+const MainPageTitle: FC = () => (
   <div className={m.main_page_title_wrap}>
     <div className={m.main_page_title_left}>
       <img src={cards} alt={'pocker planning'} />
