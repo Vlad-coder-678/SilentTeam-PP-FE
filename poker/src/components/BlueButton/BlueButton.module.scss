@@ -6,8 +6,8 @@
   border: 1px solid #496a81;
   border-radius: 2px;
   font-family: 'Ruda', sans-serif;
-  font-size: 24px;
-  line-height: 42px;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
   font-weight: bold;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -47,4 +47,13 @@
   filter: opacity(0.8);
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .BlueButton_blue,
+  .BlueButton_white {
+    min-width: 200px;
+    font-size: 1rem;
+    line-height: 2rem;
+  }
 }

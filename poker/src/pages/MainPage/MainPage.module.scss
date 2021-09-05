@@ -45,3 +45,25 @@
   margin-left: 25px;
   width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+  .MainPage_item {
+    width: 270px;
+    flex-direction: column;
+    padding-bottom: 50px;
+  }
+  .MainPage_wrap h3 {
+    font-size: 2rem;
+    line-height: 3rem;
+    color: #66999b;
+    margin: 10px;
+    margin-left: 25px;
+  }
+  .MainPage_wrap h3:nth-child(4) {
+    margin-left: 100px;
+  }
+  .MainPage_wrap label {
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+}
