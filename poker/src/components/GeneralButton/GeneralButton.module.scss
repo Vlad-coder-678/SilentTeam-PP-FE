@@ -1,5 +1,5 @@
-.BlueButton_blue,
-.BlueButton_white {
+.GeneralButton_blue,
+.GeneralButton_white {
   margin: 0 auto;
   padding: 0 10px;
   min-width: 240px;
@@ -13,45 +13,45 @@
   cursor: pointer;
 }
 
-.BlueButton_blue {
+.GeneralButton_blue {
   color: white;
   background-color: #2b3a67;
 }
 
-.BlueButton_white {
+.GeneralButton_white {
   color: #2b3a67;
   background-color: white;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.BlueButton_white:hover {
+.GeneralButton_white:hover {
   color: white;
   background-color: #2b3a67;
   text-shadow: none;
   transition: all 0.3s ease-in-out;
 }
 
-.BlueButton_blue:hover {
+.GeneralButton_blue:hover {
   color: #2b3a67;
   background-color: white;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
 }
 
-.BlueButton_white:active {
+.GeneralButton_white:active {
   filter: opacity(0.8);
   transition: all 0.3s ease-in-out;
 }
 
-.BlueButton_blue:active {
+.GeneralButton_blue:active {
   filter: opacity(0.8);
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
-  .BlueButton_blue,
-  .BlueButton_white {
+  .GeneralButton_blue,
+  .GeneralButton_white {
     min-width: 200px;
     font-size: 1rem;
     line-height: 2rem;
