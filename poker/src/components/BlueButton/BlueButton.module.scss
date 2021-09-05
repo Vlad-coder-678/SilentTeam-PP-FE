@@ -9,26 +9,42 @@
   font-size: 24px;
   line-height: 42px;
   font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
+
 .BlueButton_blue {
   color: white;
   background-color: #2b3a67;
 }
+
 .BlueButton_white {
   color: #2b3a67;
   background-color: white;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 .BlueButton_white:hover {
   color: white;
   background-color: #2b3a67;
+  text-shadow: none;
+  transition: all 0.3s ease-in-out;
 }
+
 .BlueButton_blue:hover {
   color: #2b3a67;
   background-color: white;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
 }
+
 .BlueButton_white:active {
   filter: opacity(0.8);
+  transition: all 0.3s ease-in-out;
 }
+
 .BlueButton_blue:active {
   filter: opacity(0.8);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
 }
