@@ -2,6 +2,7 @@ import React from 'react';
 import m from './MainPage.module.scss';
 import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import BlueButton from '../../components/BlueButton/BlueButton';
+import InputComponent from '../../components/InputComponent/InputComponent';
 
 const MainPage = () => {
   const handleClick1 = () => {
@@ -9,6 +10,9 @@ const MainPage = () => {
   };
   const handleClick2 = () => {
     console.log('connect');
+  };
+  const handleChange = (e) => {
+    console.log(e.target.value);
   };
 
   return (
@@ -28,7 +32,7 @@ const MainPage = () => {
         Connect to lobby by <span>URL</span>:
       </label>
       <div className={m.MainPage_item}>
-        <input />
+        <InputComponent onChange={handleChange} />
         <BlueButton label={'Connect'} onClick={handleClick2} primary={1} />
       </div>
     </div>
