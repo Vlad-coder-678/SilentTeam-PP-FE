@@ -15,7 +15,7 @@ const MainPage = () => {
     <div className={m.MainPage_wrap}>
       <MainPageTitle />
       <h3>Start your planning:</h3>
-      <div>
+      <div className={m.MainPage_item}>
         <label>Create session:</label>
         <BlueButton
           label={'Start new game'}
@@ -24,8 +24,10 @@ const MainPage = () => {
         />
       </div>
       <h3>OR:</h3>
-      <div>
-        <label>Connect to lobby by URL:</label>
+      <label>
+        Connect to lobby by <span>URL</span>:
+      </label>
+      <div className={m.MainPage_item}>
         <input />
         <BlueButton label={'Connect'} onClick={handleClick2} primary={1} />
       </div>
