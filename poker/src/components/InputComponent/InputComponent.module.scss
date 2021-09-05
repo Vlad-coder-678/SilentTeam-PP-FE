@@ -1,8 +1,10 @@
+@import '../../styles/common.scss';
+
 .InputComponent {
-  background: #ffffff;
-  border: 1px solid #2b3a67;
+  background: $red-light;
+  border: 1px solid $base-dark-blue;
   box-sizing: border-box;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 4px 4px $shadow-one-quarter;
   border-radius: 0px 0px 0px 10px;
   width: 100%;
   max-width: 276px;

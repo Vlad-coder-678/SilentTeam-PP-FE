@@ -23,7 +23,7 @@
     "semi": ["error", "always"],
     "no-use-before-define": "off",
     "import/extensions": "off",
-    "@typescript-eslint/no-use-before-define": ["error", {variables: false}]
+    "@typescript-eslint/no-use-before-define": ["error", { "variables": false }]
   },
   "env": {
     "browser": true,

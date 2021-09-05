@@ -1,9 +1,11 @@
+@import '../../styles/common.scss';
+
 .GeneralButton_blue,
 .GeneralButton_white {
   margin: 0 auto;
   padding: 0 10px;
   min-width: 240px;
-  border: 1px solid #496a81;
+  border: 1px solid $base-cornflower-blue;
   border-radius: 2px;
   font-family: 'Ruda', sans-serif;
   font-size: 1.5rem;
@@ -14,27 +16,27 @@
 }
 
 .GeneralButton_blue {
-  color: white;
-  background-color: #2b3a67;
+  color: $red-light;
+  background-color: $base-dark-blue;
 }
 
 .GeneralButton_white {
-  color: #2b3a67;
-  background-color: white;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: $base-dark-blue;
+  background-color: $red-light;
+  text-shadow: 0 4px 4px $shadow-one-quarter;
 }
 
 .GeneralButton_white:hover {
-  color: white;
-  background-color: #2b3a67;
+  color: $red-light;
+  background-color: $base-dark-blue;
   text-shadow: none;
   transition: all 0.3s ease-in-out;
 }
 
 .GeneralButton_blue:hover {
-  color: #2b3a67;
-  background-color: white;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: $base-dark-blue;
+  background-color: $red-light;
+  text-shadow: 0 4px 4px $shadow-one-quarter;
   transition: all 0.3s ease-in-out;
 }
 
@@ -45,7 +47,7 @@
 
 .GeneralButton_blue:active {
   filter: opacity(0.8);
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px $shadow-one-quarter;
   transition: all 0.3s ease-in-out;
 }
 

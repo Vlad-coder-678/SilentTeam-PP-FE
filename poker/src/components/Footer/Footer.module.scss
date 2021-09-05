@@ -1,3 +1,5 @@
+@import '../../styles/common.scss';
+
 .Footer_wrap {
   width: 100%;
   min-height: 100px;
@@ -6,10 +8,10 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background: #2b3a67;
-  color: #fff;
-  font-size: 18px;
+  background: $base-dark-blue;
+  color: $red-light;
   font-family: 'Roboto', sans-serif;
+  font-size: 18px;
 }
 
 .Footer_item {
