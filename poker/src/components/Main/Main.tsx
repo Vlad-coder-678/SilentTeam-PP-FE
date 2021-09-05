@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
 import MainPage from '../../pages/MainPage/MainPage';
@@ -7,7 +7,7 @@ import GamePage from '../../pages/GamePage/GamePage';
 import GameResultPage from '../../pages/GameResultPage/GameResultPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
-const Main = () => {
+const Main: FC = () => {
   const location = useLocation();
 
   return (

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const GamePage = () => (
+const GamePage: FC = () => (
   <div>
     <h2>GamePage</h2>
   </div>

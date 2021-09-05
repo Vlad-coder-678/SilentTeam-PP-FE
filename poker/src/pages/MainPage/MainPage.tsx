@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ChangeEvent } from 'react';
 
 import m from './MainPage.module.scss';
 
@@ -6,7 +6,7 @@ import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
 
-const MainPage = () => {
+const MainPage: FC = () => {
   const handleCreateNewGame = () => {
     console.log('start new game');
   };
@@ -15,7 +15,7 @@ const MainPage = () => {
     console.log('connect');
   };
 
-  const handleEnterUrlGame = (e) => {
+  const handleEnterUrlGame = (e: ChangeEvent<HTMLButtonElement>) => {
     console.log(e.target.value);
   };
 

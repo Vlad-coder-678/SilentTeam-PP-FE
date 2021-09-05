@@ -3,13 +3,13 @@ import LogoRSS from '../LogoRSS/LogoRSS';
 import f from './Footer.module.scss';
 import FooterTeamLink from '../FooterTeamLink/FooterTeamLink';
 
-export interface Team {
-  name?: string,
-  position?: string,
-  url?: string,
+interface Team {
+  name: string;
+  position: string;
+  url: string;
 }
 
-const teams: Team = [
+const teams: Team[] = [
   {
     name: 'anatoliyak',
     position: 'mentor/teamlead',
