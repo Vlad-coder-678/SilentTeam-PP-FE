@@ -1,0 +1,60 @@
+.GeneralButton_blue,
+.GeneralButton_white {
+  margin: 0 auto;
+  padding: 0 10px;
+  min-width: 240px;
+  border: 1px solid #496a81;
+  border-radius: 2px;
+  font-family: 'Ruda', sans-serif;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.GeneralButton_blue {
+  color: white;
+  background-color: #2b3a67;
+}
+
+.GeneralButton_white {
+  color: #2b3a67;
+  background-color: white;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.GeneralButton_white:hover {
+  color: white;
+  background-color: #2b3a67;
+  text-shadow: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.GeneralButton_blue:hover {
+  color: #2b3a67;
+  background-color: white;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.GeneralButton_white:active {
+  filter: opacity(0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+.GeneralButton_blue:active {
+  filter: opacity(0.8);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .GeneralButton_blue,
+  .GeneralButton_white {
+    min-width: 200px;
+    font-size: 1rem;
+    line-height: 2rem;
+    margin-left: 25px;
+  }
+}
