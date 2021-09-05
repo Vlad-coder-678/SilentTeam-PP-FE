@@ -1,10 +1,12 @@
+@import '../../styles/common.scss';
+
 .MainPage_wrap {
   max-width: 1000px;
   margin: 0 auto 30px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 $shadow-one-quarter;
   padding-bottom: 100px;
 }
 
@@ -13,7 +15,7 @@
   font-size: 3rem;
   font-weight: 700;
   line-height: 4rem;
-  color: #66999b;
+  color: $base-cadet-blue;
   margin: 30px;
   margin-left: 25px;
 }
@@ -27,12 +29,12 @@
   font-size: 1.5rem;
   font-weight: 300;
   line-height: 3rem;
-  color: black;
+  color: $base-dark;
   margin-left: 25px;
 }
 
 .MainPage_wrap label span {
-  color: #66999b;
+  color: $base-cadet-blue;
 }
 
 .MainPage_item {
@@ -65,7 +67,7 @@
   .MainPage_wrap h3 {
     font-size: 2rem;
     line-height: 3rem;
-    color: #66999b;
+    color: $base-cadet-blue;
     margin: 10px;
     margin-left: 25px;
   }
