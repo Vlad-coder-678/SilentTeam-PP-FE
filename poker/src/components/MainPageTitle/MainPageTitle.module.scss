@@ -17,6 +17,7 @@
   height: 100%;
   object-fit: cover;
 }
+
 .main_page_title_right {
   width: 400px;
 }
@@ -30,4 +31,25 @@
 }
 .main_page_title_right h2:last-child {
   text-align: end;
+}
+
+@media screen and (max-width: 768px) {
+  .main_page_title_wrap {
+    flex-direction: column;
+  }
+  .main_page_title_left {
+    width: 75px;
+    height: 75px;
+  }
+  .main_page_title_right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      font-size: 50px;
+      text-align: center;
+    }
+  }
 }

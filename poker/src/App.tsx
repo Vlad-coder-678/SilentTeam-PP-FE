@@ -1,44 +1,15 @@
-import React, { FC } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import React from 'react';
 
 import Header from './components/Header/Header';
-
-import MainPage from './pages/MainPage/MainPage';
-import LobbyPage from './pages/LobbyPage/LobbyPage';
-import GamePage from './pages/GamePage/GamePage';
-import GameResultPage from './pages/GameResultPage/GameResultPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-
+import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
 
-const App: FC = () => {
-  const location = useLocation();
-
-  return (
-    <div className="App">
-      <Header />
-      <main>
-        <Switch location={location}>
-          <Route path="/" exact>
-            <MainPage />
-          </Route>
-          <Route path="/lobby">
-            <LobbyPage />
-          </Route>
-          <Route path="/game">
-            <GamePage />
-          </Route>
-          <Route path="/game_result">
-            <GameResultPage />
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </main>
-      <Footer />
-    </div>
-  );
-};
+const App = () => (
+  <div>
+    <Header />
+    <Main />
+    <Footer />
+  </div>
+);
 
 export default App;

@@ -1,6 +1,11 @@
 {
-  "extends": ["plugin:import/react", "prettier", "airbnb-base", "plugin:@typescript-eslint/recommended", "plugin:import/typescript"],
-  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:import/react",
+    "prettier",
+    "airbnb-base"
+  ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": { "requireConfigFile": false },
   "settings": {
     "import/resolver": {
@@ -11,14 +16,13 @@
   },
   "rules": {
     "comma-dangle": "off",
+    "no-console": 0,
+    "react/prop-types": "off",
     "@typescript-eslint/comma-dangle": "off",
-    "semi": ["error", "always"],
-    "no-use-before-define": "off",
-    "import/extensions": "off",
-    "@typescript-eslint/no-use-before-define": ["error", {variables: false}]
+    "semi": ["error", "always"]
   },
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ]
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }
