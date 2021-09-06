@@ -27,7 +27,6 @@ const MainPage: FC = () => {
         <label>Create session:</label>
         <GeneralButton
           label={'Start new game'}
-          onClick={handleCreateNewGame}
           primaryBG
         />
       </div>
@@ -39,7 +38,6 @@ const MainPage: FC = () => {
         <InputComponent onChange={handleEnterUrlGame} />
         <GeneralButton
           label={'Connect'}
-          onClick={handleConnectToGame}
           primaryBG
         />
       </div>
