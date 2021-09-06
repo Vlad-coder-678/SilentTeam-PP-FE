@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect } from 'react';
-import classNames from 'classnames';
 
 import c from './ConnectToLobby.module.scss';
 
