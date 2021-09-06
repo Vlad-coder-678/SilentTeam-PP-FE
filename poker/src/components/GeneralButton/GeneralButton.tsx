@@ -16,7 +16,8 @@ const GeneralButton: FC<Props> = ({ label, primaryBG }) => (
           {label}
       </button>
     }
-    position="center center">
+    modal
+  >
     <ConnectToLobby />
   </Popup>
 );

@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import c from './ConnectToLobby.module.scss';
 
 interface errorProps {
     firstName: string;
@@ -37,11 +38,11 @@ const ConnectToLobby: FC = () => {
   };
 
   return (
-    <form className="form" onSubmit={handelSubmit}>
-        <div className="body-form">
+    <form className={c.Form_wrap} onSubmit={handelSubmit}>
+        <div className={c.Form_body}>
             <div className="persanal-data">
                 <h1>Connet to lobby</h1>
-                <label className="item" htmlFor={firstName}>
+                <label className={c.Form_item} htmlFor={firstName}>
                     <p>
                         Your First Name:
                         {error?.firstName !== undefined && (
@@ -55,7 +56,7 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setFirstName(event.target.value)}
                     />
                 </label>
-                <label className="item" htmlFor={lastName}>
+                <label className={c.Form_item} htmlFor={lastName}>
                     <p>
                         Your Last Name:
                         {error?.lastName !== undefined && (
@@ -69,7 +70,7 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setLastName(event.target.value)}
                     />
                 </label>
-                <label className="item" htmlFor={jobPosition}>
+                <label className={c.Form_item} htmlFor={jobPosition}>
                     <p>
                         Your job position:
                         {error?.jobPosition !== undefined && (
@@ -83,15 +84,15 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setJobPosition(event.target.value)}
                     />
                 </label>
-                <label className="item" htmlFor={image}>
+                <label className={c.Form_item} htmlFor={image}>
                     Image:
                     <input type="file"/>
                 </label>
             </div>
-            <div className="is-observer">
+            <div className={c.Is_observer}>
                 <label className="observer" htmlFor="observer">
                     <p>
-                        Connect as Observer:
+                        Connect as Observer
                     </p>
                     <input
                         type="checkbox"

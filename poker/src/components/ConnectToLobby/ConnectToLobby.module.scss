@@ -1,0 +1,21 @@
+@import '../../styles/common.scss';
+
+.Form_wrap {
+
+ padding: 10px;
+
+  .Form_body {
+
+    display: flex;
+
+    .Form_item p {
+      margin-bottom: 5px;
+    }
+
+    .Is_observer {
+      width: 35%;
+    }
+
+  }
+
+}
