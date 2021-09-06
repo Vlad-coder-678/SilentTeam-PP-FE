@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import classNames from 'classnames';
+
 import c from './ConnectToLobby.module.scss';
 
 interface errorProps {
@@ -46,7 +46,7 @@ const ConnectToLobby: FC = () => {
                     <p>
                         Your First Name:
                         {error?.firstName !== undefined && (
-                            <span className="errors"> Should be fill</span>
+                            <span className={c.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -60,7 +60,7 @@ const ConnectToLobby: FC = () => {
                     <p>
                         Your Last Name:
                         {error?.lastName !== undefined && (
-                            <span className="errors"> Should be fill</span>
+                            <span className={c.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -74,7 +74,7 @@ const ConnectToLobby: FC = () => {
                     <p>
                         Your job position:
                         {error?.jobPosition !== undefined && (
-                            <span className="errors"> Should be fill</span>
+                            <span className={c.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -86,7 +86,7 @@ const ConnectToLobby: FC = () => {
                 </label>
                 <label className={c.Form_item} htmlFor={image}>
                     Image:
-                    <input type="file"/>
+                    <input className={c.Button_blue} type="file"/>
                 </label>
             </div>
             <div className={c.Is_observer}>
@@ -96,14 +96,14 @@ const ConnectToLobby: FC = () => {
                     </p>
                     <input
                         type="checkbox"
-                        name="agree"
+                        name="observer"
                         onChange={() => setObserver((prev) => !prev)}
                     />
                 </label>
             </div>
         </div>
         <div className="buttons">
-            <input type="submit" value="Confirm" />
+            <input type="submit" className={c.Button_blue} value="Confirm" />
             <input type="submit" value="Cancel" />
         </div>
       </form>
