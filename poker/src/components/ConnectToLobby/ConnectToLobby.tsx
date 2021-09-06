@@ -1,33 +1,39 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, {
+  FC,
+  useState,
+  useEffect,
+  ChangeEvent,
+} from 'react';
+import InputComponent from '../InputComponent/InputComponent';
 
 import styles from './ConnectToLobby.module.scss';
 
-interface errorProps {
+interface FormState {
     firstName: string;
     lastName: string;
     jobPosition: string;
 }
 
 const ConnectToLobby: FC = () => {
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [jobPosition, setJobPosition] = useState<string>('');
-  const [error, setError] = useState<errorProps>({ firstName: '', lastName: '', jobPosition: '' });
+  const [error, setError] = useState<FormState>({ firstName: '', lastName: '', jobPosition: '' });
+  const [persanalData, setPersanalData] = useState<FormState>({ firstName: '', lastName: '', jobPosition: '' });
   const [observer, setObserver] = useState<boolean>(false);
   const [image, setImage] = useState<string>('');
 
   useEffect(() => {
     validate();
-  }, [firstName, lastName, jobPosition]);
+  }, [persanalData]);
 
   const validate = () => {
-    if (firstName === '') {
+    const { firstName, lastName, jobPosition } = persanalData;
+
+    if (persanalData.firstName === '') {
       setError((state) => ({ ...state, firstName }));
     }
-    if (lastName === '') {
+    if (persanalData.lastName === '') {
       setError((state) => ({ ...state, lastName }));
     }
-    if (jobPosition === '') {
+    if (persanalData.jobPosition === '') {
       setError((state) => ({ ...state, jobPosition }));
     }
   };
@@ -36,52 +42,42 @@ const ConnectToLobby: FC = () => {
     console.log('send form');
   };
 
+  const handleInputChange = (event:ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPersanalData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
   return (
     <form className={styles.Form_wrap} onSubmit={handelSubmit}>
         <div className={styles.Form_body}>
             <div className="persanal-data">
                 <h1>Connet to lobby</h1>
-                <label className={styles.Form_item} htmlFor={firstName}>
+                <label className={styles.Form_item} htmlFor={'firstName'}>
                     <p>
                         Your First Name:
                         {error?.firstName && (
                             <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
-                    <input
-                        type="text"
-                        name={firstName}
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                    />
+                    <InputComponent value={persanalData.firstName} name={'firstName'} onChange={handleInputChange}/>
                 </label>
-                <label className={styles.Form_item} htmlFor={lastName}>
+                <label className={styles.Form_item} htmlFor={'lastName'}>
                     <p>
                         Your Last Name:
                         {error?.lastName && (
                             <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
-                    <input
-                        type="text"
-                        name={lastName}
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
-                    />
+                    <InputComponent value={persanalData.lastName} name={'lastName'} onChange={handleInputChange}/>
                 </label>
-                <label className={styles.Form_item} htmlFor={jobPosition}>
+                <label className={styles.Form_item} htmlFor={'jobPosition'}>
                     <p>
                         Your job position:
                         {error?.jobPosition && (
                             <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
-                    <input
-                        type="text"
-                        name={jobPosition}
-                        value={jobPosition}
-                        onChange={(event) => setJobPosition(event.target.value)}
-                    />
+                    <InputComponent value={persanalData.jobPosition} name={'jobPosition'} onChange={handleInputChange}/>
                 </label>
                 <label className={styles.Form_item} htmlFor={image}>
                     Image:
@@ -89,13 +85,13 @@ const ConnectToLobby: FC = () => {
                 </label>
             </div>
             <div className={styles.Is_observer}>
-                <label className="observer" htmlFor="observer">
+                <label className='observer' htmlFor='observer'>
                     <p>
                         Connect as Observer
                     </p>
                     <input
-                        type="checkbox"
-                        name="observer"
+                        type='checkbox'
+                        name='observer'
                         onChange={() => setObserver((prev) => !prev)}
                     />
                 </label>

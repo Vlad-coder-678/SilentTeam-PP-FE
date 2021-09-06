@@ -16,7 +16,7 @@ const MainPage: FC = () => {
     console.log('connect');
   };
 
-  const handleEnterUrlGame = (e: ChangeEvent<HTMLButtonElement>) => {
+  const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };
 
