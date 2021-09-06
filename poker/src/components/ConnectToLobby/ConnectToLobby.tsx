@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import c from './ConnectToLobby.module.scss';
+import styles from './ConnectToLobby.module.scss';
 
 interface errorProps {
     firstName: string;
@@ -37,15 +37,15 @@ const ConnectToLobby: FC = () => {
   };
 
   return (
-    <form className={c.Form_wrap} onSubmit={handelSubmit}>
-        <div className={c.Form_body}>
+    <form className={styles.Form_wrap} onSubmit={handelSubmit}>
+        <div className={styles.Form_body}>
             <div className="persanal-data">
                 <h1>Connet to lobby</h1>
-                <label className={c.Form_item} htmlFor={firstName}>
+                <label className={styles.Form_item} htmlFor={firstName}>
                     <p>
                         Your First Name:
-                        {error?.firstName !== undefined && (
-                            <span className={c.Error}> Should be fill</span>
+                        {error?.firstName && (
+                            <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -55,11 +55,11 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setFirstName(event.target.value)}
                     />
                 </label>
-                <label className={c.Form_item} htmlFor={lastName}>
+                <label className={styles.Form_item} htmlFor={lastName}>
                     <p>
                         Your Last Name:
-                        {error?.lastName !== undefined && (
-                            <span className={c.Error}> Should be fill</span>
+                        {error?.lastName && (
+                            <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -69,11 +69,11 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setLastName(event.target.value)}
                     />
                 </label>
-                <label className={c.Form_item} htmlFor={jobPosition}>
+                <label className={styles.Form_item} htmlFor={jobPosition}>
                     <p>
                         Your job position:
-                        {error?.jobPosition !== undefined && (
-                            <span className={c.Error}> Should be fill</span>
+                        {error?.jobPosition && (
+                            <span className={styles.Error}> Should be fill</span>
                         )}
                     </p>
                     <input
@@ -83,12 +83,12 @@ const ConnectToLobby: FC = () => {
                         onChange={(event) => setJobPosition(event.target.value)}
                     />
                 </label>
-                <label className={c.Form_item} htmlFor={image}>
+                <label className={styles.Form_item} htmlFor={image}>
                     Image:
-                    <input className={c.Button_blue} type="file"/>
+                    <input className={styles.Button_blue} type="file"/>
                 </label>
             </div>
-            <div className={c.Is_observer}>
+            <div className={styles.Is_observer}>
                 <label className="observer" htmlFor="observer">
                     <p>
                         Connect as Observer
@@ -102,7 +102,7 @@ const ConnectToLobby: FC = () => {
             </div>
         </div>
         <div className="buttons">
-            <input type="submit" className={c.Button_blue} value="Confirm" />
+            <input type="submit" className={styles.Button_blue} value="Confirm" />
             <input type="submit" value="Cancel" />
         </div>
       </form>
