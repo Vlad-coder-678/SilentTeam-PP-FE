@@ -72,15 +72,17 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
       >
         <div className={styles.Form_header}>
           <h2>Connect to lobby</h2>
-          <label className={styles.Form_is_observer} htmlFor="observer">
-            Connect as Observer
-          </label>
-          <input
-            type="checkbox"
-            name="observer"
-            // value={observer}
-            // onChange={() => setObserver((prev) => !prev)}
-          />
+          <div className={styles.Form_wrap_checkbox_big_screen}>
+            <label className={styles.Form_is_observer} htmlFor="observer">
+              Connect as Observer
+            </label>
+            <input
+              type="checkbox"
+              name="observer"
+              // value={observer}
+              // onChange={() => setObserver((prev) => !prev)}
+            />
+          </div>
         </div>
 
         <div className={styles.Form_body}>
@@ -111,6 +113,17 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             Image:
             <input className={styles.Button_blue} type="file" />
           </label> */}
+          <div className={styles.Form_wrap_checkbox_small_screen}>
+            <label className={styles.Form_is_observer} htmlFor="observer">
+              Connect as Observer
+            </label>
+            <input
+              type="checkbox"
+              name="observer"
+              // value={observer}
+              // onChange={() => setObserver((prev) => !prev)}
+            />
+          </div>
         </div>
 
         <div className={styles.Form_footer}>
