@@ -1,0 +1,30 @@
+@import '../../styles/common.scss';
+
+.Form_wrap {
+  padding: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.Form_body {
+  display: flex;
+}
+
+.Form_item p {
+  margin-bottom: 5px;
+}
+
+.Is_observer {
+  width: 35%;
+}
+
+.Button_blue {
+  color: $red-light;
+  background-color: $base-dark-blue;
+}
+
+.Error {
+  color: $red-red;
+  font-size: 1.2rem;
+}

@@ -1,0 +1,22 @@
+import React, { FC, MouseEventHandler } from 'react';
+import Popup from 'reactjs-popup';
+import ConnectToLobby from '../ConnectToLobby/ConnectToLobby';
+import 'reactjs-popup/dist/index.css';
+import b from './GeneralButton.module.scss';
+
+interface Props {
+  label: string;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  primaryBG: boolean;
+}
+
+const GeneralButton: FC<Props> = ({ label, onClick, primaryBG }) => (
+    <button
+        onClick={onClick}
+        className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}
+    >
+        {label}
+    </button>
+);
+
+export default GeneralButton;
