@@ -12,16 +12,16 @@ interface Props {
 }
 
 const PopupForm: FC<Props> = ({ label, primaryBG }) => (
-    <Popup
-        trigger={
-            <button className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}>
-            {label}
-            </button>
-        }
-        modal
-    >
-        <ConnectToLobby />
-    </Popup>
+  <Popup
+    trigger={
+      <button className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}>
+        {label}
+      </button>
+    }
+    modal
+  >
+    <ConnectToLobby />
+  </Popup>
 );
 
 export default PopupForm;
