@@ -117,6 +117,8 @@ div.Form_body input {
   }
   .Form_header h2 {
     font-size: 2rem;
+    flex-basis: 100%;
+    text-align: center;
   }
   .Form_wrap_checkbox_big_screen {
     display: none;
