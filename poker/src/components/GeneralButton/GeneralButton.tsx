@@ -1,7 +1,4 @@
 import React, { FC, MouseEventHandler } from 'react';
-import Popup from 'reactjs-popup';
-import ConnectToLobby from '../ConnectToLobby/ConnectToLobby';
-import 'reactjs-popup/dist/index.css';
 import b from './GeneralButton.module.scss';
 
 interface Props {
