@@ -8,12 +8,12 @@ interface Props {
 }
 
 const InputComponent: FC<Props> = ({ onChange, name, value }) => (
-    <input
-      name={name}
-      value={value}
-      onChange={onChange}
-      className={i.InputComponent}
-    />
+  <input
+    name={name}
+    value={value}
+    onChange={onChange}
+    className={i.InputComponent}
+  />
 );
 
 export default InputComponent;
