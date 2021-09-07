@@ -8,12 +8,9 @@ interface Props {
 }
 
 const GeneralButton: FC<Props> = ({ label, onClick, primaryBG }) => (
-    <button
-        onClick={onClick}
-        className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}
-    >
-        {label}
-    </button>
+  <button onClick={onClick} className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}>
+    {label}
+  </button>
 );
 
 export default GeneralButton;

@@ -7,6 +7,8 @@ import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import PopupForm from '../../components/PopupForm/PopupForm';
 
+import Counter from '../../redux/Counter';
+
 const MainPage: FC = () => {
   const handleCreateNewGame = () => {
     console.log('start new game');
@@ -23,6 +25,7 @@ const MainPage: FC = () => {
   return (
     <div className={m.MainPage_wrap}>
       <MainPageTitle />
+      <Counter />
       <h3>Start your planning:</h3>
       <div className={m.MainPage_item}>
         <label>Create session:</label>
