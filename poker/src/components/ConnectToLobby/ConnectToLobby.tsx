@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
+import Checkbox from '../Checkbox/Checkbox';
 
 import styles from './ConnectToLobby.module.scss';
 
@@ -76,8 +77,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             <label className={styles.Form_is_observer} htmlFor="observer">
               Connect as Observer
             </label>
-            <input
-              type="checkbox"
+            <Checkbox
               name="observer"
               // value={observer}
               // onChange={() => setObserver((prev) => !prev)}
@@ -117,8 +117,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             <label className={styles.Form_is_observer} htmlFor="observer">
               Connect as Observer
             </label>
-            <input
-              type="checkbox"
+            <Checkbox
               name="observer"
               // value={observer}
               // onChange={() => setObserver((prev) => !prev)}
