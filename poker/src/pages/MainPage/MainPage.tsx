@@ -5,7 +5,7 @@ import m from './MainPage.module.scss';
 import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
-import PopupForm from '../../components/PopupForm/PopupForm';
+// import PopupForm from '../../components/PopupForm/PopupForm';
 
 import Counter from '../../redux/Counter';
 
@@ -29,7 +29,7 @@ const MainPage: FC = () => {
       <h3>Start your planning:</h3>
       <div className={m.MainPage_item}>
         <label>Create session:</label>
-        <PopupForm label={'Start new game'} primaryBG />
+        {/* <PopupForm label={'Start new game'} primaryBG /> */}
       </div>
       <h3>OR:</h3>
       <label>
@@ -37,7 +37,7 @@ const MainPage: FC = () => {
       </label>
       <div className={m.MainPage_item}>
         <InputComponent onChange={handleEnterUrlGame} />
-        <PopupForm label={'Connect'} primaryBG />
+        {/* <PopupForm label={'Connect'} primaryBG /> */}
       </div>
     </div>
   );
