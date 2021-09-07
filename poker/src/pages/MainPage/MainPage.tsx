@@ -1,18 +1,22 @@
-import React, { FC, ChangeEvent } from 'react';
-
-import m from './MainPage.module.scss';
+import React, { useState, FC, ChangeEvent } from 'react';
 
 import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
-import PopupForm from '../../components/PopupForm/PopupForm';
+import ConnectToLobby from '../../components/ConnectToLobby/ConnectToLobby';
+
+import m from './MainPage.module.scss';
 
 const MainPage: FC = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
   const handleCreateNewGame = () => {
+    setIsVisible(true);
     console.log('start new game');
   };
 
   const handleConnectToGame = () => {
+    setIsVisible(true);
     console.log('connect');
   };
 
@@ -26,7 +30,11 @@ const MainPage: FC = () => {
       <h3>Start your planning:</h3>
       <div className={m.MainPage_item}>
         <label>Create session:</label>
-        <PopupForm label={'Start new game'} primaryBG />
+        <GeneralButton
+          label={'Create new game'}
+          onClick={handleCreateNewGame}
+          primaryBG
+        />
       </div>
       <h3>OR:</h3>
       <label>
@@ -34,8 +42,13 @@ const MainPage: FC = () => {
       </label>
       <div className={m.MainPage_item}>
         <InputComponent onChange={handleEnterUrlGame} />
-        <PopupForm label={'Connect'} primaryBG />
+        <GeneralButton
+          label={'Connect'}
+          onClick={handleConnectToGame}
+          primaryBG
+        />
       </div>
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} />}
     </div>
   );
 };

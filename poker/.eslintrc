@@ -16,21 +16,50 @@
     }
   },
   "rules": {
-    "comma-dangle": "off",
-    "no-console": 0,
-    "react/prop-types": "off",
     "@typescript-eslint/comma-dangle": "off",
-    "semi": ["error", "always"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      { "variables": false }
+    ],
+    "comma-dangle": "off",
+    "curly": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-cycle": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
+    "jsx-a11y/click-events-have-key-events": 0,
+    "linebreak-style": 0,
+    "max-len": ["error", { "code": 120 }],
+    "operator-linebreak": "off",
+    "no-console": 0,
+    "no-param-reassign": ["error", { "props": false }],
     "no-use-before-define": "off",
-    "import/extensions": "off",
-    "@typescript-eslint/no-use-before-define": ["error", { "variables": false }]
+    "react/button-has-type": "off",
+    "react/jsx-curly-newline": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/prop-types": "off",
+    "semi": ["error", "always"],
+    "no-continue": "off",
+    "no-plusplus": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "nonblock-statement-body-position": "off",
+    "object-curly-newline": "off"
   },
   "env": {
     "browser": true,
     "node": true
   },
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ]
+  "plugins": ["@typescript-eslint", "react-hooks"]
 }
