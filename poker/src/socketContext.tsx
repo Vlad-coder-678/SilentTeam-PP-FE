@@ -1,17 +1,19 @@
 import React from 'react';
-// import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 
-// const SocketContext = React.createContext(null);
+const initialContextValue = {} as Socket<DefaultEventsMap, DefaultEventsMap>;
 
-// const SocketProvider = ({ children }:{{ children :React.ReactNode}}) :JSX.Element => {
-//   const endpoint = process.env.REACT_APP_SOCKET_ENDPOINT;
+const SocketContext = React.createContext(initialContextValue);
 
-//   alert(endpoint);
-//   console.log(endpoint);
+const SocketProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  const endpoint = process.env.REACT_APP_SOCKET_ENDPOINT || '';
 
-//   const socket = io(endpoint, { transports: ['websocket', 'polling'] });
+  const socket: Socket<DefaultEventsMap, DefaultEventsMap> = io(endpoint, {
+    transports: ['websocket', 'polling'],
+  }) as Socket<DefaultEventsMap, DefaultEventsMap>;
 
-//   return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
-// };
+  return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
+};
 
-// export { SocketContext, SocketProvider };
+export { SocketContext, SocketProvider };

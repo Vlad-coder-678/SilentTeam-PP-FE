@@ -1,69 +1,28 @@
 // Remove this component after moving code to the real component
 import React, { FC } from 'react';
-import io from 'socket.io-client';
+import { Socket } from 'socket.io-client/build/socket';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 
-// import { SocketContext } from '../../socketContext';
-
-// const TESTsocket: FC = () => {
-//   const socket = useContext(SocketContext);
-
-//   const handleOnClick = () => {
-//     console.log('in handleOnClick');
-//     const user = {
-//       firstName: 'User firstName',
-//       lastName: 'User firstName',
-//       job: 'User firstName',
-//       role: 'User firstName',
-//     };
-//     const room = '123456789';
-
-//     socket.emit('login', { user, room }, (error: any) => {
-//       if (error) {
-//         console.log(error);
-//       }
-//       console.log(`Welcome to room ${room}`);
-//     });
-//   };
-
-//   return (
-//     <div>
-//       <button onClick={handleOnClick}>Confirm</button>
-//     </div>
-//   );
-// };
+import { SocketContext } from '../../socketContext';
 
 const TESTsocket: FC = () => {
-  const endpoint = process.env.REACT_APP_SOCKET_ENDPOINT || 'no endpoint';
-
-  console.log('endpoint', endpoint);
-
-  const socket = io(endpoint, { transports: ['websocket', 'polling'] });
-  console.log('socket', socket);
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const handleOnClick = () => {
     console.log('in handleOnClick');
     const user = {
-      firstName: 'User firstName',
-      lastName: 'User lastName',
-      job: 'User job',
-      role: 'User role',
+      firstName: 'User firstName1',
+      lastName: 'User lastName1',
+      job: 'User job1',
+      role: 'User role1',
     };
     const room = '123456789';
-
-    socket.emit('login', { user, room }, (error: any) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(`Welcome to room ${room}`);
-      }
+    socket.emit('login', { user, room }, (response: any) => {
+      console.log(response);
     });
   };
 
-  return (
-    <div>
-      <button onClick={handleOnClick}>Confirm</button>
-    </div>
-  );
+  return <button onClick={handleOnClick}>Confirm</button>;
 };
 
 export default TESTsocket;
