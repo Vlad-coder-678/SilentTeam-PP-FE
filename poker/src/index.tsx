@@ -3,13 +3,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import App from './App';
+import { SocketProvider } from './socketContext';
 import 'normalize.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <SocketProvider>
+      <Router>
+        <App />
+      </Router>
+    </SocketProvider>
   </Provider>,
   document.getElementById('root'),
 );
