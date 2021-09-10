@@ -1,11 +1,20 @@
 @import '../../styles/common.scss';
 
-.ChatCard_wrap {
+.ChatCard_wrap,
+.ChatCard_wrap_admin {
   margin: 0.5rem 1rem;
   padding: 1rem;
   border-radius: 3px;
   box-sizing: border-box;
   box-shadow: 0 4px 4px $shadow-one-quarter;
+}
+
+.ChatCard_wrap {
+  background-color: #ffffff;
+}
+
+.ChatCard_wrap_admin {
+  background-color: $gray-light;
 }
 
 .ChatCard_header {

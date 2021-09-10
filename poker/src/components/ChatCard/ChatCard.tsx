@@ -22,7 +22,7 @@ const ChatCard: FC<Props> = ({ userId, firstName, lastName, role, message }) => 
   };
 
   return (
-    <div className={styles.ChatCard_wrap}>
+    <div className={role === ROLES.ADMIN ? styles.ChatCard_wrap_admin : styles.ChatCard_wrap}>
       <div className={styles.ChatCard_header}>
         <div className={styles.ChatCard_user}>
           <Avatar role={role} size={SIZES.SMALL} firstName={firstName} lastName={lastName} />
@@ -33,6 +33,9 @@ const ChatCard: FC<Props> = ({ userId, firstName, lastName, role, message }) => 
             </p>
           </div>
         </div>
+        {/* {currentRole === ROLES.ADMIN && role !== ROLES.ADMIN && (
+          <img className={styles.ChatCard_icon} src={kickIcon} alt="kick" onClick={handleOnKickUser} />
+        )} */}
         <img className={styles.ChatCard_icon} src={kickIcon} alt="kick" onClick={handleOnKickUser} />
       </div>
       <p className={styles.ChatCard_content}>{message}</p>
