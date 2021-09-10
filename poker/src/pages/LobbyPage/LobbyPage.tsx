@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import CardUser, { userProps } from '../../components/CardUser/CardUser';
+import Chat from '../../components/Chat/Chat';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import TitleSection from '../../components/TitleSection/TitleSection';
 
@@ -16,6 +17,7 @@ interface Props {
 const LobbyPage: FC<Props> = ({ roomId, users, link }) => (
   <div className={styled.lobbyPage_container}>
     <h2>Room {roomId}</h2>
+    <Chat />
     <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
     <div className={styled.lobbyPage_section}>
       <p>Scram master:</p>

@@ -27,3 +27,10 @@
   left: 65px;
   transform: translateY(-50%);
 }
+
+.icon {
+  position: absolute;
+  right: 3rem;
+  top: 1rem;
+  @include iconHoverWithTransition;
+}
