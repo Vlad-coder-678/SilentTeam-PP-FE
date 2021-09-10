@@ -7,6 +7,7 @@ const mockRooms = [
       { userId: 3, name: 'Teodor', surname: 'Ferdyshcenko', jobPosition: 'Clicker' },
     ],
     issues: [{ issueId: 1 }, { issueId: 2 }, { issueId: 3 }],
+    cards: [{ value: 'coffetime' }, { value: 0 }, { value: 1 }, { value: 5 }, { value: 10 }, { value: 20 }],
   },
   {
     roomId: 2,
@@ -18,6 +19,7 @@ const mockRooms = [
       { userId: 5, name: 'Habib', surname: 'Sagitovich', jobPosition: 'Refluxor' },
     ],
     issues: [{ issueId: 1 }, { issueId: 2 }, { issueId: 3 }],
+    cards: [{ value: 'coffetime' }, { value: 0 }, { value: 1 }, { value: 5 }, { value: 10 }, { value: 20 }],
   },
 ];
 

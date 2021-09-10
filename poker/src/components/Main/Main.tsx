@@ -20,7 +20,13 @@ const Main: FC = () => {
         </Route>
         {mockRooms.map((room) => (
           <Route key={room.roomId} path={`/lobby${room.roomId}`}>
-            <LobbyPage roomId={room.roomId} users={room.users} link={location.pathname} />
+            <LobbyPage
+              roomId={room.roomId}
+              users={room.users}
+              issues={room.issues}
+              link={location.pathname}
+              cards={room.cards}
+            />
           </Route>
         ))}
         <Route path="/game">
