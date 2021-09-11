@@ -5,6 +5,8 @@ $base-azure: #b3af8f;
 $base-antique: #ffc482;
 $base-dark: #000;
 $base-checkbox-uncheked: #c4c4c4;
+$blue-light: #d9f1f8;
+$gray-light: #f6f6f6;
 
 $red-red: #ff0000;
 $red-orange-red: #ff3333;
@@ -23,3 +25,17 @@ $variable-khaki: #a1b261;
 $variable-sea-green: #a1bb41;
 
 $shadow-one-quarter: rgba(0, 0, 0, 0.25);
+
+$duration-for-hover-icon: 0.1s;
+
+$scale-for-hover-icon: 1.1;
+
+$font-weight: 600;
+
+@mixin iconHoverWithTransition {
+  transition: transform $duration-for-hover-icon;
+  &:hover {
+    cursor: pointer;
+    transform: scale($scale-for-hover-icon);
+  }
+}
