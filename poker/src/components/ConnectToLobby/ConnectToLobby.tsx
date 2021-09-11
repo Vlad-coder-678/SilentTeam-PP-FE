@@ -1,4 +1,11 @@
-import React, { FC, useState, useEffect, ChangeEvent } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
+
+import { Socket } from 'socket.io-client/build/socket';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
+
+import { SocketContext } from '../../socketContext';
+
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
@@ -13,9 +20,12 @@ interface FormState {
 
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  role: string;
+  url: string;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
+const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
   const [error, setError] = useState<FormState>({
     firstName: '',
     lastName: '',
@@ -26,7 +36,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
     lastName: '',
     jobPosition: '',
   });
-  // const [observer, setObserver] = useState<boolean>(false);
+  const [observer, setObserver] = useState<boolean>(false);
   // const [image, setImage] = useState<string>('');
 
   useEffect(() => {
@@ -49,8 +59,20 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
     setPersanalData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleClickConfirm = () => {
-    setIsVisible(false);
+  const handleClickConfirm = async (event: FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    console.log(url);
+    const room = '1';
+    const { firstName, lastName, jobPosition } = persanalData;
+    const response = await axios.post('http://localhost:3000/api/users', {
+      firstName,
+      lastName,
+      jobPosition,
+      role,
+      room,
+      observer
+    });
+    console.log(response);
   };
 
   const handleClickCancel = () => {

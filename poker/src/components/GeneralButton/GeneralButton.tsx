@@ -1,10 +1,10 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { FC, FormEvent } from 'react';
 import b from './GeneralButton.module.scss';
 
 interface Props {
   label: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: FormEvent<HTMLButtonElement>) => void;
   primaryBG?: boolean;
 }
 

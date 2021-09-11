@@ -9,8 +9,12 @@ import m from './MainPage.module.scss';
 
 import Counter from '../../redux/Counter';
 
+type Role = 'admin' | 'gamer' | 'observer';
+
 const MainPage: FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [role, setRole] = useState<Role>('admin');
+  const [url, setUrl] = useState<string>('');
 
   const handleCreateNewGame = () => {
     setIsVisible(true);
@@ -19,10 +23,12 @@ const MainPage: FC = () => {
 
   const handleConnectToGame = () => {
     setIsVisible(true);
+    setRole('gamer');
     console.log('connect');
   };
 
   const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     console.log(e.target.value);
   };
 
@@ -51,7 +57,7 @@ const MainPage: FC = () => {
           primaryBG
         />
       </div>
-      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} />}
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} url={url}/>}
     </div>
   );
 };
