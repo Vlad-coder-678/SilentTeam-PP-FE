@@ -1,0 +1,25 @@
+.lobbyPage_section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.lobbyPage_setting_item {
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lobbyPage_setting_item p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.lobbyPage_setting_cards {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
