@@ -17,6 +17,7 @@ const TESTsocket: FC = () => {
       role: 'User role1',
     };
     const room = '123456789';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     socket.emit('login', { user, room }, (response: any) => {
       console.log(response);
     });

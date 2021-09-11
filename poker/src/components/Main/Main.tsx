@@ -7,7 +7,7 @@ import GamePage from '../../pages/GamePage/GamePage';
 import GameResultPage from '../../pages/GameResultPage/GameResultPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
-import mockRooms from '../../__mocks__/mockState';
+import mockRoom from '../../__mocks__/mockRoom';
 
 const Main: FC = () => {
   const location = useLocation();
@@ -18,11 +18,9 @@ const Main: FC = () => {
         <Route path="/" exact>
           <MainPage />
         </Route>
-        {mockRooms.map((room) => (
-          <Route key={room.roomId} path={`/lobby${room.roomId}`}>
-            <LobbyPage roomId={room.roomId} users={room.users} link={location.pathname} />
-          </Route>
-        ))}
+        <Route path={`/lobby${mockRoom.roomId}`}>
+          <LobbyPage users={mockRoom.users} issues={mockRoom.issues} link={location.pathname} cards={mockRoom.cards} />
+        </Route>
         <Route path="/game">
           <GamePage />
         </Route>
