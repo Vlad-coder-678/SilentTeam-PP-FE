@@ -1,12 +1,18 @@
-enum ROLES {
+export enum ROLES {
   ADMIN = 'admin',
   OBSERVER = 'observer',
   USER = 'user',
 }
 
-enum SIZES {
+export enum SIZES {
   SMALL = 'small',
   MEDIUM = 'medium',
 }
 
-export { ROLES, SIZES };
+export interface Message {
+  userId: string;
+  firstName: string;
+  lastName?: string;
+  role: ROLES;
+  message: string;
+}

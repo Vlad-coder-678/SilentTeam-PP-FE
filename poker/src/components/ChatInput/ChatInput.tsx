@@ -1,24 +1,58 @@
 import React, { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SocketContext } from '../../socketContext';
 import Avatar from '../Avatar/Avatar';
 import sendIcon from '../../assets/images/send.svg';
-import { mockChatInput } from '../../__mocks__/mockChat';
+import { mockChatInput, mockCurrentUserId } from '../../__mocks__/mockChat';
 import { SIZES } from '../../types/common';
 import { MAX_CHAT_MESSAGE_LENGTH } from '../../constants';
+
+import { chatMessagesSlice, updateChat } from '../../redux/slices/chatSlice';
 
 import styles from './ChatInput.module.scss';
 
 const ChatInput: FC = () => {
   const { firstName, lastName, role } = mockChatInput;
+  const room = '1234567';
+  const userId = mockCurrentUserId;
 
-  const [value, setValue] = React.useState('');
+  const chat = useSelector(chatMessagesSlice);
+
+  const socket = React.useContext(SocketContext);
+
+  const dispatch = useDispatch();
+
+  const [message, setMessage] = React.useState('');
+
+  React.useEffect(() => {
+    const updateChatSuccess = (response: any) => {
+      dispatch(updateChat(response));
+    };
+    socket.on('get-message', updateChatSuccess);
+    console.log('in useEffect');
+
+    return () => {
+      socket.off('get-message', updateChatSuccess);
+    };
+  });
+
+  console.log('chat', chat);
 
   const handleOnSendMessage = () => {
-    console.log('message', value);
+    console.log('message', message);
     console.log('Send message and update chat');
+    if (message !== '') {
+      const payload = {
+        room,
+        userId,
+        message,
+      };
+      socket.emit('send-message', payload);
+    }
   };
 
   const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
+    setMessage(event.target.value);
   };
 
   return (
@@ -26,7 +60,7 @@ const ChatInput: FC = () => {
       <Avatar role={role} size={SIZES.SMALL} firstName={firstName} lastName={lastName} />
       <textarea
         className={styles.ChatInput_textarea}
-        value={value}
+        value={message}
         onChange={handleOnInputChange}
         placeholder="Enter your message"
         autoFocus
