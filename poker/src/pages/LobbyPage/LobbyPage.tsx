@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import CardUser, { userProps } from '../../components/CardUser/CardUser';
+import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import LobbyScramButtons from '../../components/LobbyScramButtons/LobbyScramButtons';
 import LobbyMembers from '../../components/LobbyMembers/LobbyMembers';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => (
+  <div className={styled.lobbyPage_wrap}>
   <div className={styled.lobbyPage_container}>
     <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
     <div className={styled.lobbyPage_section}>
@@ -29,6 +31,7 @@ const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => (
     <LobbyMembers users={users} />
     <LobbyIssues issues={issues} />
     <LobbySetting cards={cards} />
+    <Chat />
   </div>
 );
 

@@ -1,0 +1,34 @@
+@import '../../styles/common.scss';
+
+.ChatInput_wrap {
+  // position: fixed;
+  display: flex;
+  justify-content: space-between;
+  background-color: $blue-light;
+  margin: 0 1rem;
+  padding: 1rem;
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px $shadow-one-quarter;
+}
+
+.ChatInput_textarea {
+  background-color: $blue-light;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  resize: none;
+  &:focus {
+    border: none;
+  }
+}
+
+.ChatInput_icon {
+  width: 1rem;
+  height: 1rem;
+  @include iconHoverWithTransition;
+}
+
+.ChatInput_content {
+  margin-bottom: 0;
+}
