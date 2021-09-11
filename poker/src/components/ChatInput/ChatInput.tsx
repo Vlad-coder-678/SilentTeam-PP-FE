@@ -27,6 +27,7 @@ const ChatInput: FC = () => {
   React.useEffect(() => {
     const updateChatSuccess = (response: any) => {
       dispatch(updateChat(response));
+      setMessage('');
     };
     socket.on('get-message', updateChatSuccess);
     console.log('in useEffect');
@@ -46,6 +47,9 @@ const ChatInput: FC = () => {
         room,
         userId,
         message,
+        firstName,
+        lastName,
+        role,
       };
       socket.emit('send-message', payload);
     }
