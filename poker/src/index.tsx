@@ -5,6 +5,7 @@ import { store } from './redux/store';
 import App from './App';
 import { SocketProvider } from './socketContext';
 import 'normalize.css';
+import './index.scss';
 
 ReactDOM.render(
   <Provider store={store}>
