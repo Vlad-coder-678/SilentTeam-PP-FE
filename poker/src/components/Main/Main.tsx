@@ -18,7 +18,7 @@ const Main: FC = () => {
         <Route path="/" exact>
           <MainPage />
         </Route>
-        <Route path={`/lobby${mockRoom.roomId}`}>
+        <Route path={'/lobby1'}>
           <LobbyPage users={mockRoom.users} issues={mockRoom.issues} link={location.pathname} cards={mockRoom.cards} />
         </Route>
         <Route path="/game">
