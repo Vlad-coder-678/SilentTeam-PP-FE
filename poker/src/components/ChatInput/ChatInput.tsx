@@ -35,7 +35,7 @@ const ChatInput: FC = () => {
     return (): void => {
       socket.off('get-message', updateChatSuccess);
     };
-  }, [chat]);
+  }, [dispatch, socket, chat]);
 
   const handleOnSendMessage = (): void => {
     if (message !== '') {

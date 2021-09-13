@@ -13,7 +13,7 @@ interface Props {
 const KickButton: FC<Props> = ({ size }) => {
   const dispatch = useDispatch();
 
-  const handleOnKickUser = () => {
+  const handleOnKickUser = ():void => {
     dispatch(setIsModalOpen(true));
     dispatch(setIsModalCallFromServer(false));
   };

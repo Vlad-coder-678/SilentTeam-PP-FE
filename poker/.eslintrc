@@ -19,15 +19,19 @@
   "rules": {
     // переменная используется перед объявлением. must disable the base rule as it can report incorrect errors.
     "no-use-before-define": "off",
-    // с предидущим идут вместе. отключается для файлов js, jsx. включается для ts, tsx, чтобы не вызвало непредвиденных ошибок
+    // с предъидущим идут вместе. отключается для файлов js, jsx. включается для ts, tsx, чтобы не вызвало непредвиденных ошибок
     "@typescript-eslint/no-use-before-define": ["error"],
-    //
+    // затемнение - когда две переменные имеют одно и то же имя в разных зонах видимости. это устаревшее правило
+    "no-shadow": "off",
+    // расширение правила "no-shadow", при этом его необходимо отключить
     "@typescript-eslint/no-shadow": ["error"],
-    "@typescript-eslint/comma-dangle": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    // требование явного возврата типов для функций и методов, присмешанном использовании её переодпределяют
-    "@typescript-eslint/explicit-function-return-type": "off",
+    // запятые в конце списков(объектных литералов)
     "comma-dangle": "off",
+    // расширяет базовое comma-dangle. Добавляет поддержку синтаксиса TypeScript.
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/explicit-module-boundary-types": ["error"],
+    // требование явного возврата типов для функций и методов, при смешанном использовании её переодпределяют
+    "@typescript-eslint/explicit-function-return-type": "off",
     "curly": "off",
     "implicit-arrow-linebreak": "off",
     //
@@ -66,9 +70,7 @@
     "no-plusplus": "off",
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "nonblock-statement-body-position": "off",
-    "object-curly-newline": "off",
-    //
-    "no-shadow": "off"
+    "object-curly-newline": "off"
   },
   "env": {
     "browser": true,

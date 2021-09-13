@@ -19,7 +19,7 @@ const KickModal: FC = () => {
 
   const isModalCallFromServer = useSelector(isModalCallFromServerSlice);
 
-  const handleClickConfirm = () => {
+  const handleClickConfirm = (): void => {
     // 1 если админ - послать сообщение удалить юзера и отправить сообщение в чат
     if (currentUser.role === ROLES.ADMIN) {
       const payload = {
@@ -41,7 +41,7 @@ const KickModal: FC = () => {
     // закрыть окно
   };
 
-  const handleClickCancel = () => {
+  const handleClickCancel = (): void => {
     dispatch(setIsModalOpen(false));
   };
 

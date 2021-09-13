@@ -13,13 +13,13 @@ const App: FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    const updateChatSuccess = (response: SocketError) => {
+    const updateChatSuccess = (response: SocketError): void => {
       dispatch(setSocketError(response));
     };
 
     socket.on('error', updateChatSuccess);
 
-    return () => {
+    return (): void => {
       socket.off('error', updateChatSuccess);
     };
   });
