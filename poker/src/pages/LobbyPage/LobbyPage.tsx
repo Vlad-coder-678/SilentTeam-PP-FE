@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 
+import { useSelector } from 'react-redux';
 import CardUser, { userProps } from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -7,6 +8,9 @@ import LobbyScramButtons from '../../components/LobbyScramButtons/LobbyScramButt
 import LobbyMembers from '../../components/LobbyMembers/LobbyMembers';
 import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
+import { admin } from '../../__mocks__/mockRoom';
+import KickModal from '../../components/KickModal/KickModal';
+import { isModalOpenSlice } from '../../redux/slices/kickSlice';
 
 import styled from './LobbyPage.module.scss';
 
@@ -17,23 +21,28 @@ interface Props {
   link: string;
 }
 
-const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => (
-  <div className={styled.lobbyPage_wrap}>
-    <div className={styled.lobbyPage_container}>
-      <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
-      <div className={styled.lobbyPage_section}>
-        <p>Scram master:</p>
+const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => {
+  const isKickModalOpen = useSelector(isModalOpenSlice);
+
+  return (
+    <div className={styled.lobbyPage_wrap}>
+      <div className={styled.lobbyPage_container}>
+        <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
+        <div className={styled.lobbyPage_section}>
+          <p>Scram master:</p>
+        </div>
+        <div className={styled.lobbyPage_section}>
+          <CardUser name={admin.name} surname={admin.surname} jobPosition={admin.jobPosition} role={admin.role} />
+        </div>
+        <LobbyScramButtons link={link} />
+        <LobbyMembers users={users} />
+        <LobbyIssues issues={issues} />
+        <LobbySetting cards={cards} />
       </div>
-      <div className={styled.lobbyPage_section}>
-        <CardUser name={users[0].name} surname={users[0].surname} jobPosition={users[0].jobPosition} />
-      </div>
-      <LobbyScramButtons link={link} />
-      <LobbyMembers users={users} />
-      <LobbyIssues issues={issues} />
-      <LobbySetting cards={cards} />
       <Chat />
+      {isKickModalOpen && <KickModal />}
     </div>
-  </div>
-);
+  );
+};
 
 export default LobbyPage;

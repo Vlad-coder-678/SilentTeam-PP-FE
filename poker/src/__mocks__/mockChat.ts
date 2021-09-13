@@ -37,8 +37,8 @@ const mockChat = [
   },
   {
     userId: '11115',
-    firstName: 'Teodorooooooooooo',
-    lastName: 'Ferdyshcenkovvvvvvvv',
+    firstName: 'Teodor',
+    lastName: 'Ferdyshcenkov',
     role: ROLES.OBSERVER,
     message: 'Ok',
   },

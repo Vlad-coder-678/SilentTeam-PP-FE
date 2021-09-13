@@ -29,19 +29,15 @@ const ChatInput: FC = () => {
       dispatch(updateChat(response));
       setMessage('');
     };
+
     socket.on('get-message', updateChatSuccess);
-    console.log('in useEffect');
 
     return (): void => {
       socket.off('get-message', updateChatSuccess);
     };
-  });
-
-  console.log('chat', chat);
+  }, [chat]);
 
   const handleOnSendMessage = (): void => {
-    console.log('message', message);
-    console.log('Send message and update chat');
     if (message !== '') {
       const payload = {
         room,

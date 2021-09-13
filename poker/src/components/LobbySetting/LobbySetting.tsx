@@ -67,7 +67,7 @@ const LobbySetting: FC<Props> = ({ cards }) => {
         <p>Add card values:</p>
       </div>
       <div className={styled.lobbyPage_setting_cards}>
-        {cards && cards.map((card) => <CardGame value={card.value} isConfig />)}
+        {cards && cards.map((card) => <CardGame key={card.value} value={card.value} isConfig />)}
         <CardGame isNew />
       </div>
     </div>
