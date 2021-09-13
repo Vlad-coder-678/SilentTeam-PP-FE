@@ -11,8 +11,9 @@ function Counter(): JSX.Element {
 
   const handleDicrement = (): { payload: undefined; type: string } => dispatch(decrement());
 
-  const handleIncrementAmount = (): { payload: number; type: string } =>
+  const handleIncrementAmount = (): void => {
     dispatch(incrementByAmount(Number(incrementAmount) || 0));
+  };
 
   const handleIncrementAsynk = (): unknown => dispatch(incrementAsync(Number(incrementAmount) || 0));
 

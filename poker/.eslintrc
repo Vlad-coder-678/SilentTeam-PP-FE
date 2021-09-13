@@ -25,16 +25,22 @@
     "no-shadow": "off",
     // расширение правила "no-shadow", при этом его необходимо отключить
     "@typescript-eslint/no-shadow": ["error"],
-    // запятые в конце списков(объектных литералов)
+    // запятые в конце объектных литералов
     "comma-dangle": "off",
     // расширяет базовое comma-dangle. Добавляет поддержку синтаксиса TypeScript.
     "@typescript-eslint/comma-dangle": "off",
+    // требует явного возврата и типов аргументов в методах экспортируемых функций и классов
     "@typescript-eslint/explicit-module-boundary-types": ["error"],
     // требование явного возврата типов для функций и методов, при смешанном использовании её переодпределяют
     "@typescript-eslint/explicit-function-return-type": "off",
-    "curly": "off",
-    "implicit-arrow-linebreak": "off",
-    //
+    // требует фигурные скобки в логических блоках(if, while, for & ot.) ["all", "multi", "multi-line", "multi-or-nest", "consistent"]
+    "curly": ["warn", "multi"],
+    // если тело функции не размещено в фигурных скобках, (т.е. нет явного возврата)
+    // то implicit-arrow-linebreak требует правильного распложения тела функции переноса или написаня в одну строку ["beside", "below"]
+    "implicit-arrow-linebreak": ["warn", "beside"],
+    // import/extensions может предписывать или запрещать использование расширений файлов,
+    // чтобы обеспечить единообразное использование расширений файлов во всей базе кода.
+    // [<severity>, "never" | "always" | "ignorePackages"]
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -43,20 +49,33 @@
         "tsx": "never"
       }
     ],
-    "import/no-cycle": "off",
-    "import/no-unresolved": "off",
-    // предпостение к экспорту по умолчанию. можно проигнорить
-    "import/prefer-default-export": "off",
+    // гарантирует, что нет пути к этому модулю через его зависимости,
+    // т.е. что модуль 1 не импортирует модуль 2, который импортирует модуль 1, чтобы создать цикл
+    "import/no-cycle": "error",
+    // запрещает модулю импортировать самого себя, если вдруг такое случается во время рефакторинга
+    "import/no-self-import": "error",
+    // гарантирует что импортируемый модуль может быть преобразован в модуль в локальной файловой системе
+    "import/no-unresolved": "error",
+    // предпочтение к экспорту по умолчанию. если в файле один экспорт, то он обязательно должен быть дуфолтным
+    "import/prefer-default-export": "error",
+    // требует определенного отступа вложенных блоков и операторов. Оч много правил. см.https://eslint.org/docs/rules/indent
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
-    "jsx-a11y/click-events-have-key-events": 0,
-    "linebreak-style": 0,
-    //
+    // Принудительно onClick сопровождается по меньшей мере одно из следующих: onKeyUp, onKeyDown, onKeyPress
+    "jsx-a11y/click-events-have-key-events": "off",
+    // linebreak-style обеспечивает согласованные окончания строк независимо от OC или редактора. ["unix", "windows"]
+    "linebreak-style": ["error", "windows"],
+    // устанавливает максимальную длину строки для повышения читабельности кода
     "max-len": ["warn", { "code": 120 }],
-    "operator-linebreak": "off",
-    "no-console": 0,
+    // обеспечивает для операторов единый стиль переноса строки. ["after", "before", "none"]
+    "operator-linebreak": ["error", "before"],
+    // no-console запрещает вызовы методов consoleобъекта
+    "no-console": "warn",
+    // направлено на предотвращение непреднамеренного поведения, вызванного изменением или переназначением параметров функции
     "no-param-reassign": ["error", { "props": false }],
+    // 
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    // 
     "react/button-has-type": "off",
     "react/jsx-curly-newline": "off",
     // файлы типов, которые могут содержать разметку jsx, по умолчанию jsx. почему то не работает
