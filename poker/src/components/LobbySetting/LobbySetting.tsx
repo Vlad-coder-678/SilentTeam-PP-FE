@@ -12,27 +12,27 @@ interface Props {
 }
 
 const LobbySetting: FC<Props> = ({ cards }) => {
-  const handleChangeMasterOrPlayer = () => {
+  const handleChangeMasterOrPlayer = (): void => {
     console.log('master or player');
   };
 
-  const handleChangeCardInRoundEnd = () => {
+  const handleChangeCardInRoundEnd = (): void => {
     console.log('change card in round end');
   };
 
-  const handleChangeTimerNeeded = () => {
+  const handleChangeTimerNeeded = (): void => {
     console.log('handle change timer needed');
   };
 
-  const handleChangeScrollType = () => {
+  const handleChangeScrollType = (): void => {
     console.log('handle change scroll type');
   };
 
-  const handleChangeScrollTypeShort = () => {
+  const handleChangeScrollTypeShort = (): void => {
     console.log('handle change scroll type short');
   };
 
-  const handleChangeRoundTime = () => {
+  const handleChangeRoundTime = (): void => {
     console.log('handle change round time');
   };
 

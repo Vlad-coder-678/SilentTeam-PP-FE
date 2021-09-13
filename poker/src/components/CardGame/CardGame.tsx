@@ -10,15 +10,15 @@ interface Props {
 }
 
 const CardGame: FC<Props> = ({ value, isNew, isSelected, isConfig }) => {
-  const handleCreateNewCard = () => {
+  const handleCreateNewCard = (): void => {
     console.log('create new card');
   };
 
-  const handleChangeValue = () => {
+  const handleChangeValue = (): void => {
     console.log('change value');
   };
 
-  const handleChangeSelected = () => {
+  const handleChangeSelected = (): void => {
     console.log('change selected');
   };
 

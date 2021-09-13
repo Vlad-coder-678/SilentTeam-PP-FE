@@ -7,14 +7,23 @@ function Counter(): JSX.Element {
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
+  const handleIncrement = (): { payload: undefined; type: string } => dispatch(increment());
+
+  const handleDicrement = (): { payload: undefined; type: string } => dispatch(decrement());
+
+  const handleIncrementAmount = (): { payload: number; type: string } =>
+    dispatch(incrementByAmount(Number(incrementAmount) || 0));
+
+  const handleIncrementAsynk = (): unknown => dispatch(incrementAsync(Number(incrementAmount) || 0));
+
   return (
     <div>
       <div>
-        <button type="button" aria-label="Increment value" onClick={() => dispatch(increment())}>
+        <button type="button" aria-label="Increment value" onClick={handleIncrement}>
           +
         </button>
         <span>{count}</span>
-        <button type="button" aria-label="Decrement value" onClick={() => dispatch(decrement())}>
+        <button type="button" aria-label="Decrement value" onClick={handleDicrement}>
           -
         </button>
       </div>
@@ -22,12 +31,12 @@ function Counter(): JSX.Element {
         <input
           aria-label="Set increment amount"
           value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
+          onChange={(e): void => setIncrementAmount(e.target.value)}
         />
-        <button type="button" onClick={() => dispatch(incrementByAmount(Number(incrementAmount) || 0))}>
+        <button type="button" onClick={handleIncrementAmount}>
           Add Amount
         </button>
-        <button type="button" onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}>
+        <button type="button" onClick={handleIncrementAsynk}>
           Add Async
         </button>
       </div>

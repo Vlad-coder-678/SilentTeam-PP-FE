@@ -8,7 +8,7 @@ import { SocketContext } from '../../socketContext';
 const TESTsocket: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
-  const handleOnClick = () => {
+  const handleOnClick = (): void => {
     console.log('in handleOnClick');
     const user = {
       firstName: 'User firstName1',
@@ -17,8 +17,7 @@ const TESTsocket: FC = () => {
       role: 'user',
     };
     const room = '123456789';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    socket.emit('login', { user, room }, (response: any) => {
+    socket.emit('login', { user, room }, (response: unknown) => {
       console.log(response);
     });
   };

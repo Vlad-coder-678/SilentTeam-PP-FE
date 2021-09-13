@@ -25,19 +25,19 @@ const ChatInput: FC = () => {
   const [message, setMessage] = React.useState('');
 
   React.useEffect(() => {
-    const updateChatSuccess = (response: Message) => {
+    const updateChatSuccess = (response: Message): void => {
       dispatch(updateChat(response));
       setMessage('');
     };
 
     socket.on('get-message', updateChatSuccess);
 
-    return () => {
+    return (): void => {
       socket.off('get-message', updateChatSuccess);
     };
   }, [chat]);
 
-  const handleOnSendMessage = () => {
+  const handleOnSendMessage = (): void => {
     if (message !== '') {
       const payload = {
         room,
@@ -51,7 +51,7 @@ const ChatInput: FC = () => {
     }
   };
 
-  const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setMessage(event.target.value);
   };
 
