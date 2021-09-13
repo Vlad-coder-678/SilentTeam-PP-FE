@@ -19,19 +19,20 @@ interface Props {
 
 const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => (
   <div className={styled.lobbyPage_wrap}>
-  <div className={styled.lobbyPage_container}>
-    <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
-    <div className={styled.lobbyPage_section}>
-      <p>Scram master:</p>
+    <div className={styled.lobbyPage_container}>
+      <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
+      <div className={styled.lobbyPage_section}>
+        <p>Scram master:</p>
+      </div>
+      <div className={styled.lobbyPage_section}>
+        <CardUser name={users[0].name} surname={users[0].surname} jobPosition={users[0].jobPosition} />
+      </div>
+      <LobbyScramButtons link={link} />
+      <LobbyMembers users={users} />
+      <LobbyIssues issues={issues} />
+      <LobbySetting cards={cards} />
+      <Chat />
     </div>
-    <div className={styled.lobbyPage_section}>
-      <CardUser name={users[0].name} surname={users[0].surname} jobPosition={users[0].jobPosition} />
-    </div>
-    <LobbyScramButtons link={link} />
-    <LobbyMembers users={users} />
-    <LobbyIssues issues={issues} />
-    <LobbySetting cards={cards} />
-    <Chat />
   </div>
 );
 

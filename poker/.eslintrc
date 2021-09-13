@@ -12,40 +12,54 @@
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
+      },
+      "typescript": {}
     }
   },
   "rules": {
+    // переменная используется перед объявлением. must disable the base rule as it can report incorrect errors.
+    "no-use-before-define": "off",
+    // с предидущим идут вместе. отключается для файлов js, jsx. включается для ts, tsx, чтобы не вызвало непредвиденных ошибок
+    "@typescript-eslint/no-use-before-define": ["error"],
+    //
+    "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/comma-dangle": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-use-before-define": ["error", { "variables": false }],
+    // требование явного возврата типов для функций и методов, присмешанном использовании её переодпределяют
+    "@typescript-eslint/explicit-function-return-type": "off",
     "comma-dangle": "off",
     "curly": "off",
     "implicit-arrow-linebreak": "off",
+    //
     "import/extensions": [
       "error",
       "ignorePackages",
       {
-        "js": "never",
-        "jsx": "never",
         "ts": "never",
         "tsx": "never"
       }
     ],
     "import/no-cycle": "off",
     "import/no-unresolved": "off",
+    // предпостение к экспорту по умолчанию. можно проигнорить
     "import/prefer-default-export": "off",
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
     "jsx-a11y/click-events-have-key-events": 0,
     "linebreak-style": 0,
-    "max-len": ["error", { "code": 120 }],
+    //
+    "max-len": ["warn", { "code": 120 }],
     "operator-linebreak": "off",
     "no-console": 0,
     "no-param-reassign": ["error", { "props": false }],
-    "no-use-before-define": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react/button-has-type": "off",
     "react/jsx-curly-newline": "off",
+    // файлы типов, которые могут содержать разметку jsx, по умолчанию jsx. почему то не работает
+    // "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
+    // проверка типов для реакт prop-types. в данном проекте используем typescript
     "react/prop-types": "off",
     "semi": ["error", "always"],
     "no-continue": "off",
@@ -53,12 +67,22 @@
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "nonblock-statement-body-position": "off",
     "object-curly-newline": "off",
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
+    //
+    "no-shadow": "off"
   },
   "env": {
     "browser": true,
     "node": true
   },
-  "plugins": ["@typescript-eslint", "react-hooks"]
+  //
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "overrides": [
+    {
+      // включить правило специально для файлов TypeScript
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["warn"]
+      }
+    }
+  ]
 }

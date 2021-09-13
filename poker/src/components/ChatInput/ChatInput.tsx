@@ -4,7 +4,7 @@ import { SocketContext } from '../../socketContext';
 import Avatar from '../Avatar/Avatar';
 import sendIcon from '../../assets/images/send.svg';
 import { mockChatInput, mockCurrentUserId } from '../../__mocks__/mockChat';
-import { SIZES } from '../../types/common';
+import { Message, SIZES } from '../../types/common';
 import { MAX_CHAT_MESSAGE_LENGTH } from '../../constants';
 
 import { chatMessagesSlice, updateChat } from '../../redux/slices/chatSlice';
@@ -25,21 +25,21 @@ const ChatInput: FC = () => {
   const [message, setMessage] = React.useState('');
 
   React.useEffect(() => {
-    const updateChatSuccess = (response: any) => {
+    const updateChatSuccess = (response: Message): void => {
       dispatch(updateChat(response));
       setMessage('');
     };
     socket.on('get-message', updateChatSuccess);
     console.log('in useEffect');
 
-    return () => {
+    return (): void => {
       socket.off('get-message', updateChatSuccess);
     };
   });
 
   console.log('chat', chat);
 
-  const handleOnSendMessage = () => {
+  const handleOnSendMessage = (): void => {
     console.log('message', message);
     console.log('Send message and update chat');
     if (message !== '') {
@@ -55,7 +55,7 @@ const ChatInput: FC = () => {
     }
   };
 
-  const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setMessage(event.target.value);
   };
 

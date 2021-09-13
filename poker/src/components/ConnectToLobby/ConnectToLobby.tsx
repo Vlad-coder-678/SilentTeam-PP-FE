@@ -21,7 +21,8 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
     lastName: '',
     jobPosition: '',
   });
-  const [persanalData, setPersanalData] = useState<FormState>({
+
+  const [personalData, setPersonalData] = useState<FormState>({
     firstName: '',
     lastName: '',
     jobPosition: '',
@@ -30,44 +31,40 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
   // const [image, setImage] = useState<string>('');
 
   useEffect(() => {
-    validate();
-  }, [persanalData]);
-
-  const validate = () => {
-    const { firstName } = persanalData;
-    if (firstName === '') {
+    if (personalData.firstName === '') {
+      const { firstName } = personalData;
       setError((state) => ({ ...state, firstName }));
     }
-  };
+  }, [personalData]);
 
-  const handelSubmit = () => {
+  const handelSubmit = (): void => {
     console.log('send form');
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
-    setPersanalData((prevState) => ({ ...prevState, [name]: value }));
+    setPersonalData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleClickConfirm = () => {
+  const handleClickConfirm = (): void => {
     setIsVisible(false);
   };
 
-  const handleClickCancel = () => {
+  const handleClickCancel = (): void => {
     setIsVisible(false);
   };
 
   return (
     <div
       className={styles.Form_wrap}
-      onClick={() => {
+      onClick={(): void => {
         setIsVisible(false);
       }}
     >
       <form
         className={styles.Form}
         onSubmit={handelSubmit}
-        onClick={(e) => {
+        onClick={(e): void => {
           e.stopPropagation();
         }}
       >
@@ -88,27 +85,13 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
         <div className={styles.Form_body}>
           <label htmlFor={'firstName'}>
             Your First Name:
-            {error?.firstName && (
-              <span className={styles.Form_error}> Should be fill</span>
-            )}
+            {error?.firstName && <span className={styles.Form_error}> Should be fill</span>}
           </label>
-          <InputComponent
-            value={persanalData.firstName}
-            name={'firstName'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.firstName} name={'firstName'} onChange={handleInputChange} />
           <label htmlFor={'lastName'}>Your Last Name:</label>
-          <InputComponent
-            value={persanalData.lastName}
-            name={'lastName'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.lastName} name={'lastName'} onChange={handleInputChange} />
           <label htmlFor={'jobPosition'}>Your job position:</label>
-          <InputComponent
-            value={persanalData.jobPosition}
-            name={'jobPosition'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.jobPosition} name={'jobPosition'} onChange={handleInputChange} />
           {/* <label htmlFor={image}>
             Image:
             <input className={styles.Button_blue} type="file" />
@@ -126,12 +109,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
         </div>
 
         <div className={styles.Form_footer}>
-          <GeneralButton
-            type="submit"
-            label={'Confirm'}
-            onClick={handleClickConfirm}
-            primaryBG
-          />
+          <GeneralButton type="submit" label={'Confirm'} onClick={handleClickConfirm} primaryBG />
           <GeneralButton label={'Cancel'} onClick={handleClickCancel} />
         </div>
       </form>

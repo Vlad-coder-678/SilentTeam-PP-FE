@@ -8,7 +8,7 @@ export interface userProps {
 }
 
 const CardUser: FC<userProps> = ({ name, surname, jobPosition }) => {
-  const handleClickKickUser = () => {
+  const handleClickKickUser = (): void => {
     console.log("I'll kick you");
   };
 

@@ -5,7 +5,7 @@ import addMessageIcon from '../../assets/images/add_message.svg';
 import h from './Header.module.scss';
 
 const Header: FC = () => {
-  const handlerOnToggleChat = () => {
+  const handlerOnToggleChat = (): void => {
     console.log('toogle chat');
   };
 

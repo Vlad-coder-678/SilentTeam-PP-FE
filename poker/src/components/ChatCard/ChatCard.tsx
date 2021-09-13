@@ -17,7 +17,7 @@ interface Props {
 const ChatCard: FC<Props> = ({ userId, firstName, lastName, role, message }) => {
   const currentUserId = mockCurrentUserId;
 
-  const handleOnKickUser = () => {
+  const handleOnKickUser = (): void => {
     console.log(`Kick user ${userId} and all his messages`);
   };
 
