@@ -13,7 +13,7 @@ const LobbyIssues: FC<Props> = ({ issues }) => (
   <div>
     <TitleSection title={'Issues:'} />
     <div className={styled.lobbyPage_section}>
-      {issues && issues.map((issue) => <CardIssue issueId={issue.issueId} />)}
+      {issues && issues.map((issue) => <CardIssue key={issue.issueId} issueId={issue.issueId} />)}
       <CardIssue isNew />
     </div>
   </div>

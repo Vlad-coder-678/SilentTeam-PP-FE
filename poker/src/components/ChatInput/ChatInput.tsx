@@ -4,7 +4,7 @@ import { SocketContext } from '../../socketContext';
 import Avatar from '../Avatar/Avatar';
 import sendIcon from '../../assets/images/send.svg';
 import { mockChatInput, mockCurrentUserId } from '../../__mocks__/mockChat';
-import { SIZES } from '../../types/common';
+import { Message, SIZES } from '../../types/common';
 import { MAX_CHAT_MESSAGE_LENGTH } from '../../constants';
 
 import { chatMessagesSlice, updateChat } from '../../redux/slices/chatSlice';
@@ -25,23 +25,19 @@ const ChatInput: FC = () => {
   const [message, setMessage] = React.useState('');
 
   React.useEffect(() => {
-    const updateChatSuccess = (response: any) => {
+    const updateChatSuccess = (response: Message) => {
       dispatch(updateChat(response));
       setMessage('');
     };
+
     socket.on('get-message', updateChatSuccess);
-    console.log('in useEffect');
 
     return () => {
       socket.off('get-message', updateChatSuccess);
     };
-  });
-
-  console.log('chat', chat);
+  }, [chat]);
 
   const handleOnSendMessage = () => {
-    console.log('message', message);
-    console.log('Send message and update chat');
     if (message !== '') {
       const payload = {
         room,

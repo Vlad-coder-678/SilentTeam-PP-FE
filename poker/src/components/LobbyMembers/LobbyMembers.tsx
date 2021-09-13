@@ -13,11 +13,15 @@ const LobbyMembers: FC<Props> = ({ users }) => (
   <div>
     <TitleSection title={'Members:'} />
     <div className={styled.lobbyPage_section}>
-      {users
-        .filter((u, i) => i !== 0)
-        .map((user: userProps) => (
-          <CardUser key={user.name} name={user.name} surname={user.surname} jobPosition={user.jobPosition} />
-        ))}
+      {users.map((user: userProps) => (
+        <CardUser
+          key={user.name}
+          name={user.name}
+          surname={user.surname}
+          jobPosition={user.jobPosition}
+          role={user.role}
+        />
+      ))}
     </div>
   </div>
 );

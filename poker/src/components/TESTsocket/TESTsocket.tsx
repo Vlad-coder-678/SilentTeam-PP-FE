@@ -14,7 +14,7 @@ const TESTsocket: FC = () => {
       firstName: 'User firstName1',
       lastName: 'User lastName1',
       job: 'User job1',
-      role: 'User role1',
+      role: 'user',
     };
     const room = '123456789';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
