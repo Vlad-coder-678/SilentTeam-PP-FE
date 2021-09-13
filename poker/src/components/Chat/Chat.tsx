@@ -18,17 +18,7 @@ const Chat: FC = () => {
   return (
     <div className={styles.Chat_wrap}>
       <div className={styles.Chat_cards}>
-        {chat.length > 0 &&
-          chat.map((item, index) => (
-            <ChatCard
-              key={item.userId + index}
-              userId={item.userId}
-              firstName={item.firstName}
-              lastName={item.lastName}
-              role={item.role}
-              message={item.message}
-            />
-          ))}
+        {chat.length > 0 && chat.map((item, index) => <ChatCard key={item.userId + index} messageCard={item} />)}
         <div ref={lastMessageRef}></div>
       </div>
       <div className={styles.Chat_input}>
