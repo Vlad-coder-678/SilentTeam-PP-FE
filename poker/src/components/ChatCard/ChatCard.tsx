@@ -12,7 +12,7 @@ const ChatCard: FC<Props> = ({ messageCard }) => {
   const { type } = messageCard;
 
   return (
-    {type === KICK ? <KickChatCard messageCard={messageCard} /> : <MessageChatCard messageCard={messageCard} />}
+   <>{type === KICK ? <KickChatCard messageCard={messageCard} /> : <MessageChatCard messageCard={messageCard} />}</>
   );
 };
 
