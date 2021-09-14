@@ -1,9 +1,9 @@
+$base-dark: #000000;
 $base-dark-blue: #2b3a67;
 $base-cornflower-blue: #496b83;
 $base-cadet-blue: #66999b;
 $base-azure: #b3af8f;
 $base-antique: #ffc482;
-$base-dark: #000000;
 $base-checkbox-uncheked: #c4c4c4;
 $blue-light: #d9f1f8;
 $gray-light: #f6f6f6;
@@ -47,56 +47,4 @@ $font-weight: 600;
   border-radius: 3px;
   box-sizing: border-box;
   box-shadow: 0 4px 4px $shadow-one-quarter;
-}
-
-@mixin buttonCommon {
-  min-width: 240px;
-  padding: 0 10px;
-  font-family: 'Ruda', sans-serif;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-  font-weight: bold;
-  border: 1px solid $base-cornflower-blue;
-  border-radius: 2px;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    min-width: 200px;
-    font-size: 1rem;
-    line-height: 2rem;
-  }
-}
-
-@mixin buttonBlue {
-  @include buttonCommon;
-  color: $red-light;
-  background-color: $base-dark-blue;
-  &:hover {
-    color: $base-dark-blue;
-    background-color: $red-light;
-    text-shadow: 0 4px 4px $shadow-one-quarter;
-    transition: all 0.3s ease-in-out;
-  }
-  :active {
-    filter: opacity(0.8);
-    text-shadow: 0 4px 4px $shadow-one-quarter;
-    transition: all 0.3s ease-in-out;
-  }
-}
-
-@mixin buttonWhite {
-  @include buttonCommon;
-  color: $base-dark-blue;
-  background-color: $red-light;
-  text-shadow: 0 4px 4px $shadow-one-quarter;
-  &:hover {
-    color: $red-light;
-    background-color: $base-dark-blue;
-    text-shadow: none;
-    transition: all 0.3s ease-in-out;
-  }
-  &:active {
-    filter: opacity(0.8);
-    transition: all 0.3s ease-in-out;
-  }
 }
