@@ -15,9 +15,9 @@ const LobbyMembers: FC<Props> = ({ users }) => (
     <div className={styles.lobbyPage_section}>
       {users.map((user: userProps) => (
         <CardUser
-          key={user.name}
-          name={user.name}
-          surname={user.surname}
+          key={user.firstName}
+          firstName={user.firstName}
+          lastName={user.lastName}
           jobPosition={user.jobPosition}
           role={user.role}
         />

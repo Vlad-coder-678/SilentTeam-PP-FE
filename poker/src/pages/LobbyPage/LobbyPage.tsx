@@ -32,7 +32,12 @@ const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => {
           <p>Scram master:</p>
         </div>
         <div className={styles.lobbyPage_section}>
-          <CardUser name={admin.name} surname={admin.surname} jobPosition={admin.jobPosition} role={admin.role} />
+          <CardUser
+            firstName={admin.firstName}
+            lastName={admin.lastName}
+            jobPosition={admin.jobPosition}
+            role={admin.role}
+          />
         </div>
         <LobbyScramButtons link={link} />
         <LobbyMembers users={users} />
