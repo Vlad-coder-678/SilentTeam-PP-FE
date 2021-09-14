@@ -17,30 +17,16 @@
     }
   },
   "rules": {
-    // переменная используется перед объявлением. must disable the base rule as it can report incorrect errors.
     "no-use-before-define": "off",
-    // с предъидущим идут вместе. отключается для файлов js, jsx. включается для ts, tsx, чтобы не вызвало непредвиденных ошибок
     "@typescript-eslint/no-use-before-define": ["error"],
-    // затемнение - когда две переменные имеют одно и то же имя в разных зонах видимости. это устаревшее правило
     "no-shadow": "off",
-    // расширение правила "no-shadow", при этом его необходимо отключить
     "@typescript-eslint/no-shadow": ["error"],
-    // запятые в конце объектных литералов
     "comma-dangle": "off",
-    // расширяет базовое comma-dangle. Добавляет поддержку синтаксиса TypeScript.
     "@typescript-eslint/comma-dangle": "off",
-    // требует явного возврата и типов аргументов в методах экспортируемых функций и классов
     "@typescript-eslint/explicit-module-boundary-types": ["error"],
-    // требование явного возврата типов для функций и методов, при смешанном использовании её переодпределяют
     "@typescript-eslint/explicit-function-return-type": "off",
-    // требует фигурные скобки в логических блоках(if, while, for & ot.) ["all", "multi", "multi-line", "multi-or-nest", "consistent"]
     "curly": ["warn", "multi"],
-    // если тело функции не размещено в фигурных скобках, (т.е. нет явного возврата)
-    // то implicit-arrow-linebreak требует правильного распложения тела функции переноса или написаня в одну строку ["beside", "below"]
     "implicit-arrow-linebreak": ["warn", "beside"],
-    // import/extensions может предписывать или запрещать использование расширений файлов,
-    // чтобы обеспечить единообразное использование расширений файлов во всей базе кода.
-    // [<severity>, "never" | "always" | "ignorePackages"]
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -49,58 +35,29 @@
         "tsx": "never"
       }
     ],
-    // гарантирует, что нет пути к этому модулю через его зависимости,
-    // т.е. что модуль 1 не импортирует модуль 2, который импортирует модуль 1, чтобы создать цикл
     "import/no-cycle": "error",
-    // запрещает модулю импортировать самого себя, если вдруг такое случается во время рефакторинга
     "import/no-self-import": "error",
-    // гарантирует что импортируемый модуль может быть преобразован в модуль в локальной файловой системе
     "import/no-unresolved": "error",
-    // предпочтение к экспорту по умолчанию. если в файле один экспорт, то он обязательно должен быть дуфолтным
     "import/prefer-default-export": "error",
-    // требует определенного отступа вложенных блоков и операторов. Оч много правил. см.https://eslint.org/docs/rules/indent
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
-    // Принудительно onClick сопровождается по меньшей мере одно из следующих: onKeyUp, onKeyDown, onKeyPress
     "jsx-a11y/click-events-have-key-events": "off",
-    // linebreak-style обеспечивает согласованные окончания строк независимо от OC или редактора. ["unix", "windows"]
     "linebreak-style": ["error", "windows"],
-    // устанавливает максимальную длину строки для повышения читабельности кода
     "max-len": ["warn", { "code": 120 }],
-    // обеспечивает для операторов единый стиль переноса строки. ["after", "before", "none"]
     "operator-linebreak": ["error", "before"],
-    // no-console запрещает вызовы методов consoleобъекта
     "no-console": "warn",
-    // направлено на предотвращение непреднамеренного поведения, вызванного изменением или переназначением параметров функции
     "no-param-reassign": ["error", { "props": false }],
-    // требует чтобы хуки вызывались только из функциональной компоненты или из пользовательского хука
-    // и только в одном и том же порядке при каждом рендере
     "react-hooks/rules-of-hooks": "error",
-    // проверяет зависимости useEffect.
     "react-hooks/exhaustive-deps": "warn",
-    // button по умолчанию type "submit", часто это нежелательное поведение, которое может привести к перезагрузке страницы. "button", "submit", "reset".
-    // выдаёт некорректные ошибки
     "react/button-has-type": "off",
-    // обеспечивает согласованные разрывы строк внутри фигурных выражений jsx. "consistent", "forbid", "require"
-    // выдаёт некорректные ошибки
     "react/jsx-curly-newline": [0, { "multiline": "consistent", "singleline": "consistent" }],
-    // файлы типов, которые могут содержать разметку jsx. выдаёт некорректные ошибки
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-    // react/jsx-one-expression-per-line ограничивает каждую строку одним выражением JSX
     "react/jsx-one-expression-per-line": "off",
-    // проверка типов для реакт prop-types. в данном проекте используем typescript
     "react/prop-types": "off",
-    // требует последовательного использования точки с запятой в конце строк js кода
     "semi": ["error", "always"],
-    // запрещает использования continue в циклах
     "no-continue": "error",
-    // запрещает унарные операторы ++ и --, allowForLoopAfterthoughts - кроме цикла for
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    // запрещает нижние подчёркивания в идентификаторах. allow, кроме
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-    //  направлено на обеспечение постоянного расположения однострочных операторов. "beside", "below", "any"
     "nonblock-statement-body-position": ["error", "beside"],
-    // требует или запрещает разрыв строки между { и последующим токеном, а также между } и предыдущим токеном объектных литералов "always", "never"
-    // настройка не удалась.
     "object-curly-newline": [
       0,
       {
@@ -115,11 +72,9 @@
     "browser": true,
     "node": true
   },
-  //
   "plugins": ["@typescript-eslint", "react-hooks"],
   "overrides": [
     {
-      // включить правило специально для файлов TypeScript
       "files": ["*.ts", "*.tsx"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": ["warn"]
