@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import st from './Logo.module.scss';
+import styles from './Logo.module.scss';
 
 const Logo: FC = () => (
-  <div className={st.Logo_bg}>
-    <div className={st.Logo_upP}>P</div>
-    <div className={st.Logo_downP}>P</div>
+  <div className={styles.Logo_bg}>
+    <div className={styles.Logo_upP}>P</div>
+    <div className={styles.Logo_downP}>P</div>
   </div>
 );
 

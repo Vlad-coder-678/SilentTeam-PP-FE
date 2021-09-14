@@ -17,24 +17,16 @@
     }
   },
   "rules": {
-    // переменная используется перед объявлением. must disable the base rule as it can report incorrect errors.
     "no-use-before-define": "off",
-    // с предъидущим идут вместе. отключается для файлов js, jsx. включается для ts, tsx, чтобы не вызвало непредвиденных ошибок
     "@typescript-eslint/no-use-before-define": ["error"],
-    // затемнение - когда две переменные имеют одно и то же имя в разных зонах видимости. это устаревшее правило
     "no-shadow": "off",
-    // расширение правила "no-shadow", при этом его необходимо отключить
     "@typescript-eslint/no-shadow": ["error"],
-    // запятые в конце списков(объектных литералов)
     "comma-dangle": "off",
-    // расширяет базовое comma-dangle. Добавляет поддержку синтаксиса TypeScript.
     "@typescript-eslint/comma-dangle": "off",
     "@typescript-eslint/explicit-module-boundary-types": ["error"],
-    // требование явного возврата типов для функций и методов, при смешанном использовании её переодпределяют
     "@typescript-eslint/explicit-function-return-type": "off",
-    "curly": "off",
-    "implicit-arrow-linebreak": "off",
-    //
+    "curly": ["warn", "multi"],
+    "implicit-arrow-linebreak": ["warn", "beside"],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -43,44 +35,46 @@
         "tsx": "never"
       }
     ],
-    "import/no-cycle": "off",
-    "import/no-unresolved": "off",
-    // предпостение к экспорту по умолчанию. можно проигнорить
-    "import/prefer-default-export": "off",
+    "import/no-cycle": "error",
+    "import/no-self-import": "error",
+    "import/no-unresolved": "error",
+    "import/prefer-default-export": "error",
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
-    "jsx-a11y/click-events-have-key-events": 0,
-    "linebreak-style": 0,
-    //
+    "jsx-a11y/click-events-have-key-events": "off",
+    "linebreak-style": ["error", "windows"],
     "max-len": ["warn", { "code": 120 }],
-    "operator-linebreak": "off",
-    "no-console": 0,
+    "operator-linebreak": ["error", "before"],
+    "no-console": "warn",
     "no-param-reassign": ["error", { "props": false }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/button-has-type": "off",
-    "react/jsx-curly-newline": "off",
-    // файлы типов, которые могут содержать разметку jsx, по умолчанию jsx. почему то не работает
-    // "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-    "react/jsx-filename-extension": "off",
+    "react/jsx-curly-newline": [0, { "multiline": "consistent", "singleline": "consistent" }],
+    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/jsx-one-expression-per-line": "off",
-    // проверка типов для реакт prop-types. в данном проекте используем typescript
     "react/prop-types": "off",
     "semi": ["error", "always"],
-    "no-continue": "off",
-    "no-plusplus": "off",
+    "no-continue": "error",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-    "nonblock-statement-body-position": "off",
-    "object-curly-newline": "off"
+    "nonblock-statement-body-position": ["error", "beside"],
+    "object-curly-newline": [
+      0,
+      {
+        "ObjectExpression": { "multiline": true },
+        "ObjectPattern": "always",
+        "ImportDeclaration": "never",
+        "ExportDeclaration": "always"
+      }
+    ]
   },
   "env": {
     "browser": true,
     "node": true
   },
-  //
   "plugins": ["@typescript-eslint", "react-hooks"],
   "overrides": [
     {
-      // включить правило специально для файлов TypeScript
       "files": ["*.ts", "*.tsx"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": ["warn"]

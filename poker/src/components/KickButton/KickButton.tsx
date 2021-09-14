@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import kickIcon from '../../assets/images/kick.svg';
+
+import kickIcon from '../../assets/images/svg/kick.svg';
 import { setIsModalCallFromServer, setIsModalOpen } from '../../redux/slices/kickSlice';
 import { SIZES } from '../../types/common';
 
@@ -13,7 +14,7 @@ interface Props {
 const KickButton: FC<Props> = ({ size }) => {
   const dispatch = useDispatch();
 
-  const handleOnKickUser = ():void => {
+  const handleOnKickUser = (): void => {
     dispatch(setIsModalOpen(true));
     dispatch(setIsModalCallFromServer(false));
   };

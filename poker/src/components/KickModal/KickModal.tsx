@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import GeneralButton from '../GeneralButton/GeneralButton';
+import GeneralButton from '../GeneralButton/GeneralButton';
 import { isModalCallFromServerSlice, setIsModalOpen } from '../../redux/slices/kickSlice';
 import { SocketContext } from '../../socketContext';
 import { KICKED_MESSAGES, ROLES } from '../../types/common';
@@ -72,14 +72,8 @@ const KickModal: FC = () => {
           </p>
         )}
         <div className={styles.buttons}>
-          <button className={styles.yes} onClick={handleClickConfirm}>
-            Yes
-          </button>
-          <button className={styles.no} onClick={handleClickCancel}>
-            No
-          </button>
-          {/* <GeneralButton type="button" label={'Yes'} onClick={handleClickConfirm} primaryBG />
-          <GeneralButton type="button" label={'No'} onClick={handleClickCancel} /> */}
+          <GeneralButton type="button" label={'Yes'} onClick={handleClickConfirm} primaryBG />
+          <GeneralButton type="button" label={'No'} onClick={handleClickCancel} />
         </div>
       </div>
     </div>
