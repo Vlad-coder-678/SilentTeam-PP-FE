@@ -7,9 +7,9 @@ function Counter(): JSX.Element {
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
-  const handleIncrement = (): { payload: undefined; type: string } => dispatch(increment());
+  const handleIncrement = (): { type: string } => dispatch(increment());
 
-  const handleDicrement = (): { payload: undefined; type: string } => dispatch(decrement());
+  const handleDicrement = (): { type: string } => dispatch(decrement());
 
   const handleIncrementAmount = (): void => {
     dispatch(incrementByAmount(Number(incrementAmount) || 0));

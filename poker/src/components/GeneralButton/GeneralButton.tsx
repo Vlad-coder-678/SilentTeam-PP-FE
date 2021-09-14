@@ -1,5 +1,5 @@
 import React, { FC, MouseEvent } from 'react';
-import b from './GeneralButton.module.scss';
+import styles from './GeneralButton.module.scss';
 
 interface Props {
   label: string;
@@ -9,7 +9,11 @@ interface Props {
 }
 
 const GeneralButton: FC<Props> = ({ label, type, onClick, primaryBG }) => (
-  <button type={type} onClick={onClick} className={primaryBG ? b.GeneralButton_blue : b.GeneralButton_white}>
+  <button
+    type={type}
+    onClick={onClick}
+    className={primaryBG ? styles.GeneralButton_primary : styles.GeneralButton_secondary}
+  >
     {label}
   </button>
 );

@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import cards from '../../assets/images/cards.png';
-import m from './MainPageTitle.module.scss';
+import cards from '../../assets/images/png/cards.png';
+import styles from './MainPageTitle.module.scss';
 
 const MainPageTitle: FC = () => (
-  <div className={m.main_page_title_wrap}>
-    <div className={m.main_page_title_left}>
+  <div className={styles.main_page_title_wrap}>
+    <div className={styles.main_page_title_left}>
       <img src={cards} alt={'pocker planning'} />
     </div>
-    <div className={m.main_page_title_right}>
+    <div className={styles.main_page_title_right}>
       <h2>Poker</h2>
       <h2>Planning</h2>
     </div>

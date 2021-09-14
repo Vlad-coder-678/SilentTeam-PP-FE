@@ -9,7 +9,7 @@ export const admin = {
 };
 
 const mockRoom = {
-  roomId: 2,
+  roomId: '2',
   users: [
     // { userId: '2', name: 'David', surname: 'Blain', jobPosition: 'Designer', role: ROLES.USER },
     // { userId: '3', name: 'Teodor', surname: 'Ferdyshcenko', jobPosition: 'Clicker', role: ROLES.OBSERVER },
@@ -40,7 +40,7 @@ const mockRoom = {
       role: ROLES.OBSERVER,
     },
   ],
-  issues: [{ issueId: 1 }, { issueId: 2 }, { issueId: 3 }],
+  issues: [{ issueId: '1' }, { issueId: '2' }, { issueId: '3' }],
   cards: [{ value: 'coffetime' }, { value: 0 }, { value: 1 }, { value: 5 }, { value: 10 }, { value: 20 }],
 };
 

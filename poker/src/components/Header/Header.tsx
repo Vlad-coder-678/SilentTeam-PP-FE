@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import Logo from '../Logo/Logo';
-import addMessageIcon from '../../assets/images/add_message.svg';
+import addMessageIcon from '../../assets/images/svg/add_message.svg';
 
-import h from './Header.module.scss';
+import styles from './Header.module.scss';
 
 const Header: FC = () => {
   const handlerOnToggleChat = (): void => {
@@ -10,12 +10,12 @@ const Header: FC = () => {
   };
 
   return (
-    <div className={h.Header_wrapper}>
-      <div className={h.Header_topLine}>
-        <img className={h.icon} src={addMessageIcon} alt="add message" onClick={handlerOnToggleChat} />
+    <div className={styles.Header_wrapper}>
+      <div className={styles.Header_topLine}>
+        <img className={styles.icon} src={addMessageIcon} alt="add message" onClick={handlerOnToggleChat} />
       </div>
-      <div className={h.Header_bottomLine}>
-        <div className={h.Header_logoWrap}>
+      <div className={styles.Header_bottomLine}>
+        <div className={styles.Header_logoWrap}>
           <Logo />
         </div>
       </div>

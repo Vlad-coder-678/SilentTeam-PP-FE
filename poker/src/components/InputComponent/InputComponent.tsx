@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from 'react';
-import i from './InputComponent.module.scss';
+import styles from './InputComponent.module.scss';
 
 interface Props {
   name?: string;
@@ -8,12 +8,7 @@ interface Props {
 }
 
 const InputComponent: FC<Props> = ({ onChange, name, value }) => (
-  <input
-    name={name}
-    value={value}
-    onChange={onChange}
-    className={i.InputComponent}
-  />
+  <input name={name} value={value} onChange={onChange} className={styles.InputComponent} />
 );
 
 export default InputComponent;
