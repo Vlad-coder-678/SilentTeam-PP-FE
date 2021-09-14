@@ -72,24 +72,44 @@
     "no-console": "warn",
     // направлено на предотвращение непреднамеренного поведения, вызванного изменением или переназначением параметров функции
     "no-param-reassign": ["error", { "props": false }],
-    // 
+    // требует чтобы хуки вызывались только из функциональной компоненты или из пользовательского хука
+    // и только в одном и том же порядке при каждом рендере
     "react-hooks/rules-of-hooks": "error",
+    // проверяет зависимости useEffect.
     "react-hooks/exhaustive-deps": "warn",
-    // 
+    // button по умолчанию type "submit", часто это нежелательное поведение, которое может привести к перезагрузке страницы. "button", "submit", "reset".
+    // выдаёт некорректные ошибки
     "react/button-has-type": "off",
-    "react/jsx-curly-newline": "off",
-    // файлы типов, которые могут содержать разметку jsx, по умолчанию jsx. почему то не работает
-    // "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-    "react/jsx-filename-extension": "off",
+    // обеспечивает согласованные разрывы строк внутри фигурных выражений jsx. "consistent", "forbid", "require"
+    // выдаёт некорректные ошибки
+    "react/jsx-curly-newline": [0, { "multiline": "consistent", "singleline": "consistent" }],
+    // файлы типов, которые могут содержать разметку jsx. выдаёт некорректные ошибки
+    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    // react/jsx-one-expression-per-line ограничивает каждую строку одним выражением JSX
     "react/jsx-one-expression-per-line": "off",
     // проверка типов для реакт prop-types. в данном проекте используем typescript
     "react/prop-types": "off",
+    // требует последовательного использования точки с запятой в конце строк js кода
     "semi": ["error", "always"],
-    "no-continue": "off",
-    "no-plusplus": "off",
+    // запрещает использования continue в циклах
+    "no-continue": "error",
+    // запрещает унарные операторы ++ и --, allowForLoopAfterthoughts - кроме цикла for
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    // запрещает нижние подчёркивания в идентификаторах. allow, кроме
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-    "nonblock-statement-body-position": "off",
-    "object-curly-newline": "off"
+    //  направлено на обеспечение постоянного расположения однострочных операторов. "beside", "below", "any"
+    "nonblock-statement-body-position": ["error", "beside"],
+    // требует или запрещает разрыв строки между { и последующим токеном, а также между } и предыдущим токеном объектных литералов "always", "never"
+    // настройка не удалась.
+    "object-curly-newline": [
+      0,
+      {
+        "ObjectExpression": { "multiline": true },
+        "ObjectPattern": "always",
+        "ImportDeclaration": "never",
+        "ExportDeclaration": "always"
+      }
+    ]
   },
   "env": {
     "browser": true,

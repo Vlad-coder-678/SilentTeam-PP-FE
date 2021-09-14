@@ -1,6 +1,12 @@
 import { ROLES } from '../types/common';
 
-export const admin = { userId: '1', name: 'Stephan', surname: 'Nazarenko', jobPosition: 'SmartBoy', role: ROLES.ADMIN };
+export const admin = {
+  userId: '1',
+  name: 'Stephan',
+  surname: 'Nazarenko',
+  jobPosition: 'SmartBoy',
+  role: ROLES.ADMIN,
+};
 
 const mockRoom = {
   roomId: 2,

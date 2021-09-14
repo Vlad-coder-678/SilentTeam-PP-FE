@@ -14,13 +14,13 @@ const LobbyScramButtons: FC<Props> = ({ link }) => (
       <h3>Link to lobby:</h3>
       <div className={styled.lobbyPage_location}>
         <p>{link}asdklasjdkjskdjkl</p>
-        <GeneralButton label={'Copy'} primaryBG />
+        <GeneralButton type="button" label={'Copy'} primaryBG />
       </div>
     </div>
 
     <div className={styled.lobbyPage_section_button}>
-      <GeneralButton label={'Start Game'} primaryBG />
-      <GeneralButton label={'Cancel Game'} />
+      <GeneralButton type="button" label={'Start Game'} primaryBG />
+      <GeneralButton type="button" label={'Cancel Game'} />
     </div>
   </div>
 );

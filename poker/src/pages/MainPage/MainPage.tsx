@@ -14,12 +14,10 @@ const MainPage: FC = () => {
 
   const handleCreateNewGame = (): void => {
     setIsVisible(true);
-    console.log('start new game');
   };
 
   const handleConnectToGame = (): void => {
     setIsVisible(true);
-    console.log('connect');
   };
 
   const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -33,7 +31,7 @@ const MainPage: FC = () => {
       <h3>Start your planning:</h3>
       <div className={m.MainPage_item}>
         <label>Create session:</label>
-        <GeneralButton label={'Create new game'} onClick={handleCreateNewGame} primaryBG />
+        <GeneralButton type="button" label={'Create new game'} onClick={handleCreateNewGame} primaryBG />
       </div>
       <h3>OR:</h3>
       <label>
@@ -41,7 +39,7 @@ const MainPage: FC = () => {
       </label>
       <div className={m.MainPage_item}>
         <InputComponent onChange={handleEnterUrlGame} />
-        <GeneralButton label={'Connect'} onClick={handleConnectToGame} primaryBG />
+        <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
       {isVisible && <ConnectToLobby setIsVisible={setIsVisible} />}
     </div>

@@ -9,7 +9,6 @@ const TESTsocket: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const handleOnClick = (): void => {
-    console.log('in handleOnClick');
     const user = {
       firstName: 'User firstName1',
       lastName: 'User lastName1',
@@ -22,7 +21,11 @@ const TESTsocket: FC = () => {
     });
   };
 
-  return <button onClick={handleOnClick}>Confirm</button>;
+  return (
+    <button type="button" onClick={handleOnClick}>
+      Confirm
+    </button>
+  );
 };
 
 export default TESTsocket;
