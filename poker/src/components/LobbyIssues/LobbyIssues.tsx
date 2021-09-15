@@ -1,22 +1,32 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
 import TitleSection from '../TitleSection/TitleSection';
 import CardIssue from '../CardIssue/CardIssue';
+import { selectIssues } from '../../redux/slices/issuesSlice';
 
 import styles from './LobbyIssues.module.scss';
 
-interface Props {
-  issues?: { issueId: string }[];
-}
+const LobbyIssues: FC = () => {
+  const issues = useSelector(selectIssues);
+  const len = issues.length;
+  const newIssue = {
+    id: len > 0 ? (Number(issues[len - 1].id) + 1).toString() : '0',
+    number: '',
+    desc: '',
+  };
 
-const LobbyIssues: FC<Props> = ({ issues }) => (
-  <div>
-    <TitleSection title={'Issues:'} />
-    <div className={styles.lobbyPage_section}>
-      {issues && issues.map((issue) => <CardIssue key={issue.issueId} issueId={issue.issueId} />)}
-      <CardIssue isNew />
+  console.log(issues);
+
+  return (
+    <div>
+      <TitleSection title={'Issues:'} />
+      <div className={styles.lobbyPage_section}>
+        {len > 0 && issues.map((issue) => <CardIssue key={issue.id} issue={issue} />)}
+        <CardIssue issue={newIssue} isNew />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LobbyIssues;

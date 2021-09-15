@@ -28,3 +28,14 @@ export interface SocketError {
   error: string;
   eventName: string;
 }
+
+export interface Issue {
+  id?: string;
+  number?: string;
+  desc?: string;
+}
+
+export interface GameCard {
+  gameCardId: string;
+  gameCardValue: string;
+}
