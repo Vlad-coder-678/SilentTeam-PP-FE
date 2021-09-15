@@ -1,7 +1,13 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react';
+import { Socket } from 'socket.io-client/build/socket';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
+import { Redirect, useHistory } from 'react-router-dom';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
+import { ROLES } from '../../types/common';
+
+import { SocketContext } from '../../socketContext';
 
 import styles from './ConnectToLobby.module.scss';
 
@@ -13,9 +19,13 @@ interface FormState {
 
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  role: ROLES;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
+const ConnectToLobby: FC<Props> = ({ setIsVisible, role }) => {
+  const history = useHistory();
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
   const [error, setError] = useState<FormState>({
     firstName: '',
     lastName: '',
@@ -27,7 +37,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
     lastName: '',
     jobPosition: '',
   });
-  // const [observer, setObserver] = useState<boolean>(false);
+  const [observer, setObserver] = useState<boolean>(false);
   // const [image, setImage] = useState<string>('');
 
   useEffect(() => {
@@ -47,6 +57,18 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
   };
 
   const handleClickConfirm = (): void => {
+    const { firstName, lastName, jobPosition } = personalData;
+    const room = socket.id;
+
+    const payload = {
+      firstName,
+      lastName,
+      jobPosition,
+      role: observer ? ROLES.OBSERVER : role,
+      room,
+    };
+    socket.emit('login', payload);
+    history.push('/lobby');
     setIsVisible(false);
   };
 
@@ -76,8 +98,8 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             </label>
             <Checkbox
               name="observer"
-              // value={observer}
-              // onChange={() => setObserver((prev) => !prev)}
+              value={observer}
+              onChange={() => setObserver((prev) => !prev)}
             />
           </div>
         </div>

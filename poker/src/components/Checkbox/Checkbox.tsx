@@ -3,7 +3,7 @@ import styles from './Checkbox.module.scss';
 
 interface Props {
   name: string;
-  value?: string;
+  value?: boolean;
   onChange?: () => void;
 }
 
@@ -13,7 +13,7 @@ const Checkbox: React.FC<Props> = ({ name, value, onChange }) => (
       type="checkbox"
       className={styles.Checkbox}
       name={name}
-      value={value}
+      checked={value}
       onChange={onChange}
     />
   </div>
