@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+
 import counterReducer from './counterSlice';
 import chatReducer from './slices/chatSlice';
 import kickReducer from './slices/kickSlice';
 import socketErrorReducer from './slices/socketErrorSlice';
 import issuesReducer from './slices/issuesSlice';
+import gameCardsReducer from './slices/gameCardsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,7 @@ export const store = configureStore({
     kick: kickReducer,
     socketError: socketErrorReducer,
     issues: issuesReducer,
+    gameCards: gameCardsReducer,
   },
 });
 

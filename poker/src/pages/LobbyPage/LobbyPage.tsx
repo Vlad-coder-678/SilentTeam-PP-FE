@@ -16,11 +16,10 @@ import styles from './LobbyPage.module.scss';
 
 interface Props {
   users: userProps[];
-  cards?: { value: string | number }[];
   link: string;
 }
 
-const LobbyPage: FC<Props> = ({ users, link, cards }) => {
+const LobbyPage: FC<Props> = ({ users, link }) => {
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
   return (
@@ -41,7 +40,7 @@ const LobbyPage: FC<Props> = ({ users, link, cards }) => {
         <LobbyScramButtons link={link} />
         <LobbyMembers users={users} />
         <LobbyIssues />
-        <LobbySetting cards={cards} />
+        <LobbySetting />
       </div>
       <Chat />
       {isKickModalOpen && <KickModal />}

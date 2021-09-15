@@ -1,17 +1,21 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
 import TitleSection from '../TitleSection/TitleSection';
 import Checkbox from '../Checkbox/Checkbox';
 import InputComponent from '../InputComponent/InputComponent';
-import CardGame from '../CardGame/CardGame';
+import CardGameLobby from '../CardGameLobby/CardGameLobby';
+import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 
 import styles from './LobbySetting.module.scss';
 
-interface Props {
-  cards?: { value: string | number }[];
-}
+const LobbySetting: FC = () => {
+  const cards = useSelector(selectGameCards);
+  const newCard = {
+    id: (Number(cards[cards.length - 1].id) + 1).toString(),
+    value: (Number(cards[cards.length - 1].value) * 2).toString(),
+  };
 
-const LobbySetting: FC<Props> = ({ cards }) => {
   const handleChangeMasterOrPlayer = (): void => {
     console.log('master or player');
   };
@@ -67,8 +71,8 @@ const LobbySetting: FC<Props> = ({ cards }) => {
         <p>Add card values:</p>
       </div>
       <div className={styles.lobbyPage_setting_cards}>
-        {cards && cards.map((card) => <CardGame key={card.value} value={card.value} isConfig />)}
-        <CardGame isNew />
+        {cards.length > 0 && cards.map((card) => <CardGameLobby key={card.id} card={card} />)}
+        <CardGameLobby card={newCard} isNew />
       </div>
     </div>
   );

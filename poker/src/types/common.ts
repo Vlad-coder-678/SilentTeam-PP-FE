@@ -35,7 +35,7 @@ export interface Issue {
   desc?: string;
 }
 
-export interface GameCard {
-  gameCardId: string;
-  gameCardValue: string;
+export interface CardGame {
+  id: string;
+  value: string;
 }
