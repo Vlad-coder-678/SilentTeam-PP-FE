@@ -8,21 +8,24 @@ import { SocketContext } from '../../socketContext';
 const TESTsocket: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
-  const handleOnClick = () => {
-    console.log('in handleOnClick');
+  const handleOnClick = (): void => {
     const user = {
       firstName: 'User firstName1',
       lastName: 'User lastName1',
       job: 'User job1',
-      role: 'User role1',
+      role: 'user',
     };
     const room = '123456789';
-    socket.emit('login', { user, room }, (response: any) => {
+    socket.emit('login', { user, room }, (response: unknown) => {
       console.log(response);
     });
   };
 
-  return <button onClick={handleOnClick}>Confirm</button>;
+  return (
+    <button type="button" onClick={handleOnClick}>
+      Confirm
+    </button>
+  );
 };
 
 export default TESTsocket;

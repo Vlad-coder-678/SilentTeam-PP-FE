@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from './store';
+import type { RootState, AppThunk } from './store';
 
 interface CounterState {
   value: number;
@@ -29,8 +29,7 @@ export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 // Async
 export function incrementAsync(amount: number): AppThunk {
-  // eslint-disable-next-line no-unused-expressions
-  (dispatch: (arg0: { payload: number; type: string }) => void) => {
+  return (dispatch: (arg0: { payload: number; type: string }) => void): void => {
     setTimeout(() => {
       dispatch(incrementByAmount(amount));
     }, 1000);

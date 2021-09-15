@@ -1,0 +1,21 @@
+@import '../../styles/common.scss';
+
+.lobbyPage_wrap {
+  display: flex;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.lobbyPage_container {
+  max-width: 1000px;
+  flex-basis: 75%;
+  box-shadow: 0 4px 4px 0 $shadow-one-quarter;
+  padding: 20px;
+}
+
+.lobbyPage_section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

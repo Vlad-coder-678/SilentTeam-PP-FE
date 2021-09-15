@@ -1,0 +1,21 @@
+.Chat_wrap {
+  position: relative;
+  width: 300px;
+  height: 90vh;
+}
+
+.Chat_input {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+}
+
+.Chat_cards {
+  margin-top: 10px;
+  max-height: 83%;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}

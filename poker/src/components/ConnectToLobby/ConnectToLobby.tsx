@@ -1,11 +1,4 @@
-import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
-
-import { Socket } from 'socket.io-client/build/socket';
-import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-
-import { SocketContext } from '../../socketContext';
-
+import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
@@ -20,76 +13,58 @@ interface FormState {
 
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  role: string;
-  url: string;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
   const [error, setError] = useState<FormState>({
     firstName: '',
     lastName: '',
     jobPosition: '',
   });
-  const [persanalData, setPersanalData] = useState<FormState>({
+
+  const [personalData, setPersonalData] = useState<FormState>({
     firstName: '',
     lastName: '',
     jobPosition: '',
   });
-  const [observer, setObserver] = useState<boolean>(false);
+  // const [observer, setObserver] = useState<boolean>(false);
   // const [image, setImage] = useState<string>('');
 
   useEffect(() => {
-    validate();
-  }, [persanalData]);
-
-  const validate = () => {
-    const { firstName } = persanalData;
-    if (firstName === '') {
+    if (personalData.firstName === '') {
+      const { firstName } = personalData;
       setError((state) => ({ ...state, firstName }));
     }
-  };
+  }, [personalData]);
 
-  const handelSubmit = () => {
+  const handelSubmit = (): void => {
     console.log('send form');
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
-    setPersanalData((prevState) => ({ ...prevState, [name]: value }));
+    setPersonalData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleClickConfirm = async (event: FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    console.log(url);
-    const room = '1';
-    const { firstName, lastName, jobPosition } = persanalData;
-    const response = await axios.post('http://localhost:3000/api/users', {
-      firstName,
-      lastName,
-      jobPosition,
-      role,
-      room,
-      observer
-    });
-    console.log(response);
+  const handleClickConfirm = (): void => {
+    setIsVisible(false);
   };
 
-  const handleClickCancel = () => {
+  const handleClickCancel = (): void => {
     setIsVisible(false);
   };
 
   return (
     <div
       className={styles.Form_wrap}
-      onClick={() => {
+      onClick={(): void => {
         setIsVisible(false);
       }}
     >
       <form
         className={styles.Form}
         onSubmit={handelSubmit}
-        onClick={(e) => {
+        onClick={(e): void => {
           e.stopPropagation();
         }}
       >
@@ -110,27 +85,13 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
         <div className={styles.Form_body}>
           <label htmlFor={'firstName'}>
             Your First Name:
-            {error?.firstName && (
-              <span className={styles.Form_error}> Should be fill</span>
-            )}
+            {error?.firstName && <span className={styles.Form_error}> Should be fill</span>}
           </label>
-          <InputComponent
-            value={persanalData.firstName}
-            name={'firstName'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.firstName} name={'firstName'} onChange={handleInputChange} />
           <label htmlFor={'lastName'}>Your Last Name:</label>
-          <InputComponent
-            value={persanalData.lastName}
-            name={'lastName'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.lastName} name={'lastName'} onChange={handleInputChange} />
           <label htmlFor={'jobPosition'}>Your job position:</label>
-          <InputComponent
-            value={persanalData.jobPosition}
-            name={'jobPosition'}
-            onChange={handleInputChange}
-          />
+          <InputComponent value={personalData.jobPosition} name={'jobPosition'} onChange={handleInputChange} />
           {/* <label htmlFor={image}>
             Image:
             <input className={styles.Button_blue} type="file" />
@@ -148,13 +109,8 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
         </div>
 
         <div className={styles.Form_footer}>
-          <GeneralButton
-            type="submit"
-            label={'Confirm'}
-            onClick={handleClickConfirm}
-            primaryBG
-          />
-          <GeneralButton label={'Cancel'} onClick={handleClickCancel} />
+          <GeneralButton type="submit" label={'Confirm'} onClick={handleClickConfirm} primaryBG />
+          <GeneralButton type="button" label={'Cancel'} onClick={handleClickCancel} />
         </div>
       </form>
     </div>
