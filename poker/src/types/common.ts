@@ -28,3 +28,11 @@ export interface SocketError {
   error: string;
   eventName: string;
 }
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  jobPosition: string;
+  role: ROLES;
+  room: string;
+}
