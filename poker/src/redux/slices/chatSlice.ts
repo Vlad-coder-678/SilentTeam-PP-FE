@@ -17,10 +17,13 @@ export const chatSlice = createSlice({
     updateChat: (state, action: PayloadAction<Message>) => {
       state.chat.push(action.payload);
     },
+    updateAllChat: (state, action: PayloadAction<Array<Message>>) => {
+      state.chat = action.payload;
+    },
   },
 });
 
-export const { updateChat } = chatSlice.actions;
+export const { updateChat, updateAllChat } = chatSlice.actions;
 
 export const chatMessagesSlice = (state: RootState): Array<Message> => state.chat.chat;
 
