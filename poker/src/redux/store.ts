@@ -3,7 +3,7 @@ import counterReducer from './counterSlice';
 import chatReducer from './slices/chatSlice';
 import kickReducer from './slices/kickSlice';
 import socketErrorReducer from './slices/socketErrorSlice';
-import userReducer from './slices/userReducer';
+import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {

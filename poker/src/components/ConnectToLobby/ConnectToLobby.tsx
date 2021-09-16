@@ -1,12 +1,13 @@
-import React, { FC, useState, useEffect, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, useState, useEffect, ChangeEvent, SyntheticEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client/build/socket';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
-import { ROLES } from '../../types/common';
+import { ROLES, User } from '../../types/common';
+import { updateUser } from '../../redux/slices/userSlice';
 
 import { SocketContext } from '../../socketContext';
 
@@ -21,11 +22,13 @@ interface FormState {
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   role: ROLES;
+  url?: string;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible, role }) => {
+const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
   const history = useHistory();
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const dispatch = useDispatch();
 
   const [error, setError] = useState<FormState>({
     firstName: '',
@@ -57,20 +60,22 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role }) => {
     setPersonalData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleClickConfirm = (): void => {
+  const handleClickConfirm = (e: SyntheticEvent): void => {
+    // e.preventDefault();
     const { firstName, lastName, jobPosition } = personalData;
-    const room = socket.id;
+    const room = url ?? socket.id;
 
-    const payload = {
+    const user:User = {
       firstName,
       lastName,
       jobPosition,
       role: observer ? ROLES.OBSERVER : role,
       room,
     };
-    socket.emit('login', payload);
+
+    dispatch(updateUser(user));
+    socket.emit('login', user);
     history.push('/lobby');
-    setIsVisible(false);
   };
 
   const handleClickCancel = (): void => {
@@ -86,7 +91,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role }) => {
     >
       <form
         className={styles.Form}
-        onSubmit={handelSubmit}
+        onSubmit={handleClickConfirm}
         onClick={(e): void => {
           e.stopPropagation();
         }}
@@ -132,7 +137,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role }) => {
         </div>
 
         <div className={styles.Form_footer}>
-          <GeneralButton type="submit" label={'Confirm'} onClick={handleClickConfirm} primaryBG />
+          <GeneralButton type="submit" label={'Confirm'} primaryBG />
           <GeneralButton type="button" label={'Cancel'} onClick={handleClickCancel} />
         </div>
       </form>

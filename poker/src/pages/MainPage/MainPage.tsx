@@ -13,6 +13,7 @@ import Counter from '../../redux/Counter';
 const MainPage: FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [role, setRole] = useState<ROLES>(ROLES.ADMIN);
+  const [url, setUrl] = useState<string>('');
 
   const handleCreateNewGame = (): void => {
     setIsVisible(true);
@@ -24,7 +25,7 @@ const MainPage: FC = () => {
   };
 
   const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
+    setUrl(e.target.value);
   };
 
   return (
@@ -44,7 +45,7 @@ const MainPage: FC = () => {
         <InputComponent onChange={handleEnterUrlGame} />
         <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
-      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} />}
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} url={url}/>}
     </div>
   );
 };
