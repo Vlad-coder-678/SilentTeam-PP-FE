@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { INIT_MEMBER } from '../../constants';
-// import GeneralButton from '../GeneralButton/GeneralButton';
+import GeneralButton from '../GeneralButton/GeneralButton';
 import {
   isModalOpenBySocketEventSlice,
   kickIdSlice,
@@ -11,7 +11,7 @@ import {
   setWhoKick,
   setWhoWillBeKicked,
   whoKickSlice,
-  whoWillBeKickedSlice,
+  // whoWillBeKickedSlice,
 } from '../../redux/slices/kickSlice';
 import { SocketContext } from '../../socketContext';
 import { KICKED_MESSAGES, Member, ROLES } from '../../types/common';
@@ -44,7 +44,6 @@ const KickModal: FC = () => {
     };
 
     socket.on('do-you-want-kick-user', kickUserSuccess);
-    console.log('kick-user-modal isModalOpenBySocketEvent', isModalOpenBySocketEvent);
 
     return (): void => {
       socket.off('do-you-want-kick-user', kickUserSuccess);

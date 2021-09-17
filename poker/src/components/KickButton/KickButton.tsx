@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
-import kickIcon from '../../assets/images/kick.svg';
+import kickIcon from '../../assets/images/svg/kick.svg';
 import {
   setIsModalOpen,
   setIsModalOpenBySocketEvent,

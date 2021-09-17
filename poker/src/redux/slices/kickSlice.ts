@@ -41,8 +41,8 @@ export const kickSlice = createSlice({
   },
 });
 
-export const { setIsModalOpen, setIsModalOpenBySocketEvent, setWhoWillBeKicked, setWhoKick, setKickId } =
-  kickSlice.actions;
+export const { setIsModalOpen, setIsModalOpenBySocketEvent, setWhoWillBeKicked, setWhoKick, setKickId }
+  = kickSlice.actions;
 
 export const isModalOpenSlice = (state: RootState): boolean => state.kick.isModalOpen;
 export const isModalOpenBySocketEventSlice = (state: RootState): boolean => state.kick.isModalOpenBySocketEvent;
