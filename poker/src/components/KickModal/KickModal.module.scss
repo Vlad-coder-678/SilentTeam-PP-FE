@@ -50,14 +50,6 @@
   flex-wrap: wrap;
 }
 
-.yes {
-  @include buttonBlue;
-}
-
-.no {
-  @include buttonWhite;
-}
-
 @media screen and (max-width: 768px) {
   .wrap {
     padding-bottom: 370px;
@@ -68,9 +60,11 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
   .buttons {
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 10px;
   }
 }

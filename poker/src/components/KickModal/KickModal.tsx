@@ -129,14 +129,8 @@ const KickModal: FC = () => {
           </p>
         )}
         <div className={styles.buttons}>
-          <button className={styles.yes} onClick={handleClickConfirm}>
-            Yes
-          </button>
-          <button className={styles.no} onClick={handleClickCancel}>
-            No
-          </button>
-          {/* <GeneralButton type="button" label={'Yes'} onClick={handleClickConfirm} primaryBG />
-          <GeneralButton type="button" label={'No'} onClick={handleClickCancel} /> */}
+          <GeneralButton type="button" label={'Yes'} onClick={handleClickConfirm} primaryBG />
+          <GeneralButton type="button" label={'No'} onClick={handleClickCancel} />
         </div>
       </div>
     </div>

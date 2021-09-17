@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import LogoRSS from '../LogoRSS/LogoRSS';
-import f from './Footer.module.scss';
+import styles from './Footer.module.scss';
 import FooterTeamLink from '../FooterTeamLink/FooterTeamLink';
 
 interface Team {
@@ -33,8 +33,8 @@ const teams: Team[] = [
 ];
 
 const Footer: FC = () => (
-  <div className={f.Footer_wrap}>
-    <div className={f.Footer_item}>
+  <div className={styles.Footer_wrap}>
+    <div className={styles.Footer_item}>
       Made by
       {teams.map(({ url, name }) => (
         <div key={name}>
@@ -42,7 +42,7 @@ const Footer: FC = () => (
         </div>
       ))}
     </div>
-    <div className={f.Footer_item}>
+    <div className={styles.Footer_item}>
       from
       <LogoRSS />
       in 2021

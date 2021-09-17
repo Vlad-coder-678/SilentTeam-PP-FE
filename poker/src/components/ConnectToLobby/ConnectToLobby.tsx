@@ -110,7 +110,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
 
         <div className={styles.Form_footer}>
           <GeneralButton type="submit" label={'Confirm'} onClick={handleClickConfirm} primaryBG />
-          <GeneralButton label={'Cancel'} onClick={handleClickCancel} />
+          <GeneralButton type="button" label={'Cancel'} onClick={handleClickCancel} />
         </div>
       </form>
     </div>

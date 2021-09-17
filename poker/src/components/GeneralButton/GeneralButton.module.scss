@@ -1,8 +1,9 @@
 @import '../../styles/common.scss';
 
-.GeneralButton_blue,
-.GeneralButton_white {
-  margin: 0 auto;
+.GeneralButton_primary,
+.GeneralButton_secondary {
+  display: block;
+  margin: 0;
   padding: 0 10px;
   min-width: 240px;
   border: 1px solid $base-cornflower-blue;
@@ -15,45 +16,45 @@
   cursor: pointer;
 }
 
-.GeneralButton_blue {
+.GeneralButton_primary {
   color: $red-light;
   background-color: $base-dark-blue;
 }
 
-.GeneralButton_white {
+.GeneralButton_secondary {
   color: $base-dark-blue;
   background-color: $red-light;
   text-shadow: 0 4px 4px $shadow-one-quarter;
 }
 
-.GeneralButton_white:hover {
+.GeneralButton_secondary:hover {
   color: $red-light;
   background-color: $base-dark-blue;
   text-shadow: none;
   transition: all 0.3s ease-in-out;
 }
 
-.GeneralButton_blue:hover {
+.GeneralButton_primary:hover {
   color: $base-dark-blue;
   background-color: $red-light;
   text-shadow: 0 4px 4px $shadow-one-quarter;
   transition: all 0.3s ease-in-out;
 }
 
-.GeneralButton_white:active {
+.GeneralButton_secondary:active {
   filter: opacity(0.8);
   transition: all 0.3s ease-in-out;
 }
 
-.GeneralButton_blue:active {
+.GeneralButton_primary:active {
   filter: opacity(0.8);
   text-shadow: 0 4px 4px $shadow-one-quarter;
   transition: all 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
-  .GeneralButton_blue,
-  .GeneralButton_white {
+  .GeneralButton_primary,
+  .GeneralButton_secondary {
     min-width: 200px;
     font-size: 1rem;
     line-height: 2rem;

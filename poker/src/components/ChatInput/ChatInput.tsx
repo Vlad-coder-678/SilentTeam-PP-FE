@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SocketContext } from '../../socketContext';
 import Avatar from '../Avatar/Avatar';
-import sendIcon from '../../assets/images/send.svg';
+import sendIcon from '../../assets/images/svg/send.svg';
 import { mockChatInput, mockCurrentUserId } from '../../__mocks__/mockChat';
 import { Message, SIZES } from '../../types/common';
 import { MAX_CHAT_MESSAGE_LENGTH } from '../../constants';

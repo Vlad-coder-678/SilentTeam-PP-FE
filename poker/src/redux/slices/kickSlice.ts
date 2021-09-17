@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { INIT_MEMBER } from '../../constants';
 import { Member } from '../../types/common';
-import { RootState } from '../store';
+import type { RootState } from '../store';
 
 interface KickState {
   isModalOpen: boolean;

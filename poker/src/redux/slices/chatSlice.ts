@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message } from '../../types/common';
-import { RootState } from '../store';
+import type { RootState } from '../store';
 
 interface ChatState {
   chat: Array<Message>;

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
+
 import kickIcon from '../../assets/images/kick.svg';
 import {
   setIsModalOpen,
