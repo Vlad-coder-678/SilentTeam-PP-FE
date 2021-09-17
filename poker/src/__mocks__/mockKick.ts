@@ -1,33 +1,30 @@
 import { KICKED_MESSAGES, ROLES } from '../types/common';
 
-const mockRoom = '123456789';
-
-// const mockCurrentUser = {
-//   userId: '11112',
-//   firstName: 'Devid',
-//   lastName: 'Blain',
-//   role: ROLES.USER,
-//   message: 'Hello everyone!',
-// };
+const mockRoom = '1234567';
 
 const mockCurrentUser = {
-  userId: '11111',
-  firstName: 'Stephan',
-  lastName: 'Nazarenko',
-  role: ROLES.ADMIN,
-  message: 'Hi :)',
+  userId: '11112',
+  firstName: 'Devid',
+  lastName: 'Blain',
+  role: ROLES.USER,
 };
+
+// const mockCurrentUser = {
+//   userId: '11111',
+//   firstName: 'Stephan',
+//   lastName: 'Nazarenko',
+//   role: ROLES.ADMIN,
+// };
 
 const mockCurrentAdmin = {
   userId: '11111',
   firstName: 'Stephan',
   lastName: 'Nazarenko',
   role: ROLES.ADMIN,
-  message: 'Hi :)',
 };
 
 const mockWhoWillBeKicked = {
-  id: '613f47f975620a3ac1d9cf79',
+  userId: '613f47f975620a3ac1d9cf79',
   firstName: 'User firstName1',
   lastName: 'User lastName1',
   role: 'user',

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ROLES, SIZES } from '../../types/common';
 import Avatar from '../Avatar/Avatar';
-import KickButton from '../KickButton/KickButton';
+// import KickButton from '../KickButton/KickButton';
 import styles from './CardUser.module.scss';
 
 export interface userProps {
@@ -20,7 +20,7 @@ const CardUser: FC<userProps> = ({ firstName, lastName, jobPosition, role }) => 
       {jobPosition && <p className={styles.CardUser_job}>{jobPosition}</p>}
     </div>
     <div className={styles.CardUser_kickButtonWrapper}>
-      <KickButton size={SIZES.MEDIUM} />
+      {/* <KickButton size={SIZES.MEDIUM} userId={userId} firstName={firstName} lastName={lastName} role={role} /> */}
     </div>
   </div>
 );

@@ -5,6 +5,7 @@ import { mockCurrentUserId } from '../../__mocks__/mockChat';
 import { Message, ROLES, SIZES } from '../../types/common';
 
 import styles from './MessageChatCard.module.scss';
+import { KICKED_ID } from '../../constants';
 
 interface Props {
   messageCard: Message;
@@ -22,7 +23,7 @@ const MessageChatCard: FC<Props> = ({ messageCard }) => {
           <Avatar role={role} size={SIZES.SMALL} firstName={firstName} lastName={lastName} />
           <div>
             {userId === currentUserId && <p className={styles.messageChatCard_you}>it's you</p>}
-            <p className={styles.messageChatCard_name}>
+            <p className={userId === KICKED_ID ? styles.messageChatCard_kick : styles.messageChatCard_name}>
               {firstName} {lastName}
             </p>
           </div>
@@ -30,7 +31,7 @@ const MessageChatCard: FC<Props> = ({ messageCard }) => {
         {/* {currentRole === ROLES.ADMIN && role !== ROLES.ADMIN && (
           <img className={styles.messageChatCard_icon} src={kickIcon} alt="kick" onClick={handleOnKickUser} />
         )} */}
-        <KickButton size={SIZES.SMALL} />
+        <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
       </div>
       <p className={styles.messageChatCard_content}>{message}</p>
     </div>

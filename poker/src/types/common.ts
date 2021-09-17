@@ -14,6 +14,14 @@ export enum KICKED_MESSAGES {
   BY_VOTING = 'kicked by voting',
 }
 
+export interface Member {
+  userId: string;
+  firstName: string;
+  lastName?: string;
+  job?: string;
+  role: ROLES;
+}
+
 export interface Message {
   userId: string;
   firstName: string;

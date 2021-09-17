@@ -1,47 +1,104 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import GeneralButton from '../GeneralButton/GeneralButton';
-import { isModalCallFromServerSlice, setIsModalOpen } from '../../redux/slices/kickSlice';
+import { INIT_MEMBER } from '../../constants';
+// import GeneralButton from '../GeneralButton/GeneralButton';
+import {
+  isModalOpenBySocketEventSlice,
+  kickIdSlice,
+  setIsModalOpen,
+  setIsModalOpenBySocketEvent,
+  setKickId,
+  setWhoKick,
+  setWhoWillBeKicked,
+  whoKickSlice,
+  whoWillBeKickedSlice,
+} from '../../redux/slices/kickSlice';
 import { SocketContext } from '../../socketContext';
-import { KICKED_MESSAGES, ROLES } from '../../types/common';
-import { mockCurrentUser, mockWhoWillBeKicked, mockRoom } from '../../__mocks__/mockKick';
+import { KICKED_MESSAGES, Member, ROLES } from '../../types/common';
+import { mockRoom } from '../../__mocks__/mockKick';
 import TESTsocket from '../TESTsocket/TESTsocket';
 
 import styles from './KickModal.module.scss';
 
 const KickModal: FC = () => {
-  const currentRoom = mockRoom;
-  const currentUser = mockCurrentUser;
-  const whoWillBeKicked = mockWhoWillBeKicked;
-  const dispatch = useDispatch();
-
   const socket = React.useContext(SocketContext);
 
-  const isModalCallFromServer = useSelector(isModalCallFromServerSlice);
+  const dispatch = useDispatch();
+
+  const isModalOpenBySocketEvent = useSelector(isModalOpenBySocketEventSlice);
+
+  const kickId = useSelector(kickIdSlice);
+
+  React.useEffect(() => {
+    const kickUserSuccess = (response: {
+      room: string;
+      whoKick: Member;
+      whoWillBeKicked: Member;
+      kickId: string;
+    }): void => {
+      dispatch(setWhoKick(response.whoKick));
+      dispatch(setWhoWillBeKicked(response.whoWillBeKicked));
+      dispatch(setKickId(response.kickId));
+      dispatch(setIsModalOpenBySocketEvent(true));
+      dispatch(setIsModalOpen(true));
+    };
+
+    socket.on('do-you-want-kick-user', kickUserSuccess);
+    console.log('kick-user-modal isModalOpenBySocketEvent', isModalOpenBySocketEvent);
+
+    return (): void => {
+      socket.off('do-you-want-kick-user', kickUserSuccess);
+    };
+  });
+
+  const currentRoom = mockRoom;
+  const whoKick = useSelector(whoKickSlice);
+  // const whoWillBeKicked = useSelector(whoWillBeKickedSlice);
+  const whoWillBeKicked = {
+    userId: '61423495be14737572a581a3',
+    firstName: 'User firstName1',
+    lastName: 'User lastName1',
+    role: 'user',
+  };
 
   const handleClickConfirm = (): void => {
-    // 1 если админ - послать сообщение удалить юзера и отправить сообщение в чат
-    if (currentUser.role === ROLES.ADMIN) {
+    if (whoKick.role === ROLES.ADMIN) {
       const payload = {
         room: currentRoom,
         message: KICKED_MESSAGES.BY_ADMIN,
-        userId: whoWillBeKicked.id,
+        userId: whoWillBeKicked.userId,
         firstName: whoWillBeKicked.firstName,
         lastName: whoWillBeKicked.lastName,
         role: whoWillBeKicked.role,
       };
-      socket.emit('kick-user-by-admin', payload);
+      socket.emit('kick-user', payload);
       dispatch(setIsModalOpen(false));
+    } else if (!isModalOpenBySocketEvent) {
+      const payload = {
+        room: currentRoom,
+        whoKick,
+        whoWillBeKicked,
+      };
+      socket.emit('user-want-voiting', payload);
+    } else if (isModalOpenBySocketEvent) {
+      const answer = {
+        room: currentRoom,
+        whoKick,
+        whoWillBeKicked,
+        kickId,
+      };
+      socket.emit('kick-user-by-user', answer);
     }
-    // eslint-disable-next-line max-len
-    // 2 если юзер и окно открыто с клиента - послать сообщение всем юзерам для голосования (кроме выбранного для кика юзера)
-    // 3 если юзер и окно открыто с сервера - послать результат выбора на сервер
-    // 4 на сервере, когда более 50% юзеров комнаты проголосовало против - удалить юзера и отправить сообщение в чат
-
-    // закрыть окно
+    dispatch(setWhoKick(INIT_MEMBER));
+    dispatch(setWhoWillBeKicked(INIT_MEMBER));
+    dispatch(setIsModalOpenBySocketEvent(false));
+    dispatch(setIsModalOpen(false));
   };
 
   const handleClickCancel = (): void => {
+    dispatch(setWhoKick(INIT_MEMBER));
+    dispatch(setWhoWillBeKicked(INIT_MEMBER));
+    dispatch(setIsModalOpenBySocketEvent(false));
     dispatch(setIsModalOpen(false));
   };
 
@@ -50,10 +107,10 @@ const KickModal: FC = () => {
       <TESTsocket />
       <div className={styles.modal}>
         <h2 className={styles.header}>Kick Player?</h2>
-        {isModalCallFromServer ? (
+        {isModalOpenBySocketEvent ? (
           <p className={styles.text}>
             <span className={styles.name}>
-              {currentUser.firstName} {currentUser.lastName} {}
+              {whoKick.firstName} {whoKick.lastName} {}
             </span>
             want to kick member {}
             <span className={styles.name}>
