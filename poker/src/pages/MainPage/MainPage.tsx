@@ -4,6 +4,7 @@ import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import ConnectToLobby from '../../components/ConnectToLobby/ConnectToLobby';
+import { ROLES } from '../../types/common';
 
 import styles from './MainPage.module.scss';
 
@@ -11,17 +12,20 @@ import Counter from '../../redux/Counter';
 
 const MainPage: FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [role, setRole] = useState<ROLES>(ROLES.ADMIN);
+  const [url, setUrl] = useState<string>('');
 
   const handleCreateNewGame = (): void => {
     setIsVisible(true);
   };
 
   const handleConnectToGame = (): void => {
+    setRole(ROLES.USER);
     setIsVisible(true);
   };
 
   const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
+    setUrl(e.target.value);
   };
 
   return (
@@ -41,7 +45,7 @@ const MainPage: FC = () => {
         <InputComponent onChange={handleEnterUrlGame} />
         <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
-      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} />}
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} url={url}/>}
     </div>
   );
 };
