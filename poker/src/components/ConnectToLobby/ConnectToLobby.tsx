@@ -8,9 +8,7 @@ import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
 import { ROLES, User } from '../../types/common';
 import { updateUser } from '../../redux/slices/userSlice';
-
 import { SocketContext } from '../../socketContext';
-
 import styles from './ConnectToLobby.module.scss';
 
 interface FormState {
