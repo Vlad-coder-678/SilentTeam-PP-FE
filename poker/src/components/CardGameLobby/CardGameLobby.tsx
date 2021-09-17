@@ -1,11 +1,13 @@
 import React, { useState, FC } from 'react';
+import { useDispatch } from 'react-redux';
 
 import plus from '../../assets/images/svg/plus.svg';
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
 import pencil from '../../assets/images/svg/pencil.svg';
 import styles from './CardGameLobby.module.scss';
-
+import { createGC, fixGC, sortGC, removeGC } from '../../redux/slices/gameCardsSlice';
 import { CardGame } from '../../types/common';
+import basket from '../../assets/images/svg/basket.svg';
 
 interface Props {
   card: CardGame;
@@ -14,17 +16,27 @@ interface Props {
 
 const CardGameLobby: FC<Props> = ({ card, isNew }) => {
   const [isVisibleInput, setIsVisibleInput] = useState(false);
+  const dispatch = useDispatch();
 
   const handleToggleVisible = (): void => {
     setIsVisibleInput(!isVisibleInput);
   };
 
   const handleCreateCard = (): void => {
-    console.log('create new card');
+    dispatch(createGC(card));
   };
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
+    dispatch(fixGC({ id: card.id, value: e.target.value }));
+  };
+
+  const handleOnBlur = (): void => {
+    setIsVisibleInput(false);
+    dispatch(sortGC());
+  };
+
+  const handleRemoveCard = (): void => {
+    dispatch(removeGC(card));
   };
 
   return (
@@ -38,9 +50,19 @@ const CardGameLobby: FC<Props> = ({ card, isNew }) => {
         <div className={styles.Card_value}>
           <p className={styles.Card_value_top}>{card.value}</p>
           {isVisibleInput ? (
-            <input onChange={handleChangeValue} onBlur={handleToggleVisible} />
+            <input
+              type="number"
+              autoFocus
+              min="0"
+              value={card.value}
+              onChange={handleChangeValue}
+              onBlur={handleOnBlur}
+            />
           ) : (
-            <img src={pencil} alt="pencil" onClick={handleToggleVisible} />
+            <>
+              <img src={pencil} alt="pencil" onClick={handleToggleVisible} />
+              <img src={basket} alt="remove" onClick={handleRemoveCard} />
+            </>
           )}
           <p className={styles.Card_value_bottom}>{card.value}</p>
         </div>

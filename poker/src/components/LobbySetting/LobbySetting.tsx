@@ -12,7 +12,7 @@ import styles from './LobbySetting.module.scss';
 const LobbySetting: FC = () => {
   const cards = useSelector(selectGameCards);
   const newCard = {
-    id: (Number(cards[cards.length - 1].id) + 1).toString(),
+    id: (cards.reduce((max, item) => Math.max(max, Number(item.id)), 0) + 1).toString(),
     value: (Number(cards[cards.length - 1].value) * 2).toString(),
   };
 

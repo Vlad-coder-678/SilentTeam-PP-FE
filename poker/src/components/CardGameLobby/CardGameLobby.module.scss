@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.Card_new svg {
+.Card_new img {
   width: 30px;
   height: 30px;
   border: 6px solid black;
@@ -20,13 +20,13 @@
   padding: 5px;
 }
 
-.Card_coffeetime svg {
+.Card_coffeetime img {
   width: 50px;
   height: 50px;
   text-align: center;
 }
 
-.Card_value svg {
+.Card_value img {
   width: 30px;
   height: 30px;
 }
@@ -56,4 +56,16 @@
 .Card_value_bottom {
   font-size: 1rem;
   font-weight: 600;
+}
+
+.Card_value img {
+  margin: 5px;
+  @include iconHoverWithTransition;
+}
+
+.Card_value input {
+  width: 50px;
+  font-size: 1rem;
+  line-height: 2rem;
+  padding: 5px;
 }

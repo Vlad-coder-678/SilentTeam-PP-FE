@@ -20,11 +20,17 @@ export const gameCardsSlice = createSlice({
     },
     fixGC: (state, action: PayloadAction<CardGame>) =>
       state.map((u) => (u.id !== action.payload.id ? u : action.payload)),
-    removeGC: (state, action: PayloadAction<CardGame>) => state.filter((u) => u.id !== action.payload.id),
+    sortGC: (state) =>
+      state.sort((a, b) => {
+        if (Number(a.value) < Number(b.value)) return -1;
+        if (Number(a.value) > Number(b.value)) return 1;
+        return 0;
+      }),
+    removeGC: (state, action: PayloadAction<CardGame>) => state.filter((u) => u.value !== action.payload.value),
   },
 });
 
-export const { createGC, fixGC, removeGC } = gameCardsSlice.actions;
+export const { createGC, fixGC, sortGC, removeGC } = gameCardsSlice.actions;
 
 // in the file use: `useSelector((state: RootState) => state.value)`
 export const selectGameCards = (state: RootState): CardGame[] => state.gameCards;
