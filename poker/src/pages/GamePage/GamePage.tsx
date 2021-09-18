@@ -17,8 +17,6 @@ interface Props {
 const GamePage: FC<Props> = () => {
   const issues = useSelector(selectIssues);
 
-  console.log(issues);
-
   return (
     <div>
       <div className={styles.lobbyPage_container}>

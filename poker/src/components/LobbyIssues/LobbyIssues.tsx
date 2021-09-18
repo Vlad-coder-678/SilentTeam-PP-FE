@@ -16,8 +16,6 @@ const LobbyIssues: FC = () => {
     desc: '',
   };
 
-  console.log(issues);
-
   return (
     <div>
       <TitleSection title={'Issues:'} />
