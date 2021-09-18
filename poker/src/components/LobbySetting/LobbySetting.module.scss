@@ -1,3 +1,5 @@
+@import '../../styles/common.scss';
+
 .lobbyPage_section {
   width: 100%;
   display: flex;
@@ -21,4 +23,60 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.time_round_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 4px 4px 0 $shadow-one-quarter;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+  position: relative;
+}
+
+.time_round_item span {
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: inset 0 4px 4px 0 $shadow-one-quarter;
+}
+
+.time_round_item_input {
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: inset 0 4px 4px 0 $shadow-one-quarter;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time_round_item_input input {
+  width: 50px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+  position: relative;
+  margin: 5px;
+  background-color: white;
+}
+
+.time_round_img_wrap {
+  width: 25px;
+  height: 25px;
+  transform: translateY(-10px);
+}
+
+.time_round_img_wrap {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

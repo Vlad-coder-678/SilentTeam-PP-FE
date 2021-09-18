@@ -76,7 +76,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             </label>
             <Checkbox
               name="observer"
-              // value={observer}
+              isChecked={false}
               // onChange={() => setObserver((prev) => !prev)}
             />
           </div>
@@ -102,7 +102,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible }) => {
             </label>
             <Checkbox
               name="observer"
-              // value={observer}
+              isChecked={false}
               // onChange={() => setObserver((prev) => !prev)}
             />
           </div>

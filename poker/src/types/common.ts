@@ -39,3 +39,12 @@ export interface CardGame {
   id: string;
   value: string;
 }
+
+export interface GameSettingsInit {
+  masterIsPlayer: boolean;
+  isChangeCard: boolean;
+  isNeededTimer: boolean;
+  storyType: string;
+  storyTypeShort: string;
+  roundTime: number;
+}

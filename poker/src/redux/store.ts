@@ -6,6 +6,7 @@ import kickReducer from './slices/kickSlice';
 import socketErrorReducer from './slices/socketErrorSlice';
 import issuesReducer from './slices/issuesSlice';
 import gameCardsReducer from './slices/gameCardsSlice';
+import gameSettingsReducer from './slices/gameSettingSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     socketError: socketErrorReducer,
     issues: issuesReducer,
     gameCards: gameCardsReducer,
+    gameSettings: gameSettingsReducer,
   },
 });
 
