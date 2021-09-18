@@ -23,11 +23,12 @@ const CardGameLobby: FC<Props> = ({ card, isNew }) => {
   };
 
   const handleCreateCard = (): void => {
-    dispatch(createGC(card));
+    dispatch(createGC({ id: card.id, value: Number(card.value) >= 1000 ? '1000' : card.value }));
   };
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(fixGC({ id: card.id, value: e.target.value }));
+    const v = Number(e.target.value) >= 1000 ? '1000' : e.target.value;
+    dispatch(fixGC({ id: card.id, value: v }));
   };
 
   const handleOnBlur = (): void => {
@@ -54,6 +55,7 @@ const CardGameLobby: FC<Props> = ({ card, isNew }) => {
               type="number"
               autoFocus
               min="0"
+              max="1000"
               value={card.value}
               onChange={handleChangeValue}
               onBlur={handleOnBlur}

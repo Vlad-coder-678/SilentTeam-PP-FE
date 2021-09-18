@@ -26,7 +26,7 @@ export const gameCardsSlice = createSlice({
         if (Number(a.value) > Number(b.value)) return 1;
         return 0;
       }),
-    removeGC: (state, action: PayloadAction<CardGame>) => state.filter((u) => u.value !== action.payload.value),
+    removeGC: (state, action: PayloadAction<CardGame>) => state.filter((u) => u.id !== action.payload.id),
   },
 });
 
