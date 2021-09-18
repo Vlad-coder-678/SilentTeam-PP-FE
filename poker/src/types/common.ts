@@ -55,6 +55,7 @@ export interface GameSettingsInit {
   storyType: string;
   storyTypeShort: string;
   roundTime: number;
+}
 
 export interface User {
   firstName: string;
