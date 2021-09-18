@@ -38,7 +38,7 @@ const ChatInput: FC = () => {
   }, [dispatch, socket, chat]);
 
   const handleOnSendMessage = (): void => {
-    if (message !== '') {
+    if (message) {
       const payload = {
         room,
         userId,

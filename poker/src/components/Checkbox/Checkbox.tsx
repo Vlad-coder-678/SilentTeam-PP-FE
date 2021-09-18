@@ -9,7 +9,13 @@ interface Props {
 
 const Checkbox: React.FC<Props> = ({ name, isChecked, onChange }) => (
   <div className={styles.Checkbox_container}>
-    <input type="checkbox" className={styles.Checkbox} name={name} checked={isChecked} onChange={onChange} />
+    <input
+      type="checkbox"
+      className={styles.Checkbox}
+      name={name}
+      checked={isChecked}
+      onChange={onChange}
+    />
   </div>
 );
 

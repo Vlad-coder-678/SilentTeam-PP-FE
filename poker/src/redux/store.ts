@@ -7,6 +7,7 @@ import socketErrorReducer from './slices/socketErrorSlice';
 import issuesReducer from './slices/issuesSlice';
 import gameCardsReducer from './slices/gameCardsSlice';
 import gameSettingsReducer from './slices/gameSettingSlice';
+import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     issues: issuesReducer,
     gameCards: gameCardsReducer,
     gameSettings: gameSettingsReducer,
+    user: userReducer,
   },
 });
 

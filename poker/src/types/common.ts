@@ -14,6 +14,14 @@ export enum KICKED_MESSAGES {
   BY_VOTING = 'kicked by voting',
 }
 
+export interface Member {
+  userId: string;
+  firstName: string;
+  lastName?: string;
+  job?: string;
+  role: ROLES;
+}
+
 export interface Message {
   userId: string;
   firstName: string;
@@ -47,4 +55,11 @@ export interface GameSettingsInit {
   storyType: string;
   storyTypeShort: string;
   roundTime: number;
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  jobPosition: string;
+  role: ROLES;
+  room: string;
 }
