@@ -15,7 +15,7 @@ interface Props {
   isNew?: boolean;
 }
 
-const options = ['create', 'fixed', 'remove'];
+const options = { create: 'create', fixed: 'fixed', remove: 'remove' };
 
 const CardIssue: FC<Props> = ({ issue, isNew }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -25,17 +25,17 @@ const CardIssue: FC<Props> = ({ issue, isNew }) => {
 
   const handleCreateIssue = (): void => {
     dispatch(createIs(issue));
-    setOption(options[0]);
+    setOption(options.create);
     setIsModalOpen(true);
   };
 
   const handleFixedIssue = (): void => {
-    setOption(options[1]);
+    setOption(options.fixed);
     setIsModalOpen(true);
   };
 
   const handleRemoveIssue = (): void => {
-    setOption(options[2]);
+    setOption(options.remove);
     setIsModalOpen(true);
   };
 

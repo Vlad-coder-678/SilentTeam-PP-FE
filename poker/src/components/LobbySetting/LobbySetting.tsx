@@ -136,8 +136,16 @@ const LobbySetting: FC = () => {
         <p>Add card values:</p>
       </div>
       <div className={styles.lobbyPage_setting_cards}>
-        {cards.length > 0 && cards.map((card) => <CardGameLobby key={card.id} card={card} />)}
-        <CardGameLobby card={newCard} isNew />
+        {cards.length > 0
+          && cards.map((card) => (
+            <CardGameLobby
+              key={card.id}
+              card={card}
+              minValue={settings.minGameCardValue}
+              maxValue={settings.maxGameCardValue}
+            />
+          ))}
+        <CardGameLobby card={newCard} isNew minValue={settings.minGameCardValue} maxValue={settings.maxGameCardValue} />
       </div>
     </div>
   );

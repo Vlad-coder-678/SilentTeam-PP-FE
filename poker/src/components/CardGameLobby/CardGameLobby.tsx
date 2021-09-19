@@ -12,9 +12,11 @@ import basket from '../../assets/images/svg/basket.svg';
 interface Props {
   card: CardGame;
   isNew?: boolean;
+  minValue: number;
+  maxValue: number;
 }
 
-const CardGameLobby: FC<Props> = ({ card, isNew }) => {
+const CardGameLobby: FC<Props> = ({ card, isNew, minValue, maxValue }) => {
   const [isVisibleInput, setIsVisibleInput] = useState(false);
   const dispatch = useDispatch();
 
@@ -23,11 +25,12 @@ const CardGameLobby: FC<Props> = ({ card, isNew }) => {
   };
 
   const handleCreateCard = (): void => {
-    dispatch(createGC({ id: card.id, value: Number(card.value) >= 1000 ? '1000' : card.value }));
+    const v = Number(card.value) >= maxValue ? maxValue.toString() : card.value;
+    dispatch(createGC({ id: card.id, value: v }));
   };
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const v = Number(e.target.value) >= 1000 ? '1000' : e.target.value;
+    const v = Number(e.target.value) >= maxValue ? maxValue.toString() : e.target.value;
     dispatch(fixGC({ id: card.id, value: v }));
   };
 
@@ -54,8 +57,8 @@ const CardGameLobby: FC<Props> = ({ card, isNew }) => {
             <input
               type="number"
               autoFocus
-              min="0"
-              max="1000"
+              min={minValue}
+              max={maxValue}
               value={card.value}
               onChange={handleChangeValue}
               onBlur={handleOnBlur}
