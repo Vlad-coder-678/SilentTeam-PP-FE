@@ -6,11 +6,11 @@ import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
 import pencil from '../../assets/images/svg/pencil.svg';
 import styles from './CardGameLobby.module.scss';
 import { createGC, fixGC, sortGC, removeGC } from '../../redux/slices/gameCardsSlice';
-import { CardGame } from '../../types/common';
+import { CardGameSetting } from '../../types/common';
 import basket from '../../assets/images/svg/basket.svg';
 
 interface Props {
-  card: CardGame;
+  card: CardGameSetting;
   isNew?: boolean;
   minValue: number;
   maxValue: number;

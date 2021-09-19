@@ -43,9 +43,15 @@ export interface Issue {
   desc?: string;
 }
 
-export interface CardGame {
+export interface CardGameSetting {
   id: string;
   value: string;
+}
+
+export interface CardGame {
+  card?: CardGameSetting;
+  title: string;
+  isChecked: boolean;
 }
 
 export interface GameSettingsInit {
@@ -65,4 +71,22 @@ export interface User {
   jobPosition: string;
   role: ROLES;
   room: string;
+}
+
+export interface issueGame {
+  id: string;
+  number: string;
+  desc: string;
+  choise: string;
+  isChecked: boolean;
+}
+
+export interface issueSelected {
+  issueId: string;
+  cardId: string;
+}
+
+export interface GameProcessInit {
+  issueIdSelected: string;
+  gameUserResults: issueSelected[];
 }

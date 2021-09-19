@@ -11,7 +11,7 @@ import styles from './LobbySetting.module.scss';
 
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import {
-  selectgameSetting,
+  selectGameSetting,
   changeMasterIsPlayer,
   isChangeCard,
   changeIsNeededTimer,
@@ -24,7 +24,7 @@ import close from '../../assets/images/svg/close.svg';
 const LobbySetting: FC = () => {
   const [isVisibleRoundTime, setIsVisibleRoundTime] = useState<boolean>(false);
   const cards = useSelector(selectGameCards);
-  const settings = useSelector(selectgameSetting);
+  const settings = useSelector(selectGameSetting);
   const dispatch = useDispatch();
 
   const newCard = {

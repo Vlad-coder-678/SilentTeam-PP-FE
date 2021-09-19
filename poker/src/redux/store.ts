@@ -8,6 +8,7 @@ import issuesReducer from './slices/issuesSlice';
 import gameCardsReducer from './slices/gameCardsSlice';
 import gameSettingsReducer from './slices/gameSettingSlice';
 import userReducer from './slices/userSlice';
+import gameProcessReducer from './slices/gameProcessSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     gameCards: gameCardsReducer,
     gameSettings: gameSettingsReducer,
     user: userReducer,
+    gameProcess: gameProcessReducer,
   },
 });
 

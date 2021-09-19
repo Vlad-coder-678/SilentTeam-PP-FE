@@ -54,6 +54,6 @@ export const {
 } = gameSettingSlice.actions;
 
 // in the file use: `useSelector((state: RootState) => state.value)`
-export const selectgameSetting = (state: RootState): GameSettingsInit => state.gameSettings;
+export const selectGameSetting = (state: RootState): GameSettingsInit => state.gameSettings;
 
 export default gameSettingSlice.reducer;
