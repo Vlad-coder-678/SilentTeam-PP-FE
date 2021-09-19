@@ -62,7 +62,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
     // e.preventDefault();
     const { firstName, lastName, jobPosition } = personalData;
     const room = url || socket.id;
-    console.log('helo', room, socket.id);
+
     const user:User = {
       firstName,
       lastName,
