@@ -61,7 +61,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
   const handleClickConfirm = (e: SyntheticEvent): void => {
     // e.preventDefault();
     const { firstName, lastName, jobPosition } = personalData;
-    const room = url ?? socket.id;
+    const room = url || socket.id;
 
     const user:User = {
       firstName,
