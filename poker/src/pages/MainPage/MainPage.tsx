@@ -8,8 +8,6 @@ import { ROLES } from '../../types/common';
 
 import styles from './MainPage.module.scss';
 
-import Counter from '../../redux/Counter';
-
 const MainPage: FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [role, setRole] = useState<ROLES>(ROLES.ADMIN);
@@ -31,7 +29,6 @@ const MainPage: FC = () => {
   return (
     <div className={styles.MainPage_wrap}>
       <MainPageTitle />
-      <Counter />
       <h3>Start your planning:</h3>
       <div className={styles.MainPage_item}>
         <label>Create session:</label>

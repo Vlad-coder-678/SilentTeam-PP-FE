@@ -33,4 +33,9 @@
   background-color: transparent;
   border: none;
   outline: none;
+  @include iconHoverWithTransition;
+}
+
+.cardIssue_item_buttons button {
+  @include iconHoverWithTransition;
 }

@@ -1,8 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+
 import counterReducer from './counterSlice';
 import chatReducer from './slices/chatSlice';
 import kickReducer from './slices/kickSlice';
 import socketErrorReducer from './slices/socketErrorSlice';
+import issuesReducer from './slices/issuesSlice';
+import gameCardsReducer from './slices/gameCardsSlice';
+import gameSettingsReducer from './slices/gameSettingSlice';
 import userReducer from './slices/userSlice';
 
 export const store = configureStore({
@@ -11,6 +15,9 @@ export const store = configureStore({
     chat: chatReducer,
     kick: kickReducer,
     socketError: socketErrorReducer,
+    issues: issuesReducer,
+    gameCards: gameCardsReducer,
+    gameSettings: gameSettingsReducer,
     user: userReducer,
   },
 });

@@ -1,0 +1,61 @@
+@import '../../styles/common.scss';
+
+.modal_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 100vh;
+  background-color: $shadow-one-quarter;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  border-radius: 3px;
+  padding-bottom: 240px;
+}
+
+.modal_form {
+  margin-top: 100px;
+  width: 768px;
+  background-color: $red-light;
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 2rem;
+  box-shadow: $shadow-one-quarter;
+}
+
+.modal_footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .modal_wrap {
+    padding-bottom: 370px;
+  }
+
+  .modal_form {
+    margin-top: 50px;
+    width: 90%;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal_footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal_footer button {
+    margin: 0;
+  }
+}

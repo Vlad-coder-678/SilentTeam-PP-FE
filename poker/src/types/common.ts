@@ -37,6 +37,26 @@ export interface SocketError {
   eventName: string;
 }
 
+export interface Issue {
+  id?: string;
+  number?: string;
+  desc?: string;
+}
+
+export interface CardGame {
+  id: string;
+  value: string;
+}
+
+export interface GameSettingsInit {
+  masterIsPlayer: boolean;
+  isChangeCard: boolean;
+  isNeededTimer: boolean;
+  storyType: string;
+  storyTypeShort: string;
+  roundTime: number;
+}
+
 export interface User {
   firstName: string;
   lastName: string;

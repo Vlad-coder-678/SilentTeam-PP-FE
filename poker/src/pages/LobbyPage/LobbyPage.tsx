@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-
 import { useSelector } from 'react-redux';
+
 import CardUser, { userProps } from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -16,12 +16,10 @@ import styles from './LobbyPage.module.scss';
 
 interface Props {
   users: userProps[];
-  issues?: { issueId: string }[];
-  cards?: { value: string | number }[];
   link: string;
 }
 
-const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => {
+const LobbyPage: FC<Props> = ({ users, link }) => {
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
   return (
@@ -41,8 +39,8 @@ const LobbyPage: FC<Props> = ({ users, issues, link, cards }) => {
         </div>
         <LobbyScramButtons link={link} />
         <LobbyMembers users={users} />
-        <LobbyIssues issues={issues} />
-        <LobbySetting cards={cards} />
+        <LobbyIssues />
+        <LobbySetting />
       </div>
       <Chat />
       {isKickModalOpen && <KickModal />}
