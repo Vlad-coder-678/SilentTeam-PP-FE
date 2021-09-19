@@ -9,6 +9,8 @@ const initialState: GameSettingsInit = {
   storyType: '',
   storyTypeShort: '',
   roundTime: 60,
+  minGameCardValue: 0,
+  maxGameCardValue: 1000,
 };
 
 export const gameSettingSlice = createSlice({

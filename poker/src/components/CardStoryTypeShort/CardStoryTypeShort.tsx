@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styles from './CardStoryTypeShort.module.scss';
 
 interface Props {
-  label: null | string;
+  label: string;
 }
 
 const CardStoryTypeShort: FC<Props> = ({ label }) => (

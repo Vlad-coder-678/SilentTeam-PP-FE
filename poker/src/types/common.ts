@@ -55,6 +55,8 @@ export interface GameSettingsInit {
   storyType: string;
   storyTypeShort: string;
   roundTime: number;
+  minGameCardValue: number;
+  maxGameCardValue: number;
 }
 
 export interface User {
