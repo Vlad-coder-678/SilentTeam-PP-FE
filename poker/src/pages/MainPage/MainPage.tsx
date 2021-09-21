@@ -1,21 +1,24 @@
 import React, { useState, FC, ChangeEvent } from 'react';
 
+import { useDispatch } from 'react-redux';
 import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import ConnectToLobby from '../../components/ConnectToLobby/ConnectToLobby';
 import { ROLES } from '../../types/common';
+import { setIsAdmin } from '../../redux/slices/roomSlice';
 
 import styles from './MainPage.module.scss';
 
-import Counter from '../../redux/Counter';
-
 const MainPage: FC = () => {
+  const dispatch = useDispatch();
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [role, setRole] = useState<ROLES>(ROLES.ADMIN);
   const [url, setUrl] = useState<string>('');
 
   const handleCreateNewGame = (): void => {
+    dispatch(setIsAdmin(true));
     setIsVisible(true);
   };
 
@@ -31,7 +34,6 @@ const MainPage: FC = () => {
   return (
     <div className={styles.MainPage_wrap}>
       <MainPageTitle />
-      <Counter />
       <h3>Start your planning:</h3>
       <div className={styles.MainPage_item}>
         <label>Create session:</label>
@@ -45,7 +47,7 @@ const MainPage: FC = () => {
         <InputComponent onChange={handleEnterUrlGame} />
         <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
-      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} url={url}/>}
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} role={role} url={url} />}
     </div>
   );
 };

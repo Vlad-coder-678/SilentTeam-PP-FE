@@ -44,3 +44,10 @@ export interface User {
   role: ROLES;
   room: string;
 }
+
+export interface ResponseFromSocket {
+  eventName: string;
+  code: number;
+  error: string;
+  data: any;
+}

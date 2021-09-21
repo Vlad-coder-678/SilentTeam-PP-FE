@@ -1,4 +1,4 @@
-import { KICKED_MESSAGES, ROLES, Member } from '../types/common';
+import { ROLES, Member } from '../types/common';
 
 const mockRoom = '1234567';
 

@@ -31,7 +31,13 @@ const MessageChatCard: FC<Props> = ({ messageCard }) => {
         {/* {currentRole === ROLES.ADMIN && role !== ROLES.ADMIN && (
           <img className={styles.messageChatCard_icon} src={kickIcon} alt="kick" onClick={handleOnKickUser} />
         )} */}
-        <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
+        <KickButton
+          size={SIZES.SMALL}
+          userId={userId}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+        />
       </div>
       <p className={styles.messageChatCard_content}>{message}</p>
     </div>

@@ -31,7 +31,13 @@ const IssueChatUserCard: FC<Props> = ({ userId, firstName, lastName, role, job }
           <p className={styles.IssueChatUserCard_job}>{job}</p>
         </div>
       </div>
-      <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
+      <KickButton
+        size={SIZES.SMALL}
+        userId={userId}
+        firstName={firstName}
+        lastName={lastName}
+        role={role}
+      />
     </div>
   );
 };
