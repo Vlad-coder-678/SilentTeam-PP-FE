@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
-import { ROLES, User } from '../../types/common';
-import { updateUser } from '../../redux/slices/userSlice';
+import { Member, ResponseFromSocket, ROLES } from '../../types/common';
 import { SocketContext } from '../../socketContext';
+import { isAdminSlice, loginUser, setCurrentRoom, setIsAdmin } from '../../redux/slices/roomSlice';
+
 import styles from './ConnectToLobby.module.scss';
 
 interface FormState {
@@ -19,14 +20,20 @@ interface FormState {
 
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  role: ROLES;
   url?: string;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
+const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
   const history = useHistory();
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
   const dispatch = useDispatch();
+
+  const isAdmin = useSelector(isAdminSlice);
+
+  const room = isAdmin ? `room${socket.id}` : url;
+
+  console.log('SocketId', socket.id);
 
   const [error, setError] = useState<FormState>({
     firstName: '',
@@ -49,8 +56,48 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
     }
   }, [personalData]);
 
-  const handelSubmit = (): void => {
+  const handleSubmit = (e: SyntheticEvent): void => {
+    e.preventDefault();
     console.log('send form');
+    const { firstName, lastName, jobPosition } = personalData;
+    console.log('room:', room);
+    console.log('url', url);
+
+    let userRole = ROLES.USER;
+    if (observer) userRole = ROLES.OBSERVER;
+    else if (isAdmin) userRole = ROLES.ADMIN;
+
+    const user: Member = {
+      userId: socket.id,
+      firstName,
+      lastName,
+      job: jobPosition,
+      role: userRole,
+    };
+
+    const callback = (response: ResponseFromSocket): void => {
+      console.log(response);
+
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { user: responseUser } = data;
+        dispatch(setCurrentRoom(responseUser.room));
+        const userToRedux = {
+          userId: responseUser.userId,
+          lastName: responseUser.lastName,
+          firstName: responseUser.firstName,
+          job: responseUser.job,
+          role: responseUser.role,
+        };
+        dispatch(loginUser(userToRedux));
+        history.push('/lobby');
+      }
+    };
+
+    socket.emit('login', { user, room }, callback);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -58,25 +105,8 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
     setPersonalData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleClickConfirm = (e: SyntheticEvent): void => {
-    // e.preventDefault();
-    const { firstName, lastName, jobPosition } = personalData;
-    const room = url || socket.id;
-
-    const user:User = {
-      firstName,
-      lastName,
-      jobPosition,
-      role: observer ? ROLES.OBSERVER : role,
-      room,
-    };
-
-    dispatch(updateUser(user));
-    socket.emit('login', user);
-    history.push('/lobby');
-  };
-
   const handleClickCancel = (): void => {
+    dispatch(setIsAdmin(false));
     setIsVisible(false);
   };
 
@@ -89,23 +119,21 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
     >
       <form
         className={styles.Form}
-        onSubmit={handleClickConfirm}
+        onSubmit={handleSubmit}
         onClick={(e): void => {
           e.stopPropagation();
         }}
       >
         <div className={styles.Form_header}>
           <h2>Connect to lobby</h2>
-          <div className={styles.Form_wrap_checkbox_big_screen}>
-            <label className={styles.Form_is_observer} htmlFor="observer">
-              Connect as Observer
-            </label>
-            <Checkbox
-              name="observer"
-              isChecked={observer}
-              onChange={() => setObserver((prev) => !prev)}
-            />
-          </div>
+          {!isAdmin && (
+            <div className={styles.Form_wrap_checkbox_big_screen}>
+              <label className={styles.Form_is_observer} htmlFor="observer">
+                Connect as Observer
+              </label>
+              <Checkbox name="observer" isChecked={observer} onChange={() => setObserver((prev) => !prev)} />
+            </div>
+          )}
         </div>
 
         <div className={styles.Form_body}>
@@ -122,16 +150,14 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
             Image:
             <input className={styles.Button_blue} type="file" />
           </label> */}
-          <div className={styles.Form_wrap_checkbox_small_screen}>
-            <label className={styles.Form_is_observer} htmlFor="observer">
-              Connect as Observer
-            </label>
-            <Checkbox
-              name="observer"
-              isChecked={observer}
-              onChange={() => setObserver((prev) => !prev)}
-            />
-          </div>
+          {!isAdmin && (
+            <div className={styles.Form_wrap_checkbox_small_screen}>
+              <label className={styles.Form_is_observer} htmlFor="observer">
+                Connect as Observer
+              </label>
+              <Checkbox name="observer" isChecked={observer} onChange={() => setObserver((prev) => !prev)} />
+            </div>
+          )}
         </div>
 
         <div className={styles.Form_footer}>
