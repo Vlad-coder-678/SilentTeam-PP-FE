@@ -25,7 +25,7 @@ const LobbyPage: FC<Props> = ({ users, link }) => {
   return (
     <div className={styles.lobbyPage_wrap}>
       <div className={styles.lobbyPage_container}>
-        <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
+        <TitleSection title={'Poker Planning'} isCapitalLetters/>
         <div className={styles.lobbyPage_section}>
           <p>Scram master:</p>
         </div>

@@ -88,5 +88,6 @@ export interface issueSelected {
 
 export interface GameProcessInit {
   issueIdSelected: string;
-  gameUserResults: issueSelected[];
+  userGameResults: issueSelected[];
+  overallGameResults: { userId: string; res: issueSelected[] }[];
 }

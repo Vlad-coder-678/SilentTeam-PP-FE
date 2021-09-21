@@ -86,11 +86,11 @@ const LobbySetting: FC = () => {
         <Checkbox name={'isTimerNeeded'} isChecked={settings.isNeededTimer} onChange={handleChangeTimerNeeded} />
       </div>
       <div className={styles.lobbyPage_setting_item}>
-        <p>Scroll type:</p>
-        <InputComponent name={'scrollType'} value={settings.storyType} onChange={handleChangeStoryType} />
+        <p>Story type:</p>
+        <InputComponent name={'storyType'} value={settings.storyType} onChange={handleChangeStoryType} />
       </div>
       <div className={styles.lobbyPage_setting_item}>
-        <p>Scroll type(Short):</p>
+        <p>Story type(Short):</p>
         <CardStoryTypeShort label={settings.storyTypeShort} />
       </div>
       <div className={styles.lobbyPage_setting_item}>

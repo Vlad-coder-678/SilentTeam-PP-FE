@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
 import { CardGameSetting, issueGame } from '../../types/common';
-import { selectedCard } from '../../redux/slices/gameProcessSlice';
+import { selectedCard, addToOverallResults, selectGameProcess } from '../../redux/slices/gameProcessSlice';
 
 import styles from './CardGame.module.scss';
 
@@ -12,14 +12,20 @@ interface Props {
   issue: issueGame;
   title: string;
   isChecked: boolean;
+  userId: string;
 }
 
-const CardGame: FC<Props> = ({ card, issue, title, isChecked }) => {
+const CardGame: FC<Props> = ({ card, issue, title, isChecked, userId }) => {
+  const process = useSelector(selectGameProcess);
   const dispatch = useDispatch();
 
   const handleSelectedCard = (): void => {
     dispatch(selectedCard({ issueId: issue.id, cardId: card.id }));
   };
+
+  useEffect(() => {
+    dispatch(addToOverallResults({ userId, res: process.userGameResults }));
+  }, [dispatch, process, userId]);
 
   return (
     <div className={isChecked ? styles.card_wrapSelected : styles.card_wrap} onClick={handleSelectedCard}>

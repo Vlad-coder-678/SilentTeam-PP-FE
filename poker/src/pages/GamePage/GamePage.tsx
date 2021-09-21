@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
-import GeneralButton from '../../components/GeneralButton/GeneralButton';
+// import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import CardGame from '../../components/CardGame/CardGame';
 
 // import { selectIssues } from '../../redux/slices/issuesSlice';
@@ -25,10 +25,18 @@ const GamePage: FC = () => {
   const process = useSelector(selectGameProcess);
   const issueSelected = issues[Number(process.issueIdSelected)];
 
+  const userId = '123';
+
   return (
     <div className={styles.game_wrap}>
       <div className={styles.game_container}>
-        <TitleSection title={'Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)'} />
+        <TitleSection
+          title={`Planning (issues: ${issues
+            .map((is) => is.number)
+            .filter((is, id) => id < 4)
+            .join(', ')}${issues.length > 5 && ', ...'})`}
+          isCapitalLetters
+        />
         <div className={styles.game_content}>
           <div className={styles.game_issueBar}>
             <p>Scram master:</p>
@@ -39,8 +47,9 @@ const GamePage: FC = () => {
               role={admin.role}
             />
             <TitleSection title={'issues:'} />
-            {issues.length > 0
-              && issues.map((item, index) => (
+            {/* eslint-disable-next-line operator-linebreak */}
+            {issues.length > 0 &&
+              issues.map((item, index) => (
                 <CardIssueGame
                   key={item.id}
                   id={item.id}
@@ -55,22 +64,24 @@ const GamePage: FC = () => {
                 <TitleSection title={issueSelected.number} />
                 <div>{issueSelected.desc}</div>
                 <TitleSection title={'please, make your choise:'} />
-                {cards
-                  && cards.map((card, index) => (
+                {/* eslint-disable-next-line operator-linebreak */}
+                {cards &&
+                  cards.map((card, index) => (
                     <CardGame
                       key={card.id}
                       card={card}
                       issue={issueSelected}
                       title={settings.storyTypeShort}
-                      isChecked={process.gameUserResults.some(
+                      isChecked={process.userGameResults.some(
                         (res) => issueSelected.id === res.issueId && index === Number(res.cardId),
                       )}
+                      userId={userId}
                     />
                   ))}
-                <TitleSection title={'ststistics:'} />
+                <TitleSection title={'statistics:'} />
               </>
             )}
-            <GeneralButton type="button" label="StopGame" />
+            {/* <GeneralButton type="button" label="StopGame" /> */}
           </div>
           <div className={styles.game_vote}>
             <h3>Vote</h3>
