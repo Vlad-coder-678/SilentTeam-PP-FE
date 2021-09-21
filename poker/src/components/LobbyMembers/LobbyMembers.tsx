@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Member } from '../../types/common';
-import CardUser, { userProps } from '../CardUser/CardUser';
+import CardUser from '../CardUser/CardUser';
 import TitleSection from '../TitleSection/TitleSection';
 
 import styles from './LobbyMembers.module.scss';
@@ -15,7 +15,7 @@ const LobbyMembers: FC<Props> = ({ users }) => (
     <div className={styles.lobbyPage_section}>
       {users.map((user: Member) => (
         <CardUser
-          key={user.firstName}
+          key={user.userId}
           userId={user.userId}
           firstName={user.firstName}
           lastName={user.lastName}

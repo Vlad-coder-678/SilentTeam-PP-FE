@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import Avatar from '../Avatar/Avatar';
 import KickButton from '../KickButton/KickButton';
-import { mockCurrentUserId } from '../../__mocks__/mockChat';
 import { ROLES, SIZES } from '../../types/common';
+import { currentUserSlice } from '../../redux/slices/roomSlice';
 
 import styles from './IssueChatUserCard.module.scss';
 
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const IssueChatUserCard: FC<Props> = ({ userId, firstName, lastName, role, job }) => {
-  const currentUserId = mockCurrentUserId;
+  const { userId: currentUserId } = useSelector(currentUserSlice);
 
   return (
     <div className={styles.IssueChatUserCard_wrap}>
@@ -31,13 +32,7 @@ const IssueChatUserCard: FC<Props> = ({ userId, firstName, lastName, role, job }
           <p className={styles.IssueChatUserCard_job}>{job}</p>
         </div>
       </div>
-      <KickButton
-        size={SIZES.SMALL}
-        userId={userId}
-        firstName={firstName}
-        lastName={lastName}
-        role={role}
-      />
+      <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
     </div>
   );
 };

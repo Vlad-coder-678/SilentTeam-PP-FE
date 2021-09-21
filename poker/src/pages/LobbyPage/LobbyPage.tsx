@@ -36,12 +36,9 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
   const users = useSelector(allUsersSlice);
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
-  console.log('admin', admin);
-  console.log('users', users);
-
   React.useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
-      console.log('response', response);
+      console.log('get-all-users-in-room', response);
 
       const { eventName, code, error: responseError, data } = response;
 
@@ -56,7 +53,7 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
     };
 
     socket.emit('get-all-users-in-room', { room }, callback);
-  }, [room, socket]);
+  }, [dispatch, history, room, socket]);
 
   return (
     <div className={styles.lobbyPage_wrap}>
