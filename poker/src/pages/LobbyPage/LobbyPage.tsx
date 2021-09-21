@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
 import CardUser from '../../components/CardUser/CardUser';
@@ -12,11 +12,11 @@ import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
 import { isModalOpenSlice } from '../../redux/slices/kickSlice';
-
-import styles from './LobbyPage.module.scss';
-import { adminSlice, allUsersSlice, currentRoomSlice } from '../../redux/slices/roomSlice';
+import { adminSlice, allUsersSlice, currentRoomSlice, initRoom } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
+
+import styles from './LobbyPage.module.scss';
 
 interface Props {
   issues?: { issueId: string }[];
@@ -25,6 +25,10 @@ interface Props {
 }
 
 const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const room = useSelector(currentRoomSlice);
@@ -32,9 +36,23 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
   const users = useSelector(allUsersSlice);
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
+  console.log('admin', admin);
+  console.log('users', users);
+
   React.useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
       console.log('response', response);
+
+      const { eventName, code, error: responseError, data } = response;
+
+      if (responseError) {
+        // eslint-disable-next-line no-console
+        console.log(`${eventName}: ${code}: ${responseError}`);
+        history.push('/');
+      } else {
+        const { users: responseUsers } = data;
+        dispatch(initRoom(responseUsers));
+      }
     };
 
     socket.emit('get-all-users-in-room', { room }, callback);
@@ -48,7 +66,13 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
           <p>Scram master:</p>
         </div>
         <div className={styles.lobbyPage_section}>
-          <CardUser firstName={admin.firstName} lastName={admin.lastName} jobPosition={admin.job} role={admin.role} />
+          <CardUser
+            userId={admin.userId}
+            firstName={admin.firstName}
+            lastName={admin.lastName}
+            jobPosition={admin.job}
+            role={admin.role}
+          />
         </div>
         <LobbyScramButtons link={link} />
         <LobbyMembers users={users} />

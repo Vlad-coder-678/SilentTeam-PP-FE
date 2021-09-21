@@ -20,11 +20,10 @@ interface FormState {
 
 interface Props {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  role: ROLES;
   url?: string;
 }
 
-const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
+const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
   const history = useHistory();
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
@@ -64,12 +63,16 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
     console.log('room:', room);
     console.log('url', url);
 
+    let userRole = ROLES.USER;
+    if (observer) userRole = ROLES.OBSERVER;
+    else if (isAdmin) userRole = ROLES.ADMIN;
+
     const user: Member = {
       userId: socket.id,
       firstName,
       lastName,
       job: jobPosition,
-      role: observer ? ROLES.OBSERVER : role,
+      role: userRole,
     };
 
     const callback = (response: ResponseFromSocket): void => {
@@ -80,7 +83,6 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, role, url }) => {
       // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
-        console.log(response);
         const { user: responseUser } = data;
         dispatch(setCurrentRoom(responseUser.room));
         const userToRedux = {

@@ -37,14 +37,6 @@ export interface SocketError {
   eventName: string;
 }
 
-export interface User {
-  firstName: string;
-  lastName: string;
-  jobPosition: string;
-  role: ROLES;
-  room: string;
-}
-
 export interface ResponseFromSocket {
   eventName: string;
   code: number;

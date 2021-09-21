@@ -32,10 +32,18 @@ export const roomSlice = createSlice({
     setIsAdmin: (state, action: PayloadAction<boolean>) => {
       state.isAdmin = action.payload;
     },
+    initRoom: (state, action: PayloadAction<Array<Member>>) => {
+      const allUsersInRoom = action.payload;
+      const currentAdmin = allUsersInRoom.shift();
+      if (currentAdmin) {
+        state.admin = currentAdmin;
+        state.allUsers = allUsersInRoom;
+      }
+    },
   },
 });
 
-export const { loginUser, setCurrentRoom, setIsAdmin } = roomSlice.actions;
+export const { loginUser, setCurrentRoom, setIsAdmin, initRoom } = roomSlice.actions;
 
 export const currentRoomSlice = (state: RootState): string => state.room.currentRoom;
 export const currentUserSlice = (state: RootState): Member => state.room.currentUser;
