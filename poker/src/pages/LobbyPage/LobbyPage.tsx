@@ -73,8 +73,8 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
         </div>
         <LobbyScramButtons link={link} />
         <LobbyMembers users={users} />
-        <LobbyIssues issues={issues} />
-        <LobbySetting cards={cards} />
+        <LobbyIssues />
+        <LobbySetting />
       </div>
       <Chat />
       {isKickModalOpen && <KickModal />}

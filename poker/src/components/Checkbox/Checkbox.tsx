@@ -3,7 +3,7 @@ import styles from './Checkbox.module.scss';
 
 interface Props {
   name: string;
-  isChecked?: boolean;
+  isChecked: boolean;
   onChange?: () => void;
 }
 
