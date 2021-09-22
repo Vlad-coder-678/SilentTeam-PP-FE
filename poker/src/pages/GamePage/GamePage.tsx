@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
-// import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import CardGame from '../../components/CardGame/CardGame';
 
 // import { selectIssues } from '../../redux/slices/issuesSlice';
@@ -19,13 +18,13 @@ import styles from './GamePage.module.scss';
 
 const GamePage: FC = () => {
   // const issues = useSelector(selectIssues);
-  const issues: issueGame[] = mockIssues;
+  const issues: issueGame[] = mockIssues; // mock
   const cards = useSelector(selectGameCards);
   const settings = useSelector(selectGameSetting);
   const process = useSelector(selectGameProcess);
   const issueSelected = issues[Number(process.issueIdSelected)];
 
-  const userId = '123';
+  const userId = '123'; // mock
 
   return (
     <div className={styles.game_wrap}>
@@ -79,9 +78,26 @@ const GamePage: FC = () => {
                     />
                   ))}
                 <TitleSection title={'statistics:'} />
+                <div className={styles.statistics}>
+                  {process.resForStat.map((issue) => {
+                    const hundred = issue.cards.reduce((acc, card) => acc + card.usersId.length, 0);
+
+                    return (
+                      <p key={issue.issueId}>
+                        {issue.issueId}
+                        <span>
+                          {issue.cards.map((card) => (
+                            <p key={card.cardId}>
+                              {card.cardId} = {(card.usersId.length * 100) / hundred}%
+                            </p>
+                          ))}
+                        </span>
+                      </p>
+                    );
+                  })}
+                </div>
               </>
             )}
-            {/* <GeneralButton type="button" label="StopGame" /> */}
           </div>
           <div className={styles.game_vote}>
             <h3>Vote</h3>

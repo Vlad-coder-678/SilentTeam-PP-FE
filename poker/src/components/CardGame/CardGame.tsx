@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
 import { CardGameSetting, issueGame } from '../../types/common';
-import { selectedCard, addToOverallResults, selectGameProcess } from '../../redux/slices/gameProcessSlice';
+import { selectedCard, addResForVote, addResForStat, selectGameProcess } from '../../redux/slices/gameProcessSlice';
 
 import styles from './CardGame.module.scss';
 
@@ -24,8 +24,12 @@ const CardGame: FC<Props> = ({ card, issue, title, isChecked, userId }) => {
   };
 
   useEffect(() => {
-    dispatch(addToOverallResults({ userId, res: process.userGameResults }));
-  }, [dispatch, process, userId]);
+    dispatch(addResForVote({ userId, res: process.userGameResults }));
+  }, [dispatch, process.userGameResults, userId]);
+
+  useEffect(() => {
+    dispatch(addResForStat(process.resForVote));
+  }, [dispatch, process.resForVote]);
 
   return (
     <div className={isChecked ? styles.card_wrapSelected : styles.card_wrap} onClick={handleSelectedCard}>
