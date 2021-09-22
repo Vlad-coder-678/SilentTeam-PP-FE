@@ -11,7 +11,7 @@ import styles from './LobbySetting.module.scss';
 
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import {
-  selectgameSetting,
+  selectGameSetting,
   changeMasterIsPlayer,
   isChangeCard,
   changeIsNeededTimer,
@@ -24,7 +24,7 @@ import close from '../../assets/images/svg/close.svg';
 const LobbySetting: FC = () => {
   const [isVisibleRoundTime, setIsVisibleRoundTime] = useState<boolean>(false);
   const cards = useSelector(selectGameCards);
-  const settings = useSelector(selectgameSetting);
+  const settings = useSelector(selectGameSetting);
   const dispatch = useDispatch();
 
   const newCard = {
@@ -86,11 +86,11 @@ const LobbySetting: FC = () => {
         <Checkbox name={'isTimerNeeded'} isChecked={settings.isNeededTimer} onChange={handleChangeTimerNeeded} />
       </div>
       <div className={styles.lobbyPage_setting_item}>
-        <p>Scroll type:</p>
-        <InputComponent name={'scrollType'} value={settings.storyType} onChange={handleChangeStoryType} />
+        <p>Story type:</p>
+        <InputComponent name={'storyType'} value={settings.storyType} onChange={handleChangeStoryType} />
       </div>
       <div className={styles.lobbyPage_setting_item}>
-        <p>Scroll type(Short):</p>
+        <p>Story type(Short):</p>
         <CardStoryTypeShort label={settings.storyTypeShort} />
       </div>
       <div className={styles.lobbyPage_setting_item}>

@@ -1,7 +1,15 @@
+.title_section_capital,
 .title_section {
   width: 100%;
   text-align: center;
   font-size: 1.5rem;
-  text-transform: lowercase;
   font-weight: 600;
+}
+
+.title_section_capital {
+  text-transform: capitalize;
+}
+
+.title_section {
+  text-transform: lowercase;
 }

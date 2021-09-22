@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CardGame as CG } from '../../types/common';
+import { CardGameSetting as CG } from '../../types/common';
 import type { RootState } from '../store';
 
 const initialState: CG[] = [

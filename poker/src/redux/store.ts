@@ -5,6 +5,7 @@ import roomReducer from './slices/roomSlice';
 import issuesReducer from './slices/issuesSlice';
 import gameCardsReducer from './slices/gameCardsSlice';
 import gameSettingsReducer from './slices/gameSettingSlice';
+import gameProcessReducer from './slices/gameProcessSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     issues: issuesReducer,
     gameCards: gameCardsReducer,
     gameSettings: gameSettingsReducer,
+    gameProcess: gameProcessReducer,
   },
 });
 
