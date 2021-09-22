@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { INIT_MEMBER } from '../../constants';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import {
@@ -7,48 +9,25 @@ import {
   kickIdSlice,
   setIsModalOpen,
   setIsModalOpenBySocketEvent,
-  setKickId,
   setWhoKick,
   setWhoWillBeKicked,
   whoKickSlice,
   whoWillBeKickedSlice,
 } from '../../redux/slices/kickSlice';
 import { SocketContext } from '../../socketContext';
-import { KICKED_MESSAGES, Member, ROLES } from '../../types/common';
+import { KICKED_MESSAGES, ROLES } from '../../types/common';
 
 import styles from './KickModal.module.scss';
+import { currentRoomSlice } from '../../redux/slices/roomSlice';
 
 const KickModal: FC = () => {
-  const socket = React.useContext(SocketContext);
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const dispatch = useDispatch();
 
   const isModalOpenBySocketEvent = useSelector(isModalOpenBySocketEventSlice);
-
   const kickId = useSelector(kickIdSlice);
-
-  React.useEffect(() => {
-    const kickUserSuccess = (response: {
-      room: string;
-      whoKick: Member;
-      whoWillBeKicked: Member;
-      kickId: string;
-    }): void => {
-      dispatch(setWhoKick(response.whoKick));
-      dispatch(setWhoWillBeKicked(response.whoWillBeKicked));
-      dispatch(setKickId(response.kickId));
-      dispatch(setIsModalOpenBySocketEvent(true));
-      dispatch(setIsModalOpen(true));
-    };
-
-    socket.on('do-you-want-kick-user', kickUserSuccess);
-
-    return (): void => {
-      socket.off('do-you-want-kick-user', kickUserSuccess);
-    };
-  });
-
-  const currentRoom = '123';
+  const currentRoom = useSelector(currentRoomSlice);
   const whoKick = useSelector(whoKickSlice);
   const whoWillBeKicked = useSelector(whoWillBeKickedSlice);
 

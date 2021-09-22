@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-import { chatMessagesSlice, updateAllChat } from '../../redux/slices/chatSlice';
+import { chatMessagesSlice, updateAllChat, updateChat } from '../../redux/slices/chatSlice';
 import { currentRoomSlice } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
@@ -15,7 +15,6 @@ const Chat: FC = () => {
   const chat = useSelector(chatMessagesSlice);
   const room = useSelector(currentRoomSlice);
 
-  console.log('chat', chat);
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const Chat: FC = () => {
 
   React.useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
-      console.log('get-all-chat', response);
+      console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
 
@@ -42,6 +41,47 @@ const Chat: FC = () => {
 
     socket.emit('get-all-chat', room, callback);
   }, [dispatch, room, socket]);
+
+  React.useEffect(() => {
+    const updateAllChatSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+
+      const { eventName, code, error: responseError, data } = response;
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { messages: responseMessages } = data;
+        dispatch(updateAllChat(responseMessages));
+      }
+    };
+
+    socket.on('update-chat', updateAllChatSuccess);
+
+    return (): void => {
+      socket.off('update-chat', updateAllChatSuccess);
+    };
+  });
+
+  React.useEffect(() => {
+    const updateChatSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { message: responseMessage } = data;
+        dispatch(updateChat(responseMessage));
+      }
+    };
+
+    socket.on('get-message', updateChatSuccess);
+
+    return (): void => {
+      socket.off('get-message', updateChatSuccess);
+    };
+  });
 
   return (
     <div className={styles.Chat_wrap}>
