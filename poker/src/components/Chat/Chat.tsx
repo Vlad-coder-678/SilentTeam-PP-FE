@@ -15,7 +15,6 @@ const Chat: FC = () => {
   const chat = useSelector(chatMessagesSlice);
   const room = useSelector(currentRoomSlice);
 
-  console.log('chat', chat);
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const Chat: FC = () => {
 
   React.useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
-      console.log('get-all-chat', response);
+      console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
 
@@ -44,7 +43,29 @@ const Chat: FC = () => {
   }, [dispatch, room, socket]);
 
   React.useEffect(() => {
+    const updateAllChatSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+
+      const { eventName, code, error: responseError, data } = response;
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { messages: responseMessages } = data;
+        dispatch(updateAllChat(responseMessages));
+      }
+    };
+
+    socket.on('update-chat', updateAllChatSuccess);
+
+    return (): void => {
+      socket.off('update-chat', updateAllChatSuccess);
+    };
+  });
+
+  React.useEffect(() => {
     const updateChatSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+
       const { eventName, code, error: responseError, data } = response;
 
       // eslint-disable-next-line no-console
