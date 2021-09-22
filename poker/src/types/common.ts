@@ -37,12 +37,12 @@ export interface SocketError {
   eventName: string;
 }
 
-
 export interface ResponseFromSocket {
   eventName: string;
   code: number;
   error: string;
   data: any;
+}
 
 export interface Issue {
   id?: string;

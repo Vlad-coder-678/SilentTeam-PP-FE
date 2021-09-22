@@ -7,7 +7,7 @@ const mockRoom = {
       userId: '_t3wWKYcSCd4y2feAAAh',
       firstName: 'Devid',
       lastName: 'Blain',
-      role: ROLES.USER,
+      role: ROLES.ADMIN,
     },
     {
       userId: 'Fr-SXZ4JKP8ptB4nAAAj',

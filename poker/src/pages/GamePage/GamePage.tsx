@@ -12,7 +12,7 @@ import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
 import { selectGameProcess } from '../../redux/slices/gameProcessSlice';
 import mockIssues from '../../__mocks__/mockIssues';
-import { admin } from '../../__mocks__/mockRoom';
+import mockRoom from '../../__mocks__/mockRoom';
 import type { issueGame } from '../../types/common';
 
 import styles from './GamePage.module.scss';
@@ -26,6 +26,7 @@ const GamePage: FC = () => {
   const issueSelected = issues[Number(process.issueIdSelected)];
 
   const userId = '123'; // mock
+  const admin = mockRoom.users[0]; // mock
 
   return (
     <div className={styles.game_wrap}>
@@ -41,9 +42,9 @@ const GamePage: FC = () => {
           <div className={styles.game_issueBar}>
             <p>Scram master:</p>
             <CardUser
+              userId={admin.userId}
               firstName={admin.firstName}
               lastName={admin.lastName}
-              jobPosition={admin.jobPosition}
               role={admin.role}
             />
             <TitleSection title={'issues:'} />
