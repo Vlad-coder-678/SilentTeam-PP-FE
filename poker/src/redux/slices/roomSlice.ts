@@ -40,10 +40,13 @@ export const roomSlice = createSlice({
         state.allUsers = allUsersInRoom;
       }
     },
+    updateMembers: (state, action: PayloadAction<Member>) => {
+      state.allUsers.push(action.payload);
+    },
   },
 });
 
-export const { loginUser, setCurrentRoom, setIsAdmin, initRoom } = roomSlice.actions;
+export const { loginUser, setCurrentRoom, setIsAdmin, initRoom, updateMembers } = roomSlice.actions;
 
 export const currentRoomSlice = (state: RootState): string => state.room.currentRoom;
 export const currentUserSlice = (state: RootState): Member => state.room.currentUser;

@@ -12,7 +12,7 @@ import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
 import { isModalOpenSlice } from '../../redux/slices/kickSlice';
-import { adminSlice, allUsersSlice, currentRoomSlice, initRoom } from '../../redux/slices/roomSlice';
+import { adminSlice, allUsersSlice, currentRoomSlice, initRoom, updateMembers } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
 
@@ -37,6 +37,25 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
   React.useEffect(() => {
+    const updateMembersSuccess = (response: ResponseFromSocket): void => {
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { user: responseUser } = data;
+        dispatch(updateMembers(responseUser));
+      }
+    };
+
+    socket.on('add-member', updateMembersSuccess);
+
+    return (): void => {
+      socket.off('add-member', updateMembersSuccess);
+    };
+  });
+
+  React.useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
       console.log('get-all-users-in-room', response);
 
@@ -58,7 +77,7 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
   return (
     <div className={styles.lobbyPage_wrap}>
       <div className={styles.lobbyPage_container}>
-        <TitleSection title={'Poker Planning'} isCapitalLetters/>
+        <TitleSection title={'Poker Planning'} isCapitalLetters />
         <div className={styles.lobbyPage_section}>
           <p>Scram master:</p>
         </div>
