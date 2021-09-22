@@ -11,12 +11,10 @@ import {
   setWhoKick,
   setWhoWillBeKicked,
   whoKickSlice,
-  // whoWillBeKickedSlice,
+  whoWillBeKickedSlice,
 } from '../../redux/slices/kickSlice';
 import { SocketContext } from '../../socketContext';
 import { KICKED_MESSAGES, Member, ROLES } from '../../types/common';
-import { mockRoom } from '../../__mocks__/mockKick';
-import TESTsocket from '../TESTsocket/TESTsocket';
 
 import styles from './KickModal.module.scss';
 
@@ -50,15 +48,9 @@ const KickModal: FC = () => {
     };
   });
 
-  const currentRoom = mockRoom;
+  const currentRoom = '123';
   const whoKick = useSelector(whoKickSlice);
-  // const whoWillBeKicked = useSelector(whoWillBeKickedSlice);
-  const whoWillBeKicked = {
-    userId: '61423495be14737572a581a3',
-    firstName: 'User firstName1',
-    lastName: 'User lastName1',
-    role: 'user',
-  };
+  const whoWillBeKicked = useSelector(whoWillBeKickedSlice);
 
   const handleClickConfirm = (): void => {
     if (whoKick.role === ROLES.ADMIN) {
@@ -103,7 +95,6 @@ const KickModal: FC = () => {
 
   return (
     <div className={styles.wrap}>
-      <TESTsocket />
       <div className={styles.modal}>
         <h2 className={styles.header}>Kick Player?</h2>
         {isModalOpenBySocketEvent ? (

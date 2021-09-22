@@ -5,6 +5,7 @@ import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
+import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
 
 // import { selectIssues } from '../../redux/slices/issuesSlice';
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
@@ -100,7 +101,7 @@ const GamePage: FC = () => {
             )}
           </div>
           <div className={styles.game_vote}>
-            <h3>Vote</h3>
+            <ChatToVoteOnIssue />
           </div>
         </div>
       </div>

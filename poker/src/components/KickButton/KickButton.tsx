@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import kickIcon from '../../assets/images/svg/kick.svg';
 import {
   setIsModalOpen,
@@ -8,8 +7,8 @@ import {
   setWhoKick,
   setWhoWillBeKicked,
 } from '../../redux/slices/kickSlice';
+import { currentUserSlice } from '../../redux/slices/roomSlice';
 import { ROLES, SIZES } from '../../types/common';
-import { mockCurrentUser } from '../../__mocks__/mockKick';
 
 import styles from './KickButton.module.scss';
 
@@ -23,7 +22,7 @@ interface Props {
 
 const KickButton: FC<Props> = ({ size, userId, firstName, lastName, role }) => {
   const dispatch = useDispatch();
-  const currentUser = mockCurrentUser;
+  const currentUser = useSelector(currentUserSlice);
   const kickedUser = { userId, firstName, lastName, role };
 
   const handleOnKickUser = (): void => {

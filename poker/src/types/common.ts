@@ -37,6 +37,13 @@ export interface SocketError {
   eventName: string;
 }
 
+
+export interface ResponseFromSocket {
+  eventName: string;
+  code: number;
+  error: string;
+  data: any;
+
 export interface Issue {
   id?: string;
   number?: string;
@@ -63,14 +70,6 @@ export interface GameSettingsInit {
   roundTime: number;
   minGameCardValue: number;
   maxGameCardValue: number;
-}
-
-export interface User {
-  firstName: string;
-  lastName: string;
-  jobPosition: string;
-  role: ROLES;
-  room: string;
 }
 
 export interface issueGame {

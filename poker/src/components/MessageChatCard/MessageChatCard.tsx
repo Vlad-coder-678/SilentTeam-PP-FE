@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import Avatar from '../Avatar/Avatar';
 import KickButton from '../KickButton/KickButton';
-import { mockCurrentUserId } from '../../__mocks__/mockChat';
 import { Message, ROLES, SIZES } from '../../types/common';
+import { KICKED_ID } from '../../constants';
+import { currentUserSlice } from '../../redux/slices/roomSlice';
 
 import styles from './MessageChatCard.module.scss';
-import { KICKED_ID } from '../../constants';
 
 interface Props {
   messageCard: Message;
 }
 
 const MessageChatCard: FC<Props> = ({ messageCard }) => {
-  const currentUserId = mockCurrentUserId;
+  const { userId: currentUserId } = useSelector(currentUserSlice);
 
   const { userId, firstName, lastName, role, message } = messageCard;
 
@@ -28,9 +29,6 @@ const MessageChatCard: FC<Props> = ({ messageCard }) => {
             </p>
           </div>
         </div>
-        {/* {currentRole === ROLES.ADMIN && role !== ROLES.ADMIN && (
-          <img className={styles.messageChatCard_icon} src={kickIcon} alt="kick" onClick={handleOnKickUser} />
-        )} */}
         <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
       </div>
       <p className={styles.messageChatCard_content}>{message}</p>
