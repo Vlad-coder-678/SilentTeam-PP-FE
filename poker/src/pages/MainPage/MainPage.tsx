@@ -38,7 +38,7 @@ const MainPage: FC = () => {
       </div>
       <h3>OR:</h3>
       <label>
-        Connect to lobby by <span>URL</span>:
+        Connect to lobby by <span>ID</span>:
       </label>
       <div className={styles.MainPage_item}>
         <InputComponent onChange={handleEnterUrlGame} />

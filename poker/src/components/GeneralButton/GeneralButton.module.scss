@@ -4,13 +4,12 @@
 .GeneralButton_secondary {
   display: block;
   margin: 0;
-  padding: 0 10px;
-  min-width: 240px;
+  padding: 10px;
+  min-width: 200px;
   border: 1px solid $base-cornflower-blue;
   border-radius: 2px;
   font-family: 'Ruda', sans-serif;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -55,9 +54,6 @@
 @media screen and (max-width: 768px) {
   .GeneralButton_primary,
   .GeneralButton_secondary {
-    min-width: 200px;
     font-size: 1rem;
-    line-height: 2rem;
-    margin-left: 25px;
   }
 }
