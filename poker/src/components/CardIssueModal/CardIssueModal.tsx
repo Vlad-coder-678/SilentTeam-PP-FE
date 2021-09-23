@@ -18,8 +18,8 @@ interface Props {
 const CardIssueModal: FC<Props> = ({ setIsOpen, issue, option }) => {
   const dispatch = useDispatch();
 
-  const handleOnChangeIssueNumber = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(fixIs({ ...issue, number: e.target.value }));
+  const handleOnChangeIssueTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(fixIs({ ...issue, title: e.target.value }));
   };
 
   const handleOnChangeIssueDesc = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -36,36 +36,31 @@ const CardIssueModal: FC<Props> = ({ setIsOpen, issue, option }) => {
   };
 
   return (
-    <div
-      className={styles.modal_wrap}
-      onClick={(): void => {
-        setIsOpen(false);
-      }}
-    >
+    <div className={styles.issue_modal_wrap} onClick={handleClickCancel}>
       <form
-        className={styles.modal_form}
+        className={styles.issue_modal_form}
         onClick={(e): void => {
           e.stopPropagation();
         }}
         onSubmit={handelSubmit}
       >
         {option === 'remove' ? (
-          <TitleSection title="Are you sure about that?" />
+          <TitleSection title="Are you sure about that?" isCapitalLetters />
         ) : (
           <>
-            <TitleSection title="Enter issue specification" />
-            <label className={styles.modal_issueNumber} htmlFor="issueNumber">
-              Enter issue Number
+            <TitleSection title="Enter issue specification" isCapitalLetters />
+            <label className={styles.modal_issueTitle} htmlFor="issueTitle">
+              Enter title
             </label>
-            <InputComponent name="issueNumber" value={issue.number} onChange={handleOnChangeIssueNumber} />
-            <label className={styles.modal_issueDesc} htmlFor="issueNumber">
-              Enter issue Description
+            <InputComponent name="issueTitle" value={issue.title} onChange={handleOnChangeIssueTitle} />
+            <label className={styles.modal_issueDesc} htmlFor="issueTitle">
+              Enter description
             </label>
             <InputComponent name="issueDesc" value={issue.desc} onChange={handleOnChangeIssueDesc} />
           </>
         )}
 
-        <div className={styles.modal_footer}>
+        <div className={styles.issue_modal_footer}>
           <GeneralButton type="submit" label={'Accept'} primaryBG />
           <GeneralButton type="button" label={'Cancel'} onClick={handleClickCancel} />
         </div>

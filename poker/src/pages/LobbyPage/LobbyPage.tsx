@@ -49,6 +49,7 @@ const LobbyPage: FC = () => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { user: responseUser } = data;
@@ -68,6 +69,7 @@ const LobbyPage: FC = () => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { user: responseUser } = data;
@@ -89,6 +91,7 @@ const LobbyPage: FC = () => {
       const { eventName, code, error: responseError, data } = response;
 
       if (responseError) {
+        // eslint-disable-next-line no-console
         console.log(`${eventName}: ${code}: ${responseError}`);
         history.push('/');
       } else {
@@ -104,6 +107,7 @@ const LobbyPage: FC = () => {
     const kickUserSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { kick: responseKick } = data;

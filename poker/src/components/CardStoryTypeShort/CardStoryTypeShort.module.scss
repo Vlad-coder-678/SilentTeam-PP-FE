@@ -1,11 +1,11 @@
 @import '../../styles/common.scss';
 
 .Card_wrap {
-  width: 100px;
-  height: 120px;
+  width: 85px;
+  height: 100px;
   border-radius: 10px;
   box-shadow: 0 4px 4px 0 $shadow-one-quarter;
-  margin: 10px;
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +30,6 @@
 
 .Card_value_top,
 .Card_value_bottom {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   font-weight: 300;
 }

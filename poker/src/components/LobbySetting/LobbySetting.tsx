@@ -7,8 +7,6 @@ import InputComponent from '../InputComponent/InputComponent';
 import CardGameLobby from '../CardGameLobby/CardGameLobby';
 import CardStoryTypeShort from '../CardStoryTypeShort/CardStoryTypeShort';
 
-import styles from './LobbySetting.module.scss';
-
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import {
   selectGameSetting,
@@ -19,7 +17,9 @@ import {
   changeStoryTypeShort,
   changeRoundTime,
 } from '../../redux/slices/gameSettingSlice';
-import close from '../../assets/images/svg/close.svg';
+import close from '../../assets/images/svg/timerSettingClose.svg';
+
+import styles from './LobbySetting.module.scss';
 
 const LobbySetting: FC = () => {
   const [isVisibleRoundTime, setIsVisibleRoundTime] = useState<boolean>(false);
@@ -73,14 +73,14 @@ const LobbySetting: FC = () => {
         <p>Scram master as player:</p>
         <Checkbox name={'master/player'} isChecked={settings.masterIsPlayer} onChange={handleChangeMasterOrPlayer} />
       </div>
-      <div className={styles.lobbyPage_setting_item}>
+      {/* <div className={styles.lobbyPage_setting_item}>
         <p>Changing card in round end:</p>
         <Checkbox
           name={'isChangeCardInRoundEnd'}
           isChecked={settings.isChangeCard}
           onChange={handleChangeCardInRoundEnd}
         />
-      </div>
+      </div> */}
       <div className={styles.lobbyPage_setting_item}>
         <p>Is timer needed:</p>
         <Checkbox name={'isTimerNeeded'} isChecked={settings.isNeededTimer} onChange={handleChangeTimerNeeded} />

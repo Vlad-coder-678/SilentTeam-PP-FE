@@ -1,13 +1,14 @@
 import React, { useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { CardGameSetting } from '../../types/common';
+import { createGC, fixGC, sortGC, removeGC } from '../../redux/slices/gameCardsSlice';
 import plus from '../../assets/images/svg/plus.svg';
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
 import pencil from '../../assets/images/svg/pencil.svg';
-import styles from './CardGameLobby.module.scss';
-import { createGC, fixGC, sortGC, removeGC } from '../../redux/slices/gameCardsSlice';
-import { CardGameSetting } from '../../types/common';
 import basket from '../../assets/images/svg/basket.svg';
+
+import styles from './CardGameLobby.module.scss';
 
 interface Props {
   card: CardGameSetting;

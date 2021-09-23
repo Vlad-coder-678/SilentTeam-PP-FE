@@ -1,7 +1,11 @@
 @import '../../styles/common.scss';
 
+.lobbyPage_wrap {
+  z-index: 0;
+}
+
 .lobbyPage_container {
-  max-width: 768px;
+  max-width: 810px;
   margin: 0 auto;
   box-shadow: 0 4px 4px 0 $shadow-one-quarter;
   padding: 25px;

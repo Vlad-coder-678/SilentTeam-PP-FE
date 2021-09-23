@@ -46,7 +46,7 @@ export interface ResponseFromSocket {
 
 export interface Issue {
   id?: string;
-  number?: string;
+  title?: string;
   desc?: string;
 }
 
@@ -74,7 +74,7 @@ export interface GameSettingsInit {
 
 export interface issueGame {
   id: string;
-  number: string;
+  title: string;
   desc: string;
   choise: string;
   isChecked: boolean;
