@@ -1,0 +1,22 @@
+@import '../../styles/common.scss';
+
+.icon_close_chat_wrap {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 25px;
+  height: 25px;
+  background-color: $blue-light;
+  border-radius: 50%;
+  border: 3px solid $red-red;
+  @include iconHoverWithTransition;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon_close_chat_wrap img {
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+}

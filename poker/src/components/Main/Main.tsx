@@ -17,7 +17,7 @@ const Main: FC = () => {
           <MainPage />
         </Route>
         <Route path={'/lobby'}>
-          <LobbyPage link={location.pathname} />
+          <LobbyPage />
         </Route>
         <Route path="/game">
           <GamePage />

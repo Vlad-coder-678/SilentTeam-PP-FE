@@ -1,4 +1,4 @@
-import React, { useState, FC, ChangeEvent } from 'react';
+import React, { useState, FC, ChangeEvent, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import MainPageTitle from '../../components/MainPageTitle/MainPageTitle';
@@ -11,9 +11,8 @@ import styles from './MainPage.module.scss';
 
 const MainPage: FC = () => {
   const dispatch = useDispatch();
-
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>('');
+  const [room, setRoom] = useState<string>('');
 
   const handleCreateNewGame = (): void => {
     dispatch(setIsAdmin(true));
@@ -25,8 +24,13 @@ const MainPage: FC = () => {
   };
 
   const handleEnterUrlGame = (e: ChangeEvent<HTMLInputElement>): void => {
-    setUrl(e.target.value);
+    setRoom(e.target.value);
   };
+
+  useEffect(() => {
+    const roomId = window.location.href.split('#')[1] ?? '';
+    setRoom(roomId);
+  }, []);
 
   return (
     <div className={styles.MainPage_wrap}>
@@ -41,10 +45,10 @@ const MainPage: FC = () => {
         Connect to lobby by <span>ID</span>:
       </label>
       <div className={styles.MainPage_item}>
-        <InputComponent onChange={handleEnterUrlGame} />
+        <InputComponent value={room} onChange={handleEnterUrlGame} />
         <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
-      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} url={url} />}
+      {isVisible && <ConnectToLobby setIsVisible={setIsVisible} url={room} />}
     </div>
   );
 };
