@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
+
 import CardUser from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -11,6 +12,7 @@ import LobbyMembers from '../../components/LobbyMembers/LobbyMembers';
 import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
+
 import {
   isModalOpenSlice,
   setIsModalOpen,
@@ -33,18 +35,13 @@ import { ResponseFromSocket } from '../../types/common';
 import styles from './LobbyPage.module.scss';
 
 interface Props {
-  issues?: { issueId: string }[];
-  cards?: { value: string | number }[];
   link: string;
 }
 
-const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
+const LobbyPage: FC<Props> = ({ link }) => {
   const history = useHistory();
-
   const dispatch = useDispatch();
-
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
-
   const room = useSelector(currentRoomSlice);
   const admin = useSelector(adminSlice);
   const users = useSelector(allUsersSlice);
@@ -54,7 +51,6 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
-      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { user: responseUser } = data;
@@ -74,7 +70,6 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
-      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { user: responseUser } = data;
@@ -96,7 +91,6 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
       const { eventName, code, error: responseError, data } = response;
 
       if (responseError) {
-        // eslint-disable-next-line no-console
         console.log(`${eventName}: ${code}: ${responseError}`);
         history.push('/');
       } else {
@@ -112,7 +106,6 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
     const kickUserSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
-      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { kick: responseKick } = data;

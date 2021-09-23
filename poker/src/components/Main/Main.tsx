@@ -7,8 +7,6 @@ import GamePage from '../../pages/GamePage/GamePage';
 import GameResultPage from '../../pages/GameResultPage/GameResultPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
-import mockRoom from '../../__mocks__/mockRoom';
-
 const Main: FC = () => {
   const location = useLocation();
 
@@ -19,7 +17,7 @@ const Main: FC = () => {
           <MainPage />
         </Route>
         <Route path={'/lobby'}>
-          <LobbyPage issues={mockRoom.issues} link={location.pathname} cards={mockRoom.cards} />
+          <LobbyPage link={location.pathname} />
         </Route>
         <Route path="/game">
           <GamePage />
