@@ -14,8 +14,10 @@ const ChatCloseButton: FC<Props> = ({ isVisible, setIsVisible }) => {
   };
 
   return (
-    <div className={styles.icon_close_chat_wrap} onClick={handleOpenChat}>
-      <img src={iconChatClose} alt={'close chat'} />
+    <div className={styles.icon_close_chat_wrap}>
+      <div className={styles.icon_close_chat_item} onClick={handleOpenChat}>
+        <img src={iconChatClose} alt={'close chat'} />
+      </div>
     </div>
   );
 };
