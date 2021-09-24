@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
-
 import CardUser from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -13,7 +12,6 @@ import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
 import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
-
 import {
   isModalOpenSlice,
   setIsModalOpen,
@@ -33,8 +31,11 @@ import {
 } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
+import GeneralButton from '../../components/GeneralButton/GeneralButton';
+import exitToMainPage from '../../utils/exit';
 
 import styles from './LobbyPage.module.scss';
+import Exit from '../../components/Exit/Exit';
 
 const LobbyPage: FC = () => {
   const history = useHistory();
@@ -57,7 +58,7 @@ const LobbyPage: FC = () => {
         const { user: responseUser } = data;
         dispatch(deleteMember(responseUser));
 
-        if (currentUser.userId === responseUser.userId) history.push('/');
+        if (currentUser.userId === responseUser.userId) exitToMainPage();
       }
     };
 
@@ -147,6 +148,7 @@ const LobbyPage: FC = () => {
           />
         </div>
         <LobbyScramButtons room={room} />
+        <Exit />
         <LobbyMembers users={users} />
         <LobbyIssues />
         <LobbySetting />
