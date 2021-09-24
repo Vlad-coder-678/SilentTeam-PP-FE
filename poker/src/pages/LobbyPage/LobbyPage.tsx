@@ -26,6 +26,7 @@ import {
   adminSlice,
   allUsersSlice,
   currentRoomSlice,
+  currentUserSlice,
   deleteMember,
   initRoom,
   updateMembers,
@@ -40,6 +41,7 @@ const LobbyPage: FC = () => {
   const dispatch = useDispatch();
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
   const room = useSelector(currentRoomSlice);
+  const currentUser = useSelector(currentUserSlice);
   const admin = useSelector(adminSlice);
   const users = useSelector(allUsersSlice);
   const [isVisible, setIsVisible] = React.useState(false);
@@ -54,6 +56,8 @@ const LobbyPage: FC = () => {
       else {
         const { user: responseUser } = data;
         dispatch(deleteMember(responseUser));
+
+        if (currentUser.userId === responseUser.userId) history.push('/');
       }
     };
 
