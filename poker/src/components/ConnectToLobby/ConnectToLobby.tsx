@@ -68,6 +68,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
 
         const { eventName, code, error: responseError, data } = response;
 
+        // eslint-disable-next-line no-console
         if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
         else {
           const { user: responseUser } = data;

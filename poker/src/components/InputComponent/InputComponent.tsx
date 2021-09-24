@@ -6,14 +6,16 @@ interface Props {
   value?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isError?: boolean;
+  isReadOnly?: boolean;
 }
 
-const InputComponent: FC<Props> = ({ onChange, name, value, isError }) => (
+const InputComponent: FC<Props> = ({ onChange, name, value, isError, isReadOnly }) => (
   <input
     name={name}
     value={value}
     onChange={onChange}
     className={isError ? styles.InputComponent_error : styles.InputComponent}
+    readOnly={isReadOnly}
   />
 );
 

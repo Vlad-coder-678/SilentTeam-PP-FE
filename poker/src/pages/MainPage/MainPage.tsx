@@ -45,7 +45,7 @@ const MainPage: FC = () => {
         Connect to lobby by <span>ID</span>:
       </label>
       <div className={styles.MainPage_item}>
-        <InputComponent value={room} onChange={handleEnterUrlGame} />
+        <InputComponent value={room} onChange={handleEnterUrlGame} isReadOnly={true} />
         <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
       </div>
       {isVisible && <ConnectToLobby setIsVisible={setIsVisible} url={room} />}
