@@ -8,9 +8,9 @@ const checkIsCanShowKickButton = (
   countUsers: number,
 ): boolean => {
   if (isAdmin && currentUserId === userId) return false;
-  if (countUsers < MIN_COUNT_USERS_IN_ROOM_TO_KICK_VOITING) return false;
-  if (currentUserId === userId) return false;
-  if (currentAdminId === userId) return false;
+  if (!isAdmin && countUsers < MIN_COUNT_USERS_IN_ROOM_TO_KICK_VOITING) return false;
+  if (!isAdmin && currentUserId === userId) return false;
+  if (!isAdmin && currentAdminId === userId) return false;
   if (userId === KICKED_ID) return false;
   return true;
 };
