@@ -33,7 +33,7 @@ const GamePage: FC = () => {
       <div className={styles.game_container}>
         <TitleSection
           title={`Planning (issues: ${issues
-            .map((is) => is.number)
+            .map((is) => is.title)
             .filter((is, id) => id < 4)
             .join(', ')}${issues.length > 5 && ', ...'})`}
           isCapitalLetters
@@ -41,12 +41,7 @@ const GamePage: FC = () => {
         <div className={styles.game_content}>
           <div className={styles.game_issueBar}>
             <p>Scram master:</p>
-            <CardUser
-              userId={admin.userId}
-              firstName={admin.firstName}
-              lastName={admin.lastName}
-              role={admin.role}
-            />
+            <CardUser userId={admin.userId} firstName={admin.firstName} lastName={admin.lastName} role={admin.role} />
             <TitleSection title={'issues:'} />
             {/* eslint-disable-next-line operator-linebreak */}
             {issues.length > 0 &&
@@ -54,7 +49,7 @@ const GamePage: FC = () => {
                 <CardIssueGame
                   key={item.id}
                   id={item.id}
-                  title={item.number}
+                  title={item.title}
                   isChecked={index === Number(issueSelected.id)}
                 />
               ))}
@@ -62,7 +57,7 @@ const GamePage: FC = () => {
           <div className={styles.game_body}>
             {issueSelected && (
               <>
-                <TitleSection title={issueSelected.number} />
+                <TitleSection title={issueSelected.title} />
                 <div>{issueSelected.desc}</div>
                 <TitleSection title={'please, make your choise:'} />
                 {/* eslint-disable-next-line operator-linebreak */}

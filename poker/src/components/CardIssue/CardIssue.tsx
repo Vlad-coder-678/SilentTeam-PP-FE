@@ -50,8 +50,8 @@ const CardIssue: FC<Props> = ({ issue, isNew }) => {
         </div>
       ) : (
         <div className={styles.cardIssue_item}>
-          <h3>Issue {issue && issue.number}</h3>
-          <p>Low property</p>
+          <p>issue {issue.id}</p>
+          <h3>{issue.title}</h3>
           <div className={styles.cardIssue_item_buttons}>
             <button type="button" onClick={handleFixedIssue}>
               <img src={pencil} alt="pencil" />

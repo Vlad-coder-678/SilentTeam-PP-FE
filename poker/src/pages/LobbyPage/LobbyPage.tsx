@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
+
 import CardUser from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -11,6 +12,8 @@ import LobbyMembers from '../../components/LobbyMembers/LobbyMembers';
 import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
+import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
+
 import {
   isModalOpenSlice,
   setIsModalOpen,
@@ -32,22 +35,14 @@ import { ResponseFromSocket } from '../../types/common';
 
 import styles from './LobbyPage.module.scss';
 
-interface Props {
-  issues?: { issueId: string }[];
-  cards?: { value: string | number }[];
-  link: string;
-}
-
-const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
+const LobbyPage: FC = () => {
   const history = useHistory();
-
   const dispatch = useDispatch();
-
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
-
   const room = useSelector(currentRoomSlice);
   const admin = useSelector(adminSlice);
   const users = useSelector(allUsersSlice);
+  const [isVisible, setIsVisible] = React.useState(false);
   const isKickModalOpen = useSelector(isModalOpenSlice);
 
   React.useEffect(() => {
@@ -147,12 +142,13 @@ const LobbyPage: FC<Props> = ({ issues, link, cards }) => {
             role={admin.role}
           />
         </div>
-        <LobbyScramButtons link={link} />
+        <LobbyScramButtons room={room} />
         <LobbyMembers users={users} />
         <LobbyIssues />
         <LobbySetting />
       </div>
-      <Chat />
+      <ChatOpenButton isVisible={isVisible} setIsVisible={setIsVisible} />
+      {isVisible && <Chat isVisible={isVisible} setIsVisible={setIsVisible} />}
       {isKickModalOpen && <KickModal />}
     </div>
   );

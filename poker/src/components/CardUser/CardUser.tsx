@@ -18,8 +18,10 @@ const CardUser: FC<userProps> = ({ userId, firstName, lastName, jobPosition, rol
   const { userId: currentUserId } = useSelector(currentUserSlice);
   return (
     <div className={styles.CardUser_wrap}>
-      <Avatar size={SIZES.MEDIUM} firstName={firstName} lastName={lastName} role={role} />
-      {userId === currentUserId && <p className={styles.IssueChatUserCard_you}>it's you</p>}
+      <div className={styles.CardUser_wrapAva}>
+        <Avatar size={SIZES.MEDIUM} firstName={firstName} lastName={lastName} role={role} />
+        {userId === currentUserId && <span>it's you</span>}
+      </div>
       <div className={styles.CardUser_fullName}>
         {lastName && <p className={styles.CardUser_surname}>{lastName}</p>}
         <h3>{firstName}</h3>

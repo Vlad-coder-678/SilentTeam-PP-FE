@@ -1,11 +1,10 @@
 @import '../../styles/common.scss';
 
 .ChatInput_wrap {
-  // position: fixed;
   display: flex;
   justify-content: space-between;
   background-color: $blue-light;
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   padding: 1rem;
   border-radius: 3px;
   box-sizing: border-box;
