@@ -91,3 +91,10 @@ export interface GameProcessInit {
   resForVote: { userId: string; res: issueSelected[] }[];
   resForStat: { issueId: string; cards: { cardId: string; usersId: string[] }[] }[];
 }
+
+export interface SettingsFromServer {
+  isAdminBePlayerInGame: boolean;
+  isNeededTimer: boolean;
+  storyTypeShort: string;
+  roundTime: number;
+}

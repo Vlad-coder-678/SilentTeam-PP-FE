@@ -6,7 +6,7 @@ import { currentRoomSlice, currentUserSlice } from '../../redux/slices/roomSlice
 import { SocketContext } from '../../socketContext';
 import GeneralButton from '../GeneralButton/GeneralButton';
 
-const Exit: FC = () => {
+const ExitButton: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
   const room = useSelector(currentRoomSlice);
   const { userId } = useSelector(currentUserSlice);
@@ -18,4 +18,4 @@ const Exit: FC = () => {
   return <GeneralButton type="button" label={'Exit'} onClick={handleUserExit} />;
 };
 
-export default Exit;
+export default ExitButton;

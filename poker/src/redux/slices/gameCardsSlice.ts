@@ -15,22 +15,26 @@ export const gameCardsSlice = createSlice({
   name: 'gameCards',
   initialState,
   reducers: {
+    setGameCards: (state, action: PayloadAction<Array<CG>>) => {
+      // eslint-disable-next-line no-param-reassign
+      state = action.payload;
+    },
     createGC: (state, action: PayloadAction<CG>) => {
       state.push(action.payload);
     },
     fixGC: (state, action: PayloadAction<CG>) => state.map((u) => (u.id !== action.payload.id ? u : action.payload)),
-    sortGC: (state) => state.sort((a, b) => {
-      if (Number(a.value) < Number(b.value)) return -1;
-      if (Number(a.value) > Number(b.value)) return 1;
-      return 0;
-    }),
+    sortGC: (state) =>
+      state.sort((a, b) => {
+        if (Number(a.value) < Number(b.value)) return -1;
+        if (Number(a.value) > Number(b.value)) return 1;
+        return 0;
+      }),
     removeGC: (state, action: PayloadAction<CG>) => state.filter((u) => u.id !== action.payload.id),
   },
 });
 
-export const { createGC, fixGC, sortGC, removeGC } = gameCardsSlice.actions;
+export const { setGameCards, createGC, fixGC, sortGC, removeGC } = gameCardsSlice.actions;
 
-// in the file use: `useSelector((state: RootState) => state.value)`
 export const selectGameCards = (state: RootState): CG[] => state.gameCards;
 
 export default gameCardsSlice.reducer;

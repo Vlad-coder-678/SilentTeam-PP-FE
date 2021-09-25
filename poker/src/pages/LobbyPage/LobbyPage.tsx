@@ -27,15 +27,18 @@ import {
   currentUserSlice,
   deleteMember,
   initRoom,
+  isAdminSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
-import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import exitToMainPage from '../../utils/exit';
+import ExitButton from '../../components/ExitButton/ExitButton';
+import { setSettings } from '../../redux/slices/gameSettingSlice';
 
 import styles from './LobbyPage.module.scss';
-import Exit from '../../components/Exit/Exit';
+import { setIssues } from '../../redux/slices/issuesSlice';
+import { setGameCards } from '../../redux/slices/gameCardsSlice';
 
 const LobbyPage: FC = () => {
   const history = useHistory();
@@ -47,6 +50,7 @@ const LobbyPage: FC = () => {
   const users = useSelector(allUsersSlice);
   const [isVisible, setIsVisible] = React.useState(false);
   const isKickModalOpen = useSelector(isModalOpenSlice);
+  const isAdmin = useSelector(isAdminSlice);
 
   React.useEffect(() => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
@@ -131,6 +135,31 @@ const LobbyPage: FC = () => {
     };
   });
 
+  React.useEffect(() => {
+    const moveAllMembersToGamePageSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        if (!isAdmin) {
+          const { game: responseGame } = data;
+          dispatch(setSettings(responseGame.settings));
+          dispatch(setIssues(responseGame.issues));
+          dispatch(setGameCards(responseGame.cards));
+        }
+        history.push('/game');
+      }
+    };
+
+    socket.on('game-is-starting', moveAllMembersToGamePageSuccess);
+
+    return (): void => {
+      socket.off('game-is-starting', moveAllMembersToGamePageSuccess);
+    };
+  });
+
   return (
     <div className={styles.lobbyPage_wrap}>
       <div className={styles.lobbyPage_container}>
@@ -147,11 +176,10 @@ const LobbyPage: FC = () => {
             role={admin.role}
           />
         </div>
-        <LobbyScramButtons room={room} />
-        <Exit />
+        {isAdmin ? <LobbyScramButtons room={room} /> : <ExitButton />}
         <LobbyMembers users={users} />
-        <LobbyIssues />
-        <LobbySetting />
+        {isAdmin && <LobbyIssues />}
+        {isAdmin && <LobbySetting />}
       </div>
       <ChatOpenButton isVisible={isVisible} setIsVisible={setIsVisible} />
       {isVisible && <Chat isVisible={isVisible} setIsVisible={setIsVisible} />}

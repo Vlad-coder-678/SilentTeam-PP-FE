@@ -8,6 +8,10 @@ export const issuesSlice = createSlice({
   name: 'issues',
   initialState,
   reducers: {
+    setIssues: (state, action: PayloadAction<Array<Issue>>) => {
+      // eslint-disable-next-line no-param-reassign
+      state = action.payload;
+    },
     createIs: (state, action: PayloadAction<Issue>) => {
       state.push(action.payload);
     },
@@ -16,9 +20,8 @@ export const issuesSlice = createSlice({
   },
 });
 
-export const { createIs, fixIs, removeIs } = issuesSlice.actions;
+export const { setIssues, createIs, fixIs, removeIs } = issuesSlice.actions;
 
-// in the file use: `useSelector((state: RootState) => state.counter.value)`
 export const selectIssues = (state: RootState): Issue[] => state.issues;
 
 export default issuesSlice.reducer;
