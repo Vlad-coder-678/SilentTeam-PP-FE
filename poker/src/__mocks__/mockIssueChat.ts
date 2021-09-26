@@ -32,7 +32,7 @@ const mockIssueChat = [
     lastName: 'Nazarenko',
     role: ROLES.ADMIN,
     jobPosition: 'Team lead',
-    score: '',
+    value: '',
   },
   {
     userId: '11112',
@@ -40,7 +40,7 @@ const mockIssueChat = [
     lastName: 'Blain',
     role: ROLES.USER,
     jobPosition: 'Clicker',
-    score: '',
+    value: '',
   },
   {
     userId: '11113',
@@ -48,7 +48,7 @@ const mockIssueChat = [
     lastName: '',
     role: ROLES.USER,
     jobPosition: 'Designer',
-    score: '',
+    value: '',
   },
   {
     userId: '11115',
@@ -56,7 +56,7 @@ const mockIssueChat = [
     lastName: 'Ferdyshcenko',
     role: ROLES.OBSERVER,
     jobPosition: 'Programmer',
-    score: '',
+    value: '',
   },
 ];
 

@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { selectedIssue } from '../../redux/slices/gameProcessSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { issueIdSelectedSlice, selectedIssue } from '../../redux/slices/gameProcessSlice';
 
 import styles from './CardIssueGame.module.scss';
 
 interface Props {
   id: string;
   title: string;
-  isChecked: boolean;
 }
 
-const CardIssueGame: FC<Props> = ({ id, title, isChecked }) => {
+const CardIssueGame: FC<Props> = ({ id, title }) => {
   const dispatch = useDispatch();
+  const issueIdSelected = useSelector(issueIdSelectedSlice);
+  const isChecked = issueIdSelected === id;
 
   const handleClick = (): void => {
     dispatch(selectedIssue(id));

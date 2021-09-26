@@ -42,8 +42,11 @@ import { setGameCards } from '../../redux/slices/gameCardsSlice';
 
 const LobbyPage: FC = () => {
   const history = useHistory();
+
   const dispatch = useDispatch();
+
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
   const room = useSelector(currentRoomSlice);
   const currentUser = useSelector(currentUserSlice);
   const admin = useSelector(adminSlice);

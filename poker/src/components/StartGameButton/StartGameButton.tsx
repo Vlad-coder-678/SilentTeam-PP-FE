@@ -28,7 +28,15 @@ const StartGameButton: FC = () => {
     socket.emit('start-game', room, settings, issues, cards);
   };
 
-  return <GeneralButton type="button" label={'Start Game'} primaryBG onClick={handleStartGame} />;
+  return (
+    <GeneralButton
+      type="button"
+      label={'Start Game'}
+      primaryBG
+      onClick={handleStartGame}
+      isDisable={issues.length === 0 || cards.length < 3}
+    />
+  );
 };
 
 export default StartGameButton;
