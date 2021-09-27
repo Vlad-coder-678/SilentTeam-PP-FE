@@ -50,7 +50,7 @@ const CardIssue: FC<Props> = ({ issue, isNew }) => {
         </div>
       ) : (
         <div className={styles.cardIssue_item}>
-          <p>issue {issue.id}</p>
+          <p>issue {Number(issue.id) + 1}</p>
           <h3>{issue.title}</h3>
           <div className={styles.cardIssue_item_buttons}>
             <button type="button" onClick={handleFixedIssue}>

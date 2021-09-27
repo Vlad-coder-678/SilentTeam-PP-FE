@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import type { GameSettingsInit } from '../../types/common';
+import type { GameSettingsInit, SettingsFromServer } from '../../types/common';
 
 const initialState: GameSettingsInit = {
   masterIsPlayer: true,
@@ -41,6 +41,10 @@ export const gameSettingSlice = createSlice({
     changeRoundTime: (state, action: PayloadAction<number>) => {
       state.roundTime = action.payload;
     },
+    setSettings: (state, action: PayloadAction<SettingsFromServer>) => {
+      const { isAdminBePlayerInGame, isNeededTimer, storyTypeShort, roundTime } = action.payload;
+      return { ...state, masterIsPlayer: isAdminBePlayerInGame, isNeededTimer, storyTypeShort, roundTime };
+    },
   },
 });
 
@@ -51,9 +55,9 @@ export const {
   changeStoryType,
   changeStoryTypeShort,
   changeRoundTime,
+  setSettings,
 } = gameSettingSlice.actions;
 
-// in the file use: `useSelector((state: RootState) => state.value)`
 export const selectGameSetting = (state: RootState): GameSettingsInit => state.gameSettings;
 
 export default gameSettingSlice.reducer;

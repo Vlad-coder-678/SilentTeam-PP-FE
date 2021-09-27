@@ -1,32 +1,63 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
 import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
-
-// import { selectIssues } from '../../redux/slices/issuesSlice';
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
-import { selectGameProcess } from '../../redux/slices/gameProcessSlice';
-import mockIssues from '../../__mocks__/mockIssues';
-import mockRoom from '../../__mocks__/mockRoom';
-import type { issueGame } from '../../types/common';
+import { initIssueChat, issueIdSelectedSlice, updateIssueChat } from '../../redux/slices/gameProcessSlice';
+import { selectIssues } from '../../redux/slices/issuesSlice';
+import { adminSlice, allUsersSlice } from '../../redux/slices/roomSlice';
+import { SocketContext } from '../../socketContext';
+import { Member, ResponseFromSocket } from '../../types/common';
+import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
 
 import styles from './GamePage.module.scss';
 
 const GamePage: FC = () => {
-  // const issues = useSelector(selectIssues);
-  const issues: issueGame[] = mockIssues; // mock
+  const dispatch = useDispatch();
+
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
+  const users = useSelector(allUsersSlice);
+  const admin = useSelector(adminSlice);
+  const issues = useSelector(selectIssues);
   const cards = useSelector(selectGameCards);
   const settings = useSelector(selectGameSetting);
-  const process = useSelector(selectGameProcess);
-  const issueSelected = issues[Number(process.issueIdSelected)];
+  const issueIdSelected = useSelector(issueIdSelectedSlice);
+  const issueSelected = issues[Number(issueIdSelected)];
 
-  const userId = '123'; // mock
-  const admin = mockRoom.users[0]; // mock
+  console.log('settings', settings);
+
+  React.useEffect(() => {
+    const isAdminPlayer = settings.masterIsPlayer;
+    const payload = { isAdminPlayer, admin, users };
+    dispatch(initIssueChat(payload));
+  }, [admin, dispatch, settings.masterIsPlayer, users]);
+
+  React.useEffect(() => {
+    const updateIssuesChatSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { vote: responseVote } = data;
+        dispatch(updateIssueChat(responseVote));
+      }
+    };
+
+    socket.on('update-voting-results', updateIssuesChatSuccess);
+
+    return (): void => {
+      socket.off('update-voting-results', updateIssuesChatSuccess);
+    };
+  });
 
   return (
     <div className={styles.game_wrap}>
@@ -44,15 +75,7 @@ const GamePage: FC = () => {
             <CardUser userId={admin.userId} firstName={admin.firstName} lastName={admin.lastName} role={admin.role} />
             <TitleSection title={'issues:'} />
             {/* eslint-disable-next-line operator-linebreak */}
-            {issues.length > 0 &&
-              issues.map((item, index) => (
-                <CardIssueGame
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  isChecked={index === Number(issueSelected.id)}
-                />
-              ))}
+            {issues.length > 0 && issues.map((item) => <CardIssueGame key={item.id} id={item.id} title={item.title} />)}
           </div>
           <div className={styles.game_body}>
             {issueSelected && (
@@ -61,21 +84,9 @@ const GamePage: FC = () => {
                 <div>{issueSelected.desc}</div>
                 <TitleSection title={'please, make your choise:'} />
                 {/* eslint-disable-next-line operator-linebreak */}
-                {cards &&
-                  cards.map((card, index) => (
-                    <CardGame
-                      key={card.id}
-                      card={card}
-                      issue={issueSelected}
-                      title={settings.storyTypeShort}
-                      isChecked={process.userGameResults.some(
-                        (res) => issueSelected.id === res.issueId && index === Number(res.cardId),
-                      )}
-                      userId={userId}
-                    />
-                  ))}
+                {cards && cards.map((card) => <CardGame key={card.id} card={card} issue={issueSelected} />)}
                 <TitleSection title={'statistics:'} />
-                <div className={styles.statistics}>
+                {/* <div className={styles.statistics}>
                   {process.resForStat.map((issue) => {
                     const hundred = issue.cards.reduce((acc, card) => acc + card.usersId.length, 0);
 
@@ -92,6 +103,26 @@ const GamePage: FC = () => {
                       </p>
                     );
                   })}
+                </div> */}
+                <TitleSection title={'members:'} />
+                <div>
+                  <IssueChatUserCard
+                    userId={admin.userId}
+                    firstName={admin.firstName}
+                    lastName={admin.lastName}
+                    role={admin.role}
+                    job={admin.job}
+                  />
+                  {users.map((user: Member) => (
+                    <IssueChatUserCard
+                      key={user.userId}
+                      userId={user.userId}
+                      firstName={user.firstName}
+                      lastName={user.lastName}
+                      role={user.role}
+                      job={user.job}
+                    />
+                  ))}
                 </div>
               </>
             )}

@@ -45,9 +45,9 @@ export interface ResponseFromSocket {
 }
 
 export interface Issue {
-  id?: string;
-  title?: string;
-  desc?: string;
+  id: string;
+  title: string;
+  desc: string;
 }
 
 export interface CardGameSetting {
@@ -72,22 +72,23 @@ export interface GameSettingsInit {
   maxGameCardValue: number;
 }
 
-export interface issueGame {
-  id: string;
-  title: string;
-  desc: string;
-  choise: string;
-  isChecked: boolean;
-}
-
-export interface issueSelected {
+export interface IssueSelected {
   issueId: string;
   cardId: string;
 }
 
-export interface GameProcessInit {
-  issueIdSelected: string;
-  userGameResults: issueSelected[];
-  resForVote: { userId: string; res: issueSelected[] }[];
-  resForStat: { issueId: string; cards: { cardId: string; usersId: string[] }[] }[];
+export interface SettingsFromServer {
+  isAdminBePlayerInGame: boolean;
+  isNeededTimer: boolean;
+  storyTypeShort: string;
+  roundTime: number;
+}
+
+export interface IssueChatItem {
+  userId: string;
+  firstName: string;
+  lastName?: string;
+  role: ROLES;
+  job?: string;
+  value: string;
 }

@@ -12,7 +12,7 @@ const LobbyIssues: FC = () => {
   const len = issues.length;
   const newIssue = {
     id: len > 0 ? (Number(issues[len - 1].id) + 1).toString() : '0',
-    number: '',
+    title: '',
     desc: '',
   };
 
