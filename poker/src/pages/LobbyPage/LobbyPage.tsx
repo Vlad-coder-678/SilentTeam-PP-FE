@@ -39,6 +39,7 @@ import { setSettings } from '../../redux/slices/gameSettingSlice';
 import styles from './LobbyPage.module.scss';
 import { setIssues } from '../../redux/slices/issuesSlice';
 import { setGameCards } from '../../redux/slices/gameCardsSlice';
+import { initStatisticsCards } from '../../redux/slices/gameProcessSlice';
 
 const LobbyPage: FC = () => {
   const history = useHistory();
@@ -151,6 +152,7 @@ const LobbyPage: FC = () => {
           dispatch(setSettings(responseGame.settings));
           dispatch(setIssues(responseGame.issues));
           dispatch(setGameCards(responseGame.cards));
+          dispatch(initStatisticsCards(responseGame.cards));
         }
         history.push('/game');
       }

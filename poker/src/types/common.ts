@@ -92,3 +92,7 @@ export interface IssueChatItem {
   job?: string;
   value: string;
 }
+
+export interface StatisticCard extends CardGameSetting {
+  scoreInPercent: number;
+}
