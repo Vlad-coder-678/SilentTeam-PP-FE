@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { StatisticCard } from '../../types/common';
+import { SIZES, StatisticCard } from '../../types/common';
 import { isShowResultOfVotingSlice } from '../../redux/slices/gameProcessSlice';
 import Card from '../Card/Card';
 
@@ -13,8 +13,8 @@ const StatisticsCard: FC<Props> = ({ card }) => {
 
   return (
     <div>
-      <Card card={card} isShowCards={isShowResultOfVoting} />
-      <p>{card.scoreInPercent} %</p>
+      <Card card={card} isShowCards={isShowResultOfVoting} size={SIZES.SMALL} />
+      {isShowResultOfVoting && <p>{card.scoreInPercent} %</p>}
     </div>
   );
 };

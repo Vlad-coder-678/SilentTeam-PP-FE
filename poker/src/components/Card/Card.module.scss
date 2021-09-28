@@ -1,14 +1,23 @@
 @import '../../styles/common.scss';
 
-.card_wrap {
-  width: 70px;
-  height: 100px;
+.small,
+.medium {
   border-radius: 10px;
   box-shadow: 0 4px 4px 0 $shadow-one-quarter;
   margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.medium {
+  width: 70px;
+  height: 100px;
+}
+
+.small {
+  width: 60px;
+  height: 90px;
 }
 
 .card_coffeetime img {

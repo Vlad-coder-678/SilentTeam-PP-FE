@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
-import { CardGameSetting } from '../../types/common';
+import { CardGameSetting, SIZES } from '../../types/common';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
 import playCardCoverImg from '../../assets/images/png/play-card-cover.png';
 
@@ -10,13 +10,14 @@ import styles from './Card.module.scss';
 interface Props {
   card: CardGameSetting;
   isShowCards: boolean;
+  size: SIZES;
 }
 
-const Card: FC<Props> = ({ card, isShowCards }) => {
+const Card: FC<Props> = ({ card, isShowCards, size }) => {
   const { storyTypeShort: title } = useSelector(selectGameSetting);
 
   return (
-    <div className={styles.card_wrap}>
+    <div className={`${styles[size]}`}>
       {isShowCards && card.value === 'coffeetime' && (
         <div className={styles.card_coffeetime}>
           <img src={coffeetime} alt="cap of coffee" />

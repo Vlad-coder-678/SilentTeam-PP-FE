@@ -55,6 +55,10 @@ export interface CardGameSetting {
   value: string;
 }
 
+export interface StatisticCard extends CardGameSetting {
+  scoreInPercent: number;
+}
+
 export interface CardGame {
   card?: CardGameSetting;
   title: string;
@@ -91,8 +95,4 @@ export interface IssueChatItem {
   role: ROLES;
   job?: string;
   value: string;
-}
-
-export interface StatisticCard extends CardGameSetting {
-  scoreInPercent: number;
 }

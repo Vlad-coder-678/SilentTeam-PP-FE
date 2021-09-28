@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CardGameSetting, IssueChatItem, Member, ROLES, StatisticCard } from '../../types/common';
+import isAllUsersVoted from '../../utils/isAllUsersVoted';
+import updateIssueChat from '../../utils/updateIssueChat';
+import updateStatistics from '../../utils/updateStatistics';
 import type { RootState } from '../store';
 
 interface GameProcessInit {
@@ -40,21 +43,34 @@ export const gameProcessSlice = createSlice({
       }, []);
       state.issueChat = usersInIssueChat;
     },
-    updateIssueChat: (
+    updateIssueChatAndStatistics: (
       state,
       action: PayloadAction<{ userId: string; issueId: string; cardId: string; cardValue: string }>,
     ) => {
       const { userId, issueId, cardValue } = action.payload;
       if (issueId === state.issueIdSelected) {
-        const newIssueChat = state.issueChat.map((item) => {
-          if (item.userId === userId) return { ...item, value: cardValue };
-          return item;
-        });
+        const allUsersCount = state.issueChat.length;
+
+        // update issueChat
+        const newIssueChat = updateIssueChat(state.issueChat, userId, cardValue);
         state.issueChat = newIssueChat;
+
+        // update statisticsCards
+        const newStatisticsCards = updateStatistics(newIssueChat, allUsersCount, state.statisticsCards);
+        state.statisticsCards = newStatisticsCards;
+
+        // check if every user voted
+        const isAllVoted = isAllUsersVoted(newIssueChat);
+
+        if (isAllVoted) {
+          state.isPlayingNow = false;
+          state.isShowResultOfVoting = true;
+        }
       }
     },
     setIsPlayingNow: (state, action: PayloadAction<boolean>) => {
       state.isPlayingNow = action.payload;
+      state.currentUserCheckCardWithId = '';
     },
     setIsShowResultOfVoting: (state, action: PayloadAction<boolean>) => {
       state.isShowResultOfVoting = action.payload;
@@ -70,15 +86,15 @@ export const {
   selectedIssue,
   selectedCard,
   initIssueChat,
-  updateIssueChat,
+  updateIssueChatAndStatistics,
   setIsPlayingNow,
   setIsShowResultOfVoting,
   initStatisticsCards,
 } = gameProcessSlice.actions;
 
 export const issueIdSelectedSlice = (state: RootState): string => state.gameProcess.issueIdSelected;
-export const currentUserCheckCardWithIdSlice = (state: RootState): string => state.gameProcess
-.currentUserCheckCardWithId;
+export const currentUserCheckCardWithIdSlice = (state: RootState): string =>
+  state.gameProcess.currentUserCheckCardWithId;
 export const issueChatSlice = (state: RootState): IssueChatItem[] => state.gameProcess.issueChat;
 export const statisticsCardsSlice = (state: RootState): StatisticCard[] => state.gameProcess.statisticsCards;
 export const isPlayingNowSlice = (state: RootState): boolean => state.gameProcess.isPlayingNow;

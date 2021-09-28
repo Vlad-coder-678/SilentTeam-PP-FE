@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-import { CardGameSetting } from '../../types/common';
+import { CardGameSetting, SIZES } from '../../types/common';
 import {
   selectedCard,
   issueIdSelectedSlice,
@@ -41,7 +41,7 @@ const CardGame: FC<Props> = ({ card }) => {
 
   return (
     <div className={isChecked ? styles.card_wrapSelected : styles.card_wrap} onClick={handleSelectedCard}>
-      <Card card={card} isShowCards={(isPlayingNow && !currentUserCheckCardWithId) || isChecked} />
+      <Card card={card} isShowCards={(isPlayingNow && !currentUserCheckCardWithId) || isChecked} size={SIZES.MEDIUM}/>
     </div>
   );
 };
