@@ -12,7 +12,12 @@
 
 .IssueChatUserCard_user {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.IssueChatUserCard_user_ava_and_status {
+  margin-right: 10px;
 }
 
 .IssueChatUserCard_you {
@@ -21,9 +26,15 @@
   text-transform: uppercase;
 }
 
+.IssueChatUserCard_user_data {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .IssueChatUserCard_name {
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin: 0px;
   font-size: 0.9rem;
   font-weight: 700;
 }
