@@ -1,32 +1,115 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
 import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
-
-// import { selectIssues } from '../../redux/slices/issuesSlice';
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
-import { selectGameProcess } from '../../redux/slices/gameProcessSlice';
-import mockIssues from '../../__mocks__/mockIssues';
-import mockRoom from '../../__mocks__/mockRoom';
-import type { issueGame } from '../../types/common';
+import {
+  initIssueChat,
+  initStatisticsCards,
+  isPlayingNowSlice,
+  issueIdSelectedSlice,
+  selectedIssue,
+  setIsPlayingNow,
+  setIsShowResultOfVoting,
+  statisticsCardsSlice,
+  updateIssueChatAndStatistics,
+} from '../../redux/slices/gameProcessSlice';
+import { selectIssues } from '../../redux/slices/issuesSlice';
+import { adminSlice, allUsersSlice, isAdminSlice } from '../../redux/slices/roomSlice';
+import { SocketContext } from '../../socketContext';
+import { Member, ResponseFromSocket } from '../../types/common';
+import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
+import StatisticsCard from '../../components/StatisticsCard/StatisticsCard';
+import RunRoundButton from '../../components/RunRoundButton/RunRoundButton';
+import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
+import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
 
 import styles from './GamePage.module.scss';
 
 const GamePage: FC = () => {
-  // const issues = useSelector(selectIssues);
-  const issues: issueGame[] = mockIssues; // mock
-  const cards = useSelector(selectGameCards);
-  const settings = useSelector(selectGameSetting);
-  const process = useSelector(selectGameProcess);
-  const issueSelected = issues[Number(process.issueIdSelected)];
+  const dispatch = useDispatch();
 
-  const userId = '123'; // mock
-  const admin = mockRoom.users[0]; // mock
+  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
+  const users = useSelector(allUsersSlice);
+  const admin = useSelector(adminSlice);
+  const isAdmin = useSelector(isAdminSlice);
+  const issues = useSelector(selectIssues);
+  const cards = useSelector(selectGameCards);
+  const statisticsCards = useSelector(statisticsCardsSlice);
+  const settings = useSelector(selectGameSetting);
+  const isPlayingNow = useSelector(isPlayingNowSlice);
+  const issueIdSelected = useSelector(issueIdSelectedSlice);
+
+  const issueSelected = issues[Number(issueIdSelected)];
+  const isNeedTimer = settings.isNeededTimer;
+
+  React.useEffect(() => {
+    const isAdminPlayer = settings.masterIsPlayer;
+    const payload = { isAdminPlayer, admin, users };
+    dispatch(initIssueChat(payload));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    const updateSelectedIssueIdSuccess = (response: string): void => {
+      console.log('round-is-starting', response);
+
+      if (!isAdmin) dispatch(selectedIssue(response));
+      const isAdminPlayer = settings.masterIsPlayer;
+      const payload = { isAdminPlayer, admin, users };
+      dispatch(initIssueChat(payload));
+      dispatch(setIsPlayingNow(true));
+      dispatch(setIsShowResultOfVoting(false));
+      dispatch(initStatisticsCards(cards));
+    };
+
+    socket.on('round-is-starting', updateSelectedIssueIdSuccess);
+
+    return (): void => {
+      socket.off('round-is-starting', updateSelectedIssueIdSuccess);
+    };
+  });
+
+  React.useEffect(() => {
+    const updateIssuesChatAndStatisticsSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { vote: responseVote } = data;
+        dispatch(updateIssueChatAndStatistics(responseVote));
+      }
+    };
+
+    socket.on('update-voting-results', updateIssuesChatAndStatisticsSuccess);
+
+    return (): void => {
+      socket.off('update-voting-results', updateIssuesChatAndStatisticsSuccess);
+    };
+  });
+
+  // eslint-disable-next-line consistent-return
+  React.useEffect(() => {
+    if (isPlayingNow && isNeedTimer) {
+      const timer = setTimeout(() => {
+        dispatch(setIsPlayingNow(false));
+        dispatch(setIsShowResultOfVoting(true));
+      }, settings.roundTime * COUNT_MILLISECONDS_IN_SECOND);
+
+      return (): void => {
+        clearTimeout(timer);
+      };
+    }
+  }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
 
   return (
     <div className={styles.game_wrap}>
@@ -43,55 +126,39 @@ const GamePage: FC = () => {
             <p>Scram master:</p>
             <CardUser userId={admin.userId} firstName={admin.firstName} lastName={admin.lastName} role={admin.role} />
             <TitleSection title={'issues:'} />
-            {/* eslint-disable-next-line operator-linebreak */}
-            {issues.length > 0 &&
-              issues.map((item, index) => (
-                <CardIssueGame
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  isChecked={index === Number(issueSelected.id)}
-                />
-              ))}
+            {issues.length > 0 && issues.map((item) => <CardIssueGame key={item.id} id={item.id} title={item.title} />)}
           </div>
           <div className={styles.game_body}>
             {issueSelected && (
               <>
                 <TitleSection title={issueSelected.title} />
                 <div>{issueSelected.desc}</div>
+                {isAdmin && !isPlayingNow && <RunRoundButton />}
+                {isAdmin && isPlayingNow && <StopRoundButton />}
+                {isNeedTimer && <p>Here must be timer</p>}
                 <TitleSection title={'please, make your choise:'} />
-                {/* eslint-disable-next-line operator-linebreak */}
-                {cards &&
-                  cards.map((card, index) => (
-                    <CardGame
-                      key={card.id}
-                      card={card}
-                      issue={issueSelected}
-                      title={settings.storyTypeShort}
-                      isChecked={process.userGameResults.some(
-                        (res) => issueSelected.id === res.issueId && index === Number(res.cardId),
-                      )}
-                      userId={userId}
+                {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                <TitleSection title={'statistics:'} />
+                {statisticsCards && statisticsCards.map((card) => <StatisticsCard key={card.id} card={card} />)}
+                <TitleSection title={'members:'} />
+                <div>
+                  <IssueChatUserCard
+                    userId={admin.userId}
+                    firstName={admin.firstName}
+                    lastName={admin.lastName}
+                    role={admin.role}
+                    job={admin.job}
+                  />
+                  {users.map((user: Member) => (
+                    <IssueChatUserCard
+                      key={user.userId}
+                      userId={user.userId}
+                      firstName={user.firstName}
+                      lastName={user.lastName}
+                      role={user.role}
+                      job={user.job}
                     />
                   ))}
-                <TitleSection title={'statistics:'} />
-                <div className={styles.statistics}>
-                  {process.resForStat.map((issue) => {
-                    const hundred = issue.cards.reduce((acc, card) => acc + card.usersId.length, 0);
-
-                    return (
-                      <p key={issue.issueId}>
-                        {issue.issueId}
-                        <span>
-                          {issue.cards.map((card) => (
-                            <p key={card.cardId}>
-                              {card.cardId} = {(card.usersId.length * 100) / hundred}%
-                            </p>
-                          ))}
-                        </span>
-                      </p>
-                    );
-                  })}
                 </div>
               </>
             )}

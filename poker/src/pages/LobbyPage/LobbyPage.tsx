@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
-
 import CardUser from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -13,7 +12,6 @@ import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
 import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
-
 import {
   isModalOpenSlice,
   setIsModalOpen,
@@ -26,24 +24,37 @@ import {
   adminSlice,
   allUsersSlice,
   currentRoomSlice,
+  currentUserSlice,
   deleteMember,
   initRoom,
+  isAdminSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
+import exitToMainPage from '../../utils/exit';
+import ExitButton from '../../components/ExitButton/ExitButton';
+import { setSettings } from '../../redux/slices/gameSettingSlice';
 
 import styles from './LobbyPage.module.scss';
+import { setIssues } from '../../redux/slices/issuesSlice';
+import { setGameCards } from '../../redux/slices/gameCardsSlice';
+import { initStatisticsCards } from '../../redux/slices/gameProcessSlice';
 
 const LobbyPage: FC = () => {
   const history = useHistory();
+
   const dispatch = useDispatch();
+
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
   const room = useSelector(currentRoomSlice);
+  const currentUser = useSelector(currentUserSlice);
   const admin = useSelector(adminSlice);
   const users = useSelector(allUsersSlice);
   const [isVisible, setIsVisible] = React.useState(false);
   const isKickModalOpen = useSelector(isModalOpenSlice);
+  const isAdmin = useSelector(isAdminSlice);
 
   React.useEffect(() => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
@@ -54,6 +65,8 @@ const LobbyPage: FC = () => {
       else {
         const { user: responseUser } = data;
         dispatch(deleteMember(responseUser));
+
+        if (currentUser.userId === responseUser.userId) exitToMainPage();
       }
     };
 
@@ -126,6 +139,32 @@ const LobbyPage: FC = () => {
     };
   });
 
+  React.useEffect(() => {
+    const moveAllMembersToGamePageSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        if (!isAdmin) {
+          const { game: responseGame } = data;
+          dispatch(setSettings(responseGame.settings));
+          dispatch(setIssues(responseGame.issues));
+          dispatch(setGameCards(responseGame.cards));
+          dispatch(initStatisticsCards(responseGame.cards));
+        }
+        history.push('/game');
+      }
+    };
+
+    socket.on('game-is-starting', moveAllMembersToGamePageSuccess);
+
+    return (): void => {
+      socket.off('game-is-starting', moveAllMembersToGamePageSuccess);
+    };
+  });
+
   return (
     <div className={styles.lobbyPage_wrap}>
       <div className={styles.lobbyPage_container}>
@@ -142,10 +181,10 @@ const LobbyPage: FC = () => {
             role={admin.role}
           />
         </div>
-        <LobbyScramButtons room={room} />
+        {isAdmin ? <LobbyScramButtons room={room} /> : <ExitButton />}
         <LobbyMembers users={users} />
-        <LobbyIssues />
-        <LobbySetting />
+        {isAdmin && <LobbyIssues />}
+        {isAdmin && <LobbySetting />}
       </div>
       <ChatOpenButton isVisible={isVisible} setIsVisible={setIsVisible} />
       {isVisible && <Chat isVisible={isVisible} setIsVisible={setIsVisible} />}

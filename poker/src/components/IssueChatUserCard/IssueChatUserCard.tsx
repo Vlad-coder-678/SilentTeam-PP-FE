@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import Avatar from '../Avatar/Avatar';
-import KickButton from '../KickButton/KickButton';
 import { ROLES, SIZES } from '../../types/common';
 import { currentUserSlice } from '../../redux/slices/roomSlice';
 
@@ -32,7 +31,6 @@ const IssueChatUserCard: FC<Props> = ({ userId, firstName, lastName, role, job }
           <p className={styles.IssueChatUserCard_job}>{job}</p>
         </div>
       </div>
-      <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
     </div>
   );
 };

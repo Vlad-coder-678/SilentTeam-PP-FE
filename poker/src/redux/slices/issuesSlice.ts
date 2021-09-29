@@ -2,23 +2,35 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Issue } from '../../types/common';
 import type { RootState } from '../store';
 
-const initialState: Issue[] = [];
+interface IssueState {
+  issues: Issue[];
+}
+
+const initialState: IssueState = {
+  issues: [],
+};
 
 export const issuesSlice = createSlice({
   name: 'issues',
   initialState,
   reducers: {
-    createIs: (state, action: PayloadAction<Issue>) => {
-      state.push(action.payload);
+    setIssues: (state, action: PayloadAction<Array<Issue>>) => {
+      state.issues = action.payload;
     },
-    fixIs: (state, action: PayloadAction<Issue>) => state.map((u) => (u.id !== action.payload.id ? u : action.payload)),
-    removeIs: (state, action: PayloadAction<Issue>) => state.filter((u) => u.id !== action.payload.id),
+    createIs: (state, action: PayloadAction<Issue>) => {
+      state.issues.push(action.payload);
+    },
+    fixIs: (state, action: PayloadAction<Issue>) => {
+      state.issues = state.issues.map((u) => (u.id !== action.payload.id ? u : action.payload));
+    },
+    removeIs: (state, action: PayloadAction<Issue>) => {
+      state.issues = state.issues.filter((u) => u.id !== action.payload.id);
+    },
   },
 });
 
-export const { createIs, fixIs, removeIs } = issuesSlice.actions;
+export const { setIssues, createIs, fixIs, removeIs } = issuesSlice.actions;
 
-// in the file use: `useSelector((state: RootState) => state.counter.value)`
-export const selectIssues = (state: RootState): Issue[] => state.issues;
+export const selectIssues = (state: RootState): Issue[] => state.issues.issues;
 
 export default issuesSlice.reducer;

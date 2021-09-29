@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-
 import GeneralButton from '../GeneralButton/GeneralButton';
+import StartGameButton from '../StartGameButton/StartGameButton';
 
 import styles from './LobbyScramButtons.module.scss';
 
@@ -26,7 +26,7 @@ const LobbyScramButtons: FC<Props> = ({ room }) => {
       </div>
 
       <div className={styles.lobbyPage_section_button}>
-        <GeneralButton type="button" label={'Start Game'} primaryBG />
+        <StartGameButton />
         <GeneralButton type="button" label={'Cancel Game'} />
       </div>
     </div>

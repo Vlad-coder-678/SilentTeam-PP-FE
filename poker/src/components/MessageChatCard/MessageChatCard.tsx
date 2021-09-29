@@ -6,9 +6,10 @@ import KickButton from '../KickButton/KickButton';
 import { Message, ROLES, SIZES } from '../../types/common';
 
 import { KICKED_ID } from '../../constants';
-import { currentUserSlice } from '../../redux/slices/roomSlice';
+import { adminSlice, allUsersSlice, currentUserSlice, isAdminSlice } from '../../redux/slices/roomSlice';
 
 import styles from './MessageChatCard.module.scss';
+import checkIsCanShowKickButton from '../../utils/checkIsCanShowKickButton';
 
 interface Props {
   messageCard: Message;
@@ -16,8 +17,13 @@ interface Props {
 
 const MessageChatCard: FC<Props> = ({ messageCard }) => {
   const { userId: currentUserId } = useSelector(currentUserSlice);
+  const { userId: currentAdminId } = useSelector(adminSlice);
+  const isAdmin = useSelector(isAdminSlice);
+  const countUsers = useSelector(allUsersSlice).length;
 
   const { userId, firstName, lastName, role, message } = messageCard;
+
+  const isShowKickButton = checkIsCanShowKickButton(userId, isAdmin, currentUserId, currentAdminId, countUsers);
 
   return (
     <div className={role === ROLES.ADMIN ? styles.messageChatCard_wrap_admin : styles.messageChatCard_wrap}>
@@ -31,7 +37,9 @@ const MessageChatCard: FC<Props> = ({ messageCard }) => {
           </p>
           {userId === currentUserId && <p className={styles.messageChatCard_its_you}>it's you</p>}
         </div>
-        <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
+        {isShowKickButton && (
+          <KickButton size={SIZES.SMALL} userId={userId} firstName={firstName} lastName={lastName} role={role} />
+        )}
       </div>
       <p className={styles.messageChatCard_content}>{message}</p>
     </div>

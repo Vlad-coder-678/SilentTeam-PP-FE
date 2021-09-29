@@ -32,7 +32,7 @@ const mockIssueChat = [
     lastName: 'Nazarenko',
     role: ROLES.ADMIN,
     jobPosition: 'Team lead',
-    score: '',
+    value: '-',
   },
   {
     userId: '11112',
@@ -40,7 +40,7 @@ const mockIssueChat = [
     lastName: 'Blain',
     role: ROLES.USER,
     jobPosition: 'Clicker',
-    score: '',
+    value: '20',
   },
   {
     userId: '11113',
@@ -48,7 +48,7 @@ const mockIssueChat = [
     lastName: '',
     role: ROLES.USER,
     jobPosition: 'Designer',
-    score: '',
+    value: '20',
   },
   {
     userId: '11115',
@@ -56,8 +56,26 @@ const mockIssueChat = [
     lastName: 'Ferdyshcenko',
     role: ROLES.OBSERVER,
     jobPosition: 'Programmer',
-    score: '',
+    value: '-',
   },
 ];
 
-export { mockCurrentIssue, mockIssueChat, mockCurrentAdmin, mockCurrentUser, mockRoom };
+const tempCardValueAndCountOfVotesMock = [
+  { value: '-', count: 2 },
+  { value: '20', count: 2 },
+];
+
+const statisticsCardsMock = [
+  { id: '0', value: '-', scoreInPercent: 50 },
+  { id: '1', value: '20', scoreInPercent: 50 },
+];
+
+export {
+  mockCurrentIssue,
+  mockIssueChat,
+  mockCurrentAdmin,
+  mockCurrentUser,
+  mockRoom,
+  statisticsCardsMock,
+  tempCardValueAndCountOfVotesMock,
+};
