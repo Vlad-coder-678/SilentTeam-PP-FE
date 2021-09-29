@@ -40,14 +40,18 @@ const MainPage: FC = () => {
         <label>Create session:</label>
         <GeneralButton type="button" label={'Create new game'} onClick={handleCreateNewGame} primaryBG />
       </div>
-      <h3>OR:</h3>
-      <label>
-        Connect to lobby by <span>ID</span>:
-      </label>
-      <div className={styles.MainPage_item}>
-        <InputComponent value={room} onChange={handleEnterUrlGame} isReadOnly={true} />
-        <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
-      </div>
+      {room && (
+        <>
+          <h3>OR:</h3>
+          <label>
+            Connect to lobby by <span>ID</span>:
+          </label>
+          <div className={styles.MainPage_item}>
+            <InputComponent value={room} onChange={handleEnterUrlGame} isReadOnly={true} />
+            <GeneralButton type="button" label={'Connect'} onClick={handleConnectToGame} primaryBG />
+          </div>
+        </>
+      )}
       {isVisible && <ConnectToLobby setIsVisible={setIsVisible} url={room} />}
     </div>
   );

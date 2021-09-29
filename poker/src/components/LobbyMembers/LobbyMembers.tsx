@@ -23,6 +23,7 @@ const LobbyMembers: FC<Props> = ({ users }) => (
           role={user.role}
         />
       ))}
+      {users.length === 0 && <p>There are no other members yet</p>}
     </div>
   </div>
 );

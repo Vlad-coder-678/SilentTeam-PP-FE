@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
+import { initStatisticsCards } from '../../redux/slices/gameProcessSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
 import { selectIssues } from '../../redux/slices/issuesSlice';
 import { currentRoomSlice } from '../../redux/slices/roomSlice';
@@ -11,6 +12,8 @@ import GeneralButton from '../GeneralButton/GeneralButton';
 
 const StartGameButton: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+
+  const dispatch = useDispatch();
 
   const room = useSelector(currentRoomSlice);
   const {
@@ -23,6 +26,8 @@ const StartGameButton: FC = () => {
   const cards = useSelector(selectGameCards);
 
   const handleStartGame = (): void => {
+    dispatch(initStatisticsCards(cards));
+
     const settings = { isAdminBePlayerInGame, isNeededTimer, storyTypeShort, roundTime };
 
     socket.emit('start-game', room, settings, issues, cards);

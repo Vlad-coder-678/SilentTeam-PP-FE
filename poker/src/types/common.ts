@@ -55,6 +55,10 @@ export interface CardGameSetting {
   value: string;
 }
 
+export interface StatisticCard extends CardGameSetting {
+  scoreInPercent: number;
+}
+
 export interface CardGame {
   card?: CardGameSetting;
   title: string;

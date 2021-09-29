@@ -22,7 +22,7 @@ const Main: FC = () => {
         <Route path="/game">
           <GamePage />
         </Route>
-        <Route path="/game_result">
+        <Route path="/result">
           <GameResultPage />
         </Route>
         <Route path="*">
