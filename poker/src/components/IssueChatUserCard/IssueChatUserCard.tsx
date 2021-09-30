@@ -20,15 +20,15 @@ const IssueChatUserCard: FC<Props> = ({ userId, firstName, lastName, role, job }
   return (
     <div className={styles.IssueChatUserCard_wrap}>
       <div className={styles.IssueChatUserCard_user}>
-        <div>
+        <div className={styles.IssueChatUserCard_user_ava_and_status}>
           <Avatar role={role} size={SIZES.SMALL} firstName={firstName} lastName={lastName} />
           {userId === currentUserId && <p className={styles.IssueChatUserCard_you}>it's you</p>}
         </div>
 
-        <div>
+        <div className={styles.IssueChatUserCard_user_data}>
           <p className={styles.IssueChatUserCard_name}>{firstName}</p>
-          <p className={styles.IssueChatUserCard_name}>{lastName}</p>
-          <p className={styles.IssueChatUserCard_job}>{job}</p>
+          {lastName && <p className={styles.IssueChatUserCard_name}>{lastName}</p>}
+          {job && <p className={styles.IssueChatUserCard_job}>{job}</p>}
         </div>
       </div>
     </div>

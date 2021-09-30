@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
+
 import CardUser from '../../components/CardUser/CardUser';
 import Chat from '../../components/Chat/Chat';
 import TitleSection from '../../components/TitleSection/TitleSection';
@@ -12,6 +13,8 @@ import LobbyIssues from '../../components/LobbyIssues/LobbyIssues';
 import LobbySetting from '../../components/LobbySetting/LobbySetting';
 import KickModal from '../../components/KickModal/KickModal';
 import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
+import ExitButton from '../../components/ExitButton/ExitButton';
+
 import {
   isModalOpenSlice,
   setIsModalOpen,
@@ -30,16 +33,15 @@ import {
   isAdminSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
-import { SocketContext } from '../../socketContext';
 import { ResponseFromSocket } from '../../types/common';
-import exitToMainPage from '../../utils/exit';
-import ExitButton from '../../components/ExitButton/ExitButton';
 import { setSettings } from '../../redux/slices/gameSettingSlice';
-
-import styles from './LobbyPage.module.scss';
 import { setIssues } from '../../redux/slices/issuesSlice';
 import { setGameCards } from '../../redux/slices/gameCardsSlice';
 import { initStatisticsCards } from '../../redux/slices/gameProcessSlice';
+import { SocketContext } from '../../socketContext';
+import exitToMainPage from '../../utils/exit';
+
+import styles from './LobbyPage.module.scss';
 
 const LobbyPage: FC = () => {
   const history = useHistory();

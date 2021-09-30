@@ -13,8 +13,6 @@ import { currentRoomSlice, currentUserSlice } from '../../redux/slices/roomSlice
 import { SocketContext } from '../../socketContext';
 import Card from '../Card/Card';
 
-import styles from './CardGame.module.scss';
-
 interface Props {
   card: CardGameSetting;
 }
@@ -40,8 +38,8 @@ const CardGame: FC<Props> = ({ card }) => {
   };
 
   return (
-    <div className={isChecked ? styles.card_wrapSelected : styles.card_wrap} onClick={handleSelectedCard}>
-      <Card card={card} isShowCards={(isPlayingNow && !currentUserCheckCardWithId) || isChecked} size={SIZES.MEDIUM}/>
+    <div onClick={handleSelectedCard}>
+      <Card card={card} isShowCards={(isPlayingNow && !currentUserCheckCardWithId) || isChecked} size={SIZES.MEDIUM} />
     </div>
   );
 };

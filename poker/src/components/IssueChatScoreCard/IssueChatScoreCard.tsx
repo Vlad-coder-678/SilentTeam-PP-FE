@@ -22,7 +22,9 @@ const IssueChatScoreCard: FC<Props> = ({ value }) => {
         {!isPlayingNow && value === 'coffeetime' && <img src={coffeeImg} alt="coffee" />}
         {!isPlayingNow && value !== 'coffeetime' && value}
       </div>
-      <div className={styles.IssueChatScoreCard_storyTypeShort}>{storyTypeShort}</div>
+      {!isPlayingNow && value !== 'coffeetime' && (
+        <div className={styles.IssueChatScoreCard_storyTypeShort}>{storyTypeShort}</div>
+      )}
     </div>
   );
 };
