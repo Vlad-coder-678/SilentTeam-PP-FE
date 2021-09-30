@@ -2,12 +2,10 @@
 
 .small,
 .medium {
-  border-radius: 10px;
-  box-shadow: 0 4px 4px 0 $shadow-one-quarter;
   margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  perspective: 200px;
+  cursor: pointer;
+  @include iconHoverWithTransition;
 }
 
 .medium {
@@ -20,19 +18,64 @@
   height: 90px;
 }
 
+.card_content_show,
+.card_content_no_show {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 4px 0 $shadow-one-quarter;
+  border-radius: 10px;
+}
+
+.card_content_show {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.card_content_no_show {
+  transform: rotateY(180deg);
+  transition: transform 0.5s;
+}
+
+.card_coffeetime_checked,
+.card_value_checked,
+.card_coffeetime,
+.card_value,
+.card_cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+.card_coffeetime_checked,
+.card_value_checked {
+  background-color: $variable-sky-blue;
+}
+
+.card_coffeetime,
+.card_value,
+.card_cover {
+  background-color: white;
+}
+
 .card_coffeetime img {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   text-align: center;
 }
 
-.card_value {
-  width: 100%;
-  height: 100%;
+.card_coffeetime,
+.card_value,
+.card_coffeetime_checked,
+.card_value_checked {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 }
 
 .card_value_top {
@@ -51,4 +94,27 @@
 .card_value_bottom {
   font-size: 1rem;
   font-weight: 600;
+}
+
+.card_cover_no_show {
+  transform: rotateY(180deg);
+}
+
+.card_cover_show {
+  transform: rotateY(0);
+}
+
+.card_cover_show,
+.card_cover_no_show {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card_cover_show img,
+.card_cover_no_show img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
