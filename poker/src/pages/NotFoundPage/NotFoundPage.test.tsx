@@ -16,12 +16,12 @@ describe('NotFoundPage', () => {
     container.remove();
   });
 
-  test('Renders correctly initial document', () => {
+  test('should have one title', () => {
     const title = container.querySelectorAll('h2');
     expect(title).toHaveLength(1);
   });
 
-  test('h2 to have text', () => {
+  test('h2 to have text "NotFoundPage"', () => {
     const title = container.querySelector('h2');
     expect(title && title.outerHTML).toMatch(/NotFoundPage/i);
   });
