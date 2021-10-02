@@ -12,6 +12,7 @@ import { SocketContext } from '../../socketContext';
 import { isAdminSlice, loginUser, setCurrentRoom, setIsAdmin } from '../../redux/slices/roomSlice';
 
 import styles from './ConnectToLobby.module.scss';
+import exitToMainPage from '../../utils/exit';
 
 interface FormState {
   firstName: string;
@@ -69,8 +70,11 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
         const { eventName, code, error: responseError, data } = response;
 
         // eslint-disable-next-line no-console
-        if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
-        else {
+        if (responseError) {
+          console.log(`${eventName}: ${code}: ${responseError}`);
+          history.push('/');
+          exitToMainPage();
+        } else {
           const { user: responseUser } = data;
           dispatch(setCurrentRoom(responseUser.room));
           const userToRedux = {
