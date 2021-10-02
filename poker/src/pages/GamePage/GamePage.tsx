@@ -136,7 +136,7 @@ const GamePage: FC = () => {
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { statistics: responseStatistics } = data;
-        dispatch(initStatistics(responseStatistics));
+        dispatch(initStatistics({ responseStatistics, issues, storyType: settings.storyType }));
         history.push('/result');
       }
     };

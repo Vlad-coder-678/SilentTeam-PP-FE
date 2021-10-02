@@ -97,7 +97,19 @@ export interface IssueChatItem {
   value: string;
 }
 
-export interface StatisticsResultItem {
+export interface StatisticsResultItemFromServer {
   issueId: string;
-  statisticsCard: Array<StatisticCard>;
+  results: Array<StatisticCard>;
+}
+
+export interface StatisticsResultItem {
+  issueTitle: string;
+  statisticsCards: Array<StatisticCard>;
+}
+
+export interface StatisticsForDownloadItem {
+  issueTitle: string;
+  storyType: string;
+  value: string;
+  scoreInPercent: number;
 }
