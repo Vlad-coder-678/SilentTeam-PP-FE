@@ -165,6 +165,26 @@ const LobbyPage: FC = () => {
     };
   });
 
+  React.useEffect(() => {
+    const deleteGameSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        history.push('/');
+        exitToMainPage();
+      }
+    };
+
+    socket.on('game-end', deleteGameSuccess);
+
+    return (): void => {
+      socket.off('game-end', deleteGameSuccess);
+    };
+  });
+
   return (
     <div className={styles.lobbyPage_wrap}>
       <div className={styles.lobbyPage_container}>
