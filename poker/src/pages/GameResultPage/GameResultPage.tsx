@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DownloadCSVButton from '../../components/DownloadCSVButton/DownloadCSVButton';
+import ExitFromResultPageButton from '../../components/ExitFromResultPageButton/ExitFromResultPageButton';
 import { allStatisticsSlice } from '../../redux/slices/statisticsSlice';
 import exitToMainPage from '../../utils/exit';
 
@@ -23,6 +24,7 @@ const GameResultPage: FC = () => {
     <div>
       <h2>GameResultPage</h2>
       <DownloadCSVButton />
+      <ExitFromResultPageButton />
     </div>
   );
 };
