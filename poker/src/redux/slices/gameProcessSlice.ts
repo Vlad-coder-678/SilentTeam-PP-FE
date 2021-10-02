@@ -12,6 +12,8 @@ interface GameProcessInit {
   isPlayingNow: boolean;
   isShowResultOfVoting: boolean;
   statisticsCards: StatisticCard[];
+  isLateModalOpen: boolean;
+  lateUser: Member | null;
 }
 
 const initialState: GameProcessInit = {
@@ -21,6 +23,8 @@ const initialState: GameProcessInit = {
   isPlayingNow: false,
   isShowResultOfVoting: false,
   statisticsCards: [],
+  isLateModalOpen: false,
+  lateUser: null,
 };
 
 export const gameProcessSlice = createSlice({
@@ -79,6 +83,12 @@ export const gameProcessSlice = createSlice({
       const cards = action.payload;
       state.statisticsCards = cards.map((card) => ({ ...card, scoreInPercent: 0 }));
     },
+    setIsLateModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isLateModalOpen = action.payload;
+    },
+    setLateUser: (state, action: PayloadAction<Member>) => {
+      state.lateUser = action.payload;
+    },
   },
 });
 
@@ -90,14 +100,18 @@ export const {
   setIsPlayingNow,
   setIsShowResultOfVoting,
   initStatisticsCards,
+  setIsLateModalOpen,
+  setLateUser
 } = gameProcessSlice.actions;
 
 export const issueIdSelectedSlice = (state: RootState): string => state.gameProcess.issueIdSelected;
-export const currentUserCheckCardWithIdSlice = (state: RootState): string =>
-  state.gameProcess.currentUserCheckCardWithId;
+export const currentUserCheckCardWithIdSlice = (state: RootState): string => state
+.gameProcess.currentUserCheckCardWithId;
 export const issueChatSlice = (state: RootState): IssueChatItem[] => state.gameProcess.issueChat;
 export const statisticsCardsSlice = (state: RootState): StatisticCard[] => state.gameProcess.statisticsCards;
 export const isPlayingNowSlice = (state: RootState): boolean => state.gameProcess.isPlayingNow;
 export const isShowResultOfVotingSlice = (state: RootState): boolean => state.gameProcess.isShowResultOfVoting;
+export const isLateModalOpenSlice = (state: RootState): boolean => state.gameProcess.isLateModalOpen;
+export const lateUserSlice = (state: RootState): Member|null => state.gameProcess.lateUser;
 
 export default gameProcessSlice.reducer;

@@ -28,6 +28,7 @@ import {
   deleteMember,
   initRoom,
   isAdminSlice,
+  isLateSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
@@ -55,6 +56,7 @@ const LobbyPage: FC = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const isKickModalOpen = useSelector(isModalOpenSlice);
   const isAdmin = useSelector(isAdminSlice);
+  const isLate = useSelector(isLateSlice);
 
   React.useEffect(() => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
@@ -186,30 +188,37 @@ const LobbyPage: FC = () => {
   });
 
   return (
-    <div className={styles.lobbyPage_wrap}>
-      <div className={styles.lobbyPage_container}>
-        <TitleSection title={'Poker Planning'} isCapitalLetters />
-        <div className={styles.lobbyPage_section}>
-          <p>Scram master:</p>
+    <>
+      {!isLate && (
+        <div className={styles.lobbyPage_wrap}>
+          <div className={styles.lobbyPage_container}>
+            <TitleSection title={'Poker Planning'} isCapitalLetters />
+            <div className={styles.lobbyPage_section}>
+              <p>Scram master:</p>
+            </div>
+            <div className={styles.lobbyPage_section}>
+              <CardUser
+                userId={admin.userId}
+                firstName={admin.firstName}
+                lastName={admin.lastName}
+                jobPosition={admin.job}
+                role={admin.role}
+              />
+            </div>
+            {isAdmin ? <LobbyScramButtons room={room} /> : <ExitButton />}
+            <LobbyMembers users={users} />
+            {isAdmin && <LobbyIssues />}
+            {isAdmin && <LobbySetting />}
+          </div>
+          <ChatOpenButton isVisible={isVisible} setIsVisible={setIsVisible} />
+          {isVisible && <Chat isVisible={isVisible} setIsVisible={setIsVisible} />}
+          {isKickModalOpen && <KickModal />}
         </div>
-        <div className={styles.lobbyPage_section}>
-          <CardUser
-            userId={admin.userId}
-            firstName={admin.firstName}
-            lastName={admin.lastName}
-            jobPosition={admin.job}
-            role={admin.role}
-          />
-        </div>
-        {isAdmin ? <LobbyScramButtons room={room} /> : <ExitButton />}
-        <LobbyMembers users={users} />
-        {isAdmin && <LobbyIssues />}
-        {isAdmin && <LobbySetting />}
-      </div>
-      <ChatOpenButton isVisible={isVisible} setIsVisible={setIsVisible} />
-      {isVisible && <Chat isVisible={isVisible} setIsVisible={setIsVisible} />}
-      {isKickModalOpen && <KickModal />}
-    </div>
+      )}
+      {isLate && (
+        <div>You late. Now wait for the admin to decide whether to allow you to play or kick you out of the game</div>
+      )}
+    </>
   );
 };
 
