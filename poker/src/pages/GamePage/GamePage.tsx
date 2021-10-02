@@ -34,6 +34,8 @@ import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
 
 import styles from './GamePage.module.scss';
 import exitToMainPage from '../../utils/exit';
+import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
+import { initStatistics } from '../../redux/slices/statisticsSlice';
 
 const GamePage: FC = () => {
   const history = useHistory();
@@ -126,6 +128,27 @@ const GamePage: FC = () => {
   }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
 
   React.useEffect(() => {
+    const setStatisticsSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { statistics: responseStatistics } = data;
+        dispatch(initStatistics(responseStatistics));
+        history.push('/result');
+      }
+    };
+
+    socket.on('get-statistics', setStatisticsSuccess);
+
+    return (): void => {
+      socket.off('get-statistics', setStatisticsSuccess);
+    };
+  });
+
+  React.useEffect(() => {
     if (isShowResultOfVoting && isAdmin) {
       const callback = (response: ResponseFromSocket): void => {
         console.log('send-statistics', response);
@@ -165,6 +188,7 @@ const GamePage: FC = () => {
                 <div>{issueSelected.desc}</div>
                 {isAdmin && !isPlayingNow && <RunRoundButton />}
                 {isAdmin && isPlayingNow && <StopRoundButton />}
+                {isAdmin && <ShowResultsButton />}
                 {isNeedTimer && <p>Here must be timer</p>}
                 <TitleSection title={'please, make your choise:'} />
                 {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}

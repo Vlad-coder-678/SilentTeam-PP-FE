@@ -96,3 +96,8 @@ export interface IssueChatItem {
   job?: string;
   value: string;
 }
+
+export interface StatisticsResultItem {
+  issueId: string;
+  statisticsCard: Array<StatisticCard>;
+}
