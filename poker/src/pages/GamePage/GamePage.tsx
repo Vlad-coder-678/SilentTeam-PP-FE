@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
+import { useHistory } from 'react-router-dom';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
@@ -13,6 +14,7 @@ import {
   initIssueChat,
   initStatisticsCards,
   isPlayingNowSlice,
+  isShowResultOfVotingSlice,
   issueIdSelectedSlice,
   selectedIssue,
   setIsPlayingNow,
@@ -21,7 +23,7 @@ import {
   updateIssueChatAndStatistics,
 } from '../../redux/slices/gameProcessSlice';
 import { selectIssues } from '../../redux/slices/issuesSlice';
-import { adminSlice, allUsersSlice, isAdminSlice } from '../../redux/slices/roomSlice';
+import { adminSlice, allUsersSlice, currentRoomSlice, isAdminSlice } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { Member, ResponseFromSocket } from '../../types/common';
 import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
@@ -31,12 +33,16 @@ import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
 import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
 
 import styles from './GamePage.module.scss';
+import exitToMainPage from '../../utils/exit';
 
 const GamePage: FC = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
+  const room = useSelector(currentRoomSlice);
   const users = useSelector(allUsersSlice);
   const admin = useSelector(adminSlice);
   const isAdmin = useSelector(isAdminSlice);
@@ -46,9 +52,17 @@ const GamePage: FC = () => {
   const settings = useSelector(selectGameSetting);
   const isPlayingNow = useSelector(isPlayingNowSlice);
   const issueIdSelected = useSelector(issueIdSelectedSlice);
+  const isShowResultOfVoting = useSelector(isShowResultOfVotingSlice);
 
   const issueSelected = issues[Number(issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
+
+  React.useEffect(() => {
+    if (!admin.firstName) {
+      history.push('/');
+      exitToMainPage();
+    }
+  });
 
   React.useEffect(() => {
     const isAdminPlayer = settings.masterIsPlayer;
@@ -110,6 +124,22 @@ const GamePage: FC = () => {
       };
     }
   }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
+
+  React.useEffect(() => {
+    if (isShowResultOfVoting && isAdmin) {
+      const callback = (response: ResponseFromSocket): void => {
+        console.log('send-statistics', response);
+
+        const { eventName, code, error: responseError } = response;
+
+        // eslint-disable-next-line no-console
+        if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      };
+
+      socket.emit('send-statistics', room, issueIdSelected, statisticsCards, callback);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowResultOfVoting]);
 
   return (
     <div className={styles.game_wrap}>
