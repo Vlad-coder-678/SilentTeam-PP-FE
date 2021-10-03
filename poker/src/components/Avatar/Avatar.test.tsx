@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Avatar from './Avatar';
 import { ROLES, SIZES } from '../../types/common';
 
-describe('Avatar component tests', () => {
+describe('Avatar', () => {
   let container: HTMLDivElement;
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('Avatar component tests', () => {
     container.remove();
   });
 
-  test('Renders correctly initial document', () => {
+  test('should contain one paragraph', () => {
     const p = container.querySelectorAll('p');
     expect(p).toHaveLength(1);
   });

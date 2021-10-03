@@ -1,31 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'enzyme';
 import { Provider } from 'react-redux';
 
 import { store } from '../../redux/store';
 import CardGameLobby from './CardGameLobby';
 
+const minValue = 0;
+const maxValue = 1000;
+const cardInit = { id: '0', value: '10' };
+
 describe('CardGameLobby component tests', () => {
-  let container: HTMLDivElement;
+  const wrapper = render(
+    <Provider store={store}>
+      <CardGameLobby card={cardInit} minValue={minValue} maxValue={maxValue} isNew />
+    </Provider>,
+  );
 
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    const MyComponent = ({ minValue = 0, maxValue = 1000 }): JSX.Element => (
-      <Provider store={store}>
-        <CardGameLobby card={{ id: '0', value: '10' }} minValue={minValue} maxValue={maxValue} />
-      </Provider>
-    );
-    ReactDOM.render(<MyComponent />, container);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(container);
-    container.remove();
-  });
+  const img = wrapper.find('img');
 
   it('Renders correctly initial document', () => {
-    const p = container.querySelectorAll('p');
-    expect(p).toHaveLength(2);
+    expect(img).toHaveLength(1);
   });
 });
