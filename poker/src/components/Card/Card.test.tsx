@@ -1,32 +1,29 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import ReactDOM from 'react-dom';
+import { render } from 'enzyme';
 
-import { store } from '../../redux/store';
 import Card from './Card';
+import { store } from '../../redux/store';
 import { SIZES } from '../../types/common';
 
+const cardInit = { id: '0', value: '10' };
+
 describe('Card', () => {
-  let container: HTMLDivElement;
+  const wrapper = render(
+    <Provider store={store}>
+      <Card card={cardInit} isShowCards={true} size={SIZES.SMALL} />
+    </Provider>,
+  );
 
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    const MyComponent = (): JSX.Element => (
-      <Provider store={store}>
-        <Card card={{ id: '0', value: '10' }} isShowCards={true} size={SIZES.SMALL} />
-      </Provider>
-    );
-    ReactDOM.render(<MyComponent />, container);
+  it('should render text in paragraph equal cardInit.value', () => {
+    const p = wrapper.find('p');
+    const pInnerText = p.first().text();
+    expect(pInnerText).toEqual(cardInit.value);
   });
 
-  afterEach(() => {
-    document.body.removeChild(container);
-    container.remove();
-  });
-
-  it('Renders correctly initial document', () => {
-    const p = container.querySelectorAll('p');
-    expect(p).toHaveLength(2);
+  it('should render text in title Card equal storyTypeShort from settings game', () => {
+    const h3 = wrapper.find('h3');
+    const h3InnerText = h3.first().text();
+    expect(h3InnerText).toEqual(store.getState().gameSettings.storyTypeShort);
   });
 });
