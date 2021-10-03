@@ -9,6 +9,7 @@ interface roomState {
   admin: Member;
   allUsers: Array<Member>;
   isAdmin: boolean;
+  isLate: boolean;
 }
 
 const initialState: roomState = {
@@ -17,6 +18,7 @@ const initialState: roomState = {
   admin: INIT_MEMBER,
   allUsers: [],
   isAdmin: false,
+  isLate: false,
 };
 
 export const roomSlice = createSlice({
@@ -31,6 +33,9 @@ export const roomSlice = createSlice({
     },
     setIsAdmin: (state, action: PayloadAction<boolean>) => {
       state.isAdmin = action.payload;
+    },
+    setIsLate: (state, action: PayloadAction<boolean>) => {
+      state.isLate = action.payload;
     },
     initRoom: (state, action: PayloadAction<Array<Member>>) => {
       const allUsersInRoom = action.payload;
@@ -50,12 +55,14 @@ export const roomSlice = createSlice({
   },
 });
 
-export const { loginUser, setCurrentRoom, setIsAdmin, initRoom, updateMembers, deleteMember } = roomSlice.actions;
+export const { loginUser, setCurrentRoom, setIsAdmin,
+  setIsLate, initRoom, updateMembers, deleteMember } = roomSlice.actions;
 
 export const currentRoomSlice = (state: RootState): string => state.room.currentRoom;
 export const currentUserSlice = (state: RootState): Member => state.room.currentUser;
 export const adminSlice = (state: RootState): Member => state.room.admin;
 export const allUsersSlice = (state: RootState): Array<Member> => state.room.allUsers;
 export const isAdminSlice = (state: RootState): boolean => state.room.isAdmin;
+export const isLateSlice = (state: RootState): boolean => state.room.isLate;
 
 export default roomSlice.reducer;
