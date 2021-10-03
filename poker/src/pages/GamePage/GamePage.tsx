@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { useHistory } from 'react-router-dom';
+
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
 import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
 import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
+import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
+
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
 import {
@@ -56,6 +59,7 @@ const GamePage: FC = () => {
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const room = useSelector(currentRoomSlice);
+  const [isVisibleChat, setIsVisibleChat] = React.useState(false);
   const users = useSelector(allUsersSlice);
   const admin = useSelector(adminSlice);
   const isAdmin = useSelector(isAdminSlice);
@@ -223,7 +227,7 @@ const GamePage: FC = () => {
           title={`Planning (issues: ${issues
             .map((is) => is.title)
             .filter((is, id) => id < 4)
-            .join(', ')}${issues.length > 5 && ', ...'})`}
+            .join(', ')}${issues.length > 5 ? ', ...' : ''})`}
           isCapitalLetters
         />
         <div className={styles.game_content}>
@@ -237,17 +241,25 @@ const GamePage: FC = () => {
             {issueSelected && (
               <>
                 <TitleSection title={issueSelected.title} />
-                <div>{issueSelected.desc}</div>
-                {isAdmin && !isPlayingNow && <RunRoundButton />}
-                {isAdmin && isPlayingNow && <StopRoundButton />}
-                {isAdmin && <ShowResultsButton />}
-                {isNeedTimer && <p>Here must be timer</p>}
+                <div className={styles.game_desc}>{issueSelected.desc}</div>
+                <div className={styles.game_buttons}>
+                  {isAdmin && !isPlayingNow && <RunRoundButton />}
+                  {isAdmin && isPlayingNow && <StopRoundButton />}
+                  {isAdmin && <ShowResultsButton />}
+                </div>
+                {isNeedTimer && <div>Here must be timer</div>}
                 <TitleSection title={'please, make your choise:'} />
-                {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                <div className={styles.game_cards}>
+                  {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                </div>
                 <TitleSection title={'statistics:'} />
-                {statisticsCards && statisticsCards.map((card) => <StatisticsCard key={card.id} card={card} />)}
+                {statisticsCards.some((card) => card.scoreInPercent > 0) ? (
+                  statisticsCards.map((card) => card.scoreInPercent > 0 && <StatisticsCard key={card.id} card={card} />)
+                ) : (
+                  <p>Statistics will be displayed here</p>
+                )}
                 <TitleSection title={'members:'} />
-                <div>
+                <div className={styles.game_users}>
                   <IssueChatUserCard
                     userId={admin.userId}
                     firstName={admin.firstName}
@@ -269,9 +281,8 @@ const GamePage: FC = () => {
               </>
             )}
           </div>
-          <div className={styles.game_vote}>
-            <ChatToVoteOnIssue />
-          </div>
+          <ChatOpenButton isVisible={isVisibleChat} setIsVisible={setIsVisibleChat} />
+          {isVisibleChat && <ChatToVoteOnIssue isVisible={isVisibleChat} setIsVisible={setIsVisibleChat} />}
         </div>
       </div>
       {isLateModalOpen && <IsLateModal />}
