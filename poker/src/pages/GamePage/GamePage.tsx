@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
+import { useHistory } from 'react-router-dom';
 
 import TitleSection from '../../components/TitleSection/TitleSection';
 import CardUser from '../../components/CardUser/CardUser';
@@ -15,16 +16,27 @@ import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
 import {
   initIssueChat,
   initStatisticsCards,
+  isLateModalOpenSlice,
   isPlayingNowSlice,
+  isShowResultOfVotingSlice,
   issueIdSelectedSlice,
   selectedIssue,
+  setIsLateModalOpen,
   setIsPlayingNow,
   setIsShowResultOfVoting,
+  setLateUser,
   statisticsCardsSlice,
   updateIssueChatAndStatistics,
 } from '../../redux/slices/gameProcessSlice';
 import { selectIssues } from '../../redux/slices/issuesSlice';
-import { adminSlice, allUsersSlice, isAdminSlice } from '../../redux/slices/roomSlice';
+import {
+  adminSlice,
+  allUsersSlice,
+  currentRoomSlice,
+  currentUserSlice,
+  isAdminSlice,
+  updateMembers,
+} from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
 import { Member, ResponseFromSocket } from '../../types/common';
 import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
@@ -34,14 +46,20 @@ import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
 import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
 
 import styles from './GamePage.module.scss';
+import exitToMainPage from '../../utils/exit';
+import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
+import { initStatistics } from '../../redux/slices/statisticsSlice';
+import IsLateModal from '../../components/IsLateModal/IsLateModal';
 
 const GamePage: FC = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
+  const room = useSelector(currentRoomSlice);
   const [isVisibleChat, setIsVisibleChat] = React.useState(false);
-
   const users = useSelector(allUsersSlice);
   const admin = useSelector(adminSlice);
   const isAdmin = useSelector(isAdminSlice);
@@ -51,16 +69,42 @@ const GamePage: FC = () => {
   const settings = useSelector(selectGameSetting);
   const isPlayingNow = useSelector(isPlayingNowSlice);
   const issueIdSelected = useSelector(issueIdSelectedSlice);
+  const isShowResultOfVoting = useSelector(isShowResultOfVotingSlice);
+  const isLateModalOpen = useSelector(isLateModalOpenSlice);
+  const currentUser = useSelector(currentUserSlice);
 
   const issueSelected = issues[Number(issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
+
+  React.useEffect(() => {
+    if (!admin.firstName) {
+      history.push('/');
+      exitToMainPage();
+    }
+  });
 
   React.useEffect(() => {
     const isAdminPlayer = settings.masterIsPlayer;
     const payload = { isAdminPlayer, admin, users };
     dispatch(initIssueChat(payload));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [users]);
+
+  React.useEffect(() => {
+    const updateUsersSuccess = (response: Member): void => {
+      if (response.userId !== currentUser.userId) {
+        console.log('admin-added-later-in-game', response);
+
+        dispatch(updateMembers(response));
+      }
+    };
+
+    socket.on('admin-added-later-in-game', updateUsersSuccess);
+
+    return (): void => {
+      socket.off('admin-added-later-in-game', updateUsersSuccess);
+    };
+  });
 
   React.useEffect(() => {
     const updateSelectedIssueIdSuccess = (response: string): void => {
@@ -116,6 +160,66 @@ const GamePage: FC = () => {
     }
   }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
 
+  React.useEffect(() => {
+    const setLateUserSuccess = (response: ResponseFromSocket): void => {
+      if (isAdmin) {
+        console.log(response);
+        const { eventName, code, error: responseError, data } = response;
+
+        // eslint-disable-next-line no-console
+        if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+        else {
+          const { user: responseUser } = data;
+          dispatch(setLateUser(responseUser));
+          dispatch(setIsLateModalOpen(true));
+        }
+      }
+    };
+
+    socket.on('late-user-logged-in', setLateUserSuccess);
+
+    return (): void => {
+      socket.off('late-user-logged-in', setLateUserSuccess);
+    };
+  });
+
+  React.useEffect(() => {
+    const setStatisticsSuccess = (response: ResponseFromSocket): void => {
+      console.log(response);
+      const { eventName, code, error: responseError, data } = response;
+
+      // eslint-disable-next-line no-console
+      if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      else {
+        const { statistics: responseStatistics } = data;
+        dispatch(initStatistics({ responseStatistics, issues, storyType: settings.storyType }));
+        history.push('/result');
+      }
+    };
+
+    socket.on('get-statistics', setStatisticsSuccess);
+
+    return (): void => {
+      socket.off('get-statistics', setStatisticsSuccess);
+    };
+  });
+
+  React.useEffect(() => {
+    if (isShowResultOfVoting && isAdmin) {
+      const callback = (response: ResponseFromSocket): void => {
+        console.log('send-statistics', response);
+
+        const { eventName, code, error: responseError } = response;
+
+        // eslint-disable-next-line no-console
+        if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
+      };
+
+      socket.emit('send-statistics', room, issueIdSelected, statisticsCards, callback);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowResultOfVoting]);
+
   return (
     <div className={styles.game_wrap}>
       <div className={styles.game_container}>
@@ -141,6 +245,7 @@ const GamePage: FC = () => {
                 <div className={styles.game_buttons}>
                   {isAdmin && !isPlayingNow && <RunRoundButton />}
                   {isAdmin && isPlayingNow && <StopRoundButton />}
+                  {isAdmin && <ShowResultsButton />}
                 </div>
                 {isNeedTimer && <div>Here must be timer</div>}
                 <TitleSection title={'please, make your choise:'} />
@@ -180,6 +285,7 @@ const GamePage: FC = () => {
           {isVisibleChat && <ChatToVoteOnIssue isVisible={isVisibleChat} setIsVisible={setIsVisibleChat} />}
         </div>
       </div>
+      {isLateModalOpen && <IsLateModal />}
     </div>
   );
 };

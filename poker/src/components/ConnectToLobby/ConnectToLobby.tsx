@@ -9,9 +9,10 @@ import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
 import { Member, ResponseFromSocket, ROLES } from '../../types/common';
 import { SocketContext } from '../../socketContext';
-import { isAdminSlice, loginUser, setCurrentRoom, setIsAdmin } from '../../redux/slices/roomSlice';
+import { isAdminSlice, loginUser, setCurrentRoom, setIsAdmin, setIsLate } from '../../redux/slices/roomSlice';
 
 import styles from './ConnectToLobby.module.scss';
+import exitToMainPage from '../../utils/exit';
 
 interface FormState {
   firstName: string;
@@ -69,9 +70,12 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
         const { eventName, code, error: responseError, data } = response;
 
         // eslint-disable-next-line no-console
-        if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
-        else {
-          const { user: responseUser } = data;
+        if (responseError) {
+          console.log(`${eventName}: ${code}: ${responseError}`);
+          history.push('/');
+          exitToMainPage();
+        } else {
+          const { user: responseUser, isLate: responseIsLate } = data;
           dispatch(setCurrentRoom(responseUser.room));
           const userToRedux = {
             userId: responseUser.userId,
@@ -80,6 +84,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
             job: responseUser.job,
             role: responseUser.role,
           };
+          dispatch(setIsLate(responseIsLate));
           dispatch(loginUser(userToRedux));
           history.push('/lobby');
         }

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import CancelGameButton from '../CancelGameButton/CancelGameButton';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import StartGameButton from '../StartGameButton/StartGameButton';
 
@@ -27,7 +28,7 @@ const LobbyScramButtons: FC<Props> = ({ room }) => {
 
       <div className={styles.lobbyPage_section_button}>
         <StartGameButton />
-        <GeneralButton type="button" label={'Cancel Game'} />
+        <CancelGameButton />
       </div>
     </div>
   );

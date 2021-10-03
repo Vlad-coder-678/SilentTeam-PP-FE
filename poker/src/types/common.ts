@@ -96,3 +96,20 @@ export interface IssueChatItem {
   job?: string;
   value: string;
 }
+
+export interface StatisticsResultItemFromServer {
+  issueId: string;
+  results: Array<StatisticCard>;
+}
+
+export interface StatisticsResultItem {
+  issueTitle: string;
+  statisticsCards: Array<StatisticCard>;
+}
+
+export interface StatisticsForDownloadItem {
+  issueTitle: string;
+  storyType: string;
+  value: string;
+  scoreInPercent: number;
+}
