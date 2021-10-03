@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
@@ -56,10 +56,9 @@ const GamePage: FC = () => {
 
   const dispatch = useDispatch();
 
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const room = useSelector(currentRoomSlice);
-  const [isVisibleChat, setIsVisibleChat] = React.useState(false);
   const users = useSelector(allUsersSlice);
   const admin = useSelector(adminSlice);
   const isAdmin = useSelector(isAdminSlice);
@@ -73,24 +72,27 @@ const GamePage: FC = () => {
   const isLateModalOpen = useSelector(isLateModalOpenSlice);
   const currentUser = useSelector(currentUserSlice);
 
+  const [isVisibleChat, setIsVisibleChat] = useState(false);
+  const [currentRoundTime, setCurrentRoundTime] = useState(settings.roundTime);
+
   const issueSelected = issues[Number(issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!admin.firstName) {
       history.push('/');
       exitToMainPage();
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isAdminPlayer = settings.masterIsPlayer;
     const payload = { isAdminPlayer, admin, users };
     dispatch(initIssueChat(payload));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateUsersSuccess = (response: Member): void => {
       if (response.userId !== currentUser.userId) {
         console.log('admin-added-later-in-game', response);
@@ -106,7 +108,7 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateSelectedIssueIdSuccess = (response: string): void => {
       console.log('round-is-starting', response);
 
@@ -126,7 +128,7 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateIssuesChatAndStatisticsSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
@@ -147,7 +149,7 @@ const GamePage: FC = () => {
   });
 
   // eslint-disable-next-line consistent-return
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPlayingNow && isNeedTimer) {
       const timer = setTimeout(() => {
         dispatch(setIsPlayingNow(false));
@@ -160,7 +162,7 @@ const GamePage: FC = () => {
     }
   }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const setLateUserSuccess = (response: ResponseFromSocket): void => {
       if (isAdmin) {
         console.log(response);
@@ -183,7 +185,7 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const setStatisticsSuccess = (response: ResponseFromSocket): void => {
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
@@ -204,7 +206,7 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isShowResultOfVoting && isAdmin) {
       const callback = (response: ResponseFromSocket): void => {
         console.log('send-statistics', response);
@@ -219,6 +221,14 @@ const GamePage: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowResultOfVoting]);
+
+  useEffect(() => {
+    if (isPlayingNow && currentRoundTime > 0) setTimeout(() => setCurrentRoundTime(currentRoundTime - 1), 1000);
+    else {
+      setIsPlayingNow(false);
+      setCurrentRoundTime(settings.roundTime);
+    }
+  }, [currentRoundTime, isPlayingNow, settings.roundTime]);
 
   return (
     <div className={styles.game_wrap}>
@@ -248,14 +258,12 @@ const GamePage: FC = () => {
                   {isAdmin && <ShowResultsButton />}
                 </div>
                 {isNeedTimer && (
-                  <>
-                    <span>{Math.floor(settings.roundTime / 60)}</span> :
+                  <div className={styles.game_timer}>
+                    <span>{Math.floor(currentRoundTime / 60)}</span> :
                     <span>
-                      {settings.roundTime % 60 < 10
-                        ? `0${(settings.roundTime % 60).toString()}`
-                        : settings.roundTime % 60}
+                      {currentRoundTime % 60 < 10 ? `0${(currentRoundTime % 60).toString()}` : currentRoundTime % 60}
                     </span>
-                  </>
+                  </div>
                 )}
                 <TitleSection title={'please, make your choise:'} />
                 <div className={styles.game_cards}>
