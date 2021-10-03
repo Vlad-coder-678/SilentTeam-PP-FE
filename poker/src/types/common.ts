@@ -41,6 +41,7 @@ export interface ResponseFromSocket {
   eventName: string;
   code: number;
   error: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 }
 
@@ -67,7 +68,6 @@ export interface CardGame {
 
 export interface GameSettingsInit {
   masterIsPlayer: boolean;
-  isChangeCard: boolean;
   isNeededTimer: boolean;
   storyType: string;
   storyTypeShort: string;

@@ -247,7 +247,16 @@ const GamePage: FC = () => {
                   {isAdmin && isPlayingNow && <StopRoundButton />}
                   {isAdmin && <ShowResultsButton />}
                 </div>
-                {isNeedTimer && <div>Here must be timer</div>}
+                {isNeedTimer && (
+                  <>
+                    <span>{Math.floor(settings.roundTime / 60)}</span> :
+                    <span>
+                      {settings.roundTime % 60 < 10
+                        ? `0${(settings.roundTime % 60).toString()}`
+                        : settings.roundTime % 60}
+                    </span>
+                  </>
+                )}
                 <TitleSection title={'please, make your choise:'} />
                 <div className={styles.game_cards}>
                   {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}

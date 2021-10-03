@@ -11,7 +11,6 @@ import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import {
   selectGameSetting,
   changeMasterIsPlayer,
-  isChangeCard,
   changeIsNeededTimer,
   changeStoryType,
   changeStoryTypeShort,
@@ -34,10 +33,6 @@ const LobbySetting: FC = () => {
 
   const handleChangeMasterOrPlayer = (): void => {
     dispatch(changeMasterIsPlayer());
-  };
-
-  const handleChangeCardInRoundEnd = (): void => {
-    dispatch(isChangeCard());
   };
 
   const handleChangeTimerNeeded = (): void => {
@@ -73,14 +68,6 @@ const LobbySetting: FC = () => {
         <p>Scram master as player:</p>
         <Checkbox name={'master/player'} isChecked={settings.masterIsPlayer} onChange={handleChangeMasterOrPlayer} />
       </div>
-      {/* <div className={styles.lobbyPage_setting_item}>
-        <p>Changing card in round end:</p>
-        <Checkbox
-          name={'isChangeCardInRoundEnd'}
-          isChecked={settings.isChangeCard}
-          onChange={handleChangeCardInRoundEnd}
-        />
-      </div> */}
       <div className={styles.lobbyPage_setting_item}>
         <p>Is timer needed:</p>
         <Checkbox name={'isTimerNeeded'} isChecked={settings.isNeededTimer} onChange={handleChangeTimerNeeded} />

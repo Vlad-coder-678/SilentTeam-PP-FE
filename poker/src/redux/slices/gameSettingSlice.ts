@@ -4,7 +4,6 @@ import type { GameSettingsInit, SettingsFromServer } from '../../types/common';
 
 const initialState: GameSettingsInit = {
   masterIsPlayer: true,
-  isChangeCard: false,
   isNeededTimer: true,
   storyType: 'story type',
   storyTypeShort: 'ST',
@@ -20,10 +19,6 @@ export const gameSettingSlice = createSlice({
     changeMasterIsPlayer: (state) => {
       const isPlayer = !state.masterIsPlayer;
       return { ...state, masterIsPlayer: isPlayer };
-    },
-    isChangeCard: (state) => {
-      const mop = !state.isChangeCard;
-      return { ...state, isChangeCard: mop };
     },
     changeIsNeededTimer: (state) => {
       const isNeeded = !state.isNeededTimer;
@@ -50,7 +45,6 @@ export const gameSettingSlice = createSlice({
 
 export const {
   changeMasterIsPlayer,
-  isChangeCard,
   changeIsNeededTimer,
   changeStoryType,
   changeStoryTypeShort,
