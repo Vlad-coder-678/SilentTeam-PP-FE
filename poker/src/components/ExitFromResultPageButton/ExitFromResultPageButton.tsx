@@ -1,16 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
+import GeneralButton from '../GeneralButton/GeneralButton';
 import { currentRoomSlice, isAdminSlice } from '../../redux/slices/roomSlice';
 import { SocketContext } from '../../socketContext';
-import GeneralButton from '../GeneralButton/GeneralButton';
 import exitToMainPage from '../../utils/exit';
 import { ResponseFromSocket } from '../../types/common';
 
 const ExitFromResultPageButton: FC = () => {
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const history = useHistory();
 
@@ -20,6 +20,7 @@ const ExitFromResultPageButton: FC = () => {
   const handleExitFromResultPage = (): void => {
     if (isAdmin) {
       const callback = (response: ResponseFromSocket): void => {
+        // eslint-disable-next-line no-console
         console.log('delete-room', response);
 
         const { eventName, code, error: responseError } = response;

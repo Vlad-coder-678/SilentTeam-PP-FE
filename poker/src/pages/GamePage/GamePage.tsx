@@ -10,6 +10,12 @@ import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
 import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
 import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
+import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
+import StatisticsCard from '../../components/StatisticsCard/StatisticsCard';
+import RunRoundButton from '../../components/RunRoundButton/RunRoundButton';
+import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
+import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
+import IsLateModal from '../../components/IsLateModal/IsLateModal';
 
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
@@ -37,19 +43,13 @@ import {
   isAdminSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
+import { initStatistics } from '../../redux/slices/statisticsSlice';
 import { SocketContext } from '../../socketContext';
-import { Member, ResponseFromSocket } from '../../types/common';
-import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
-import StatisticsCard from '../../components/StatisticsCard/StatisticsCard';
-import RunRoundButton from '../../components/RunRoundButton/RunRoundButton';
-import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
 import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
+import { Member, ResponseFromSocket } from '../../types/common';
+import exitToMainPage from '../../utils/exit';
 
 import styles from './GamePage.module.scss';
-import exitToMainPage from '../../utils/exit';
-import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
-import { initStatistics } from '../../redux/slices/statisticsSlice';
-import IsLateModal from '../../components/IsLateModal/IsLateModal';
 
 const GamePage: FC = () => {
   const history = useHistory();
@@ -77,6 +77,7 @@ const GamePage: FC = () => {
 
   const issueSelected = issues[Number(issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
+  const isAdminAsPlayer = settings.masterIsPlayer;
 
   useEffect(() => {
     if (!admin.firstName) {
@@ -95,6 +96,7 @@ const GamePage: FC = () => {
   useEffect(() => {
     const updateUsersSuccess = (response: Member): void => {
       if (response.userId !== currentUser.userId) {
+        // eslint-disable-next-line no-console
         console.log('admin-added-later-in-game', response);
 
         dispatch(updateMembers(response));
@@ -110,6 +112,7 @@ const GamePage: FC = () => {
 
   useEffect(() => {
     const updateSelectedIssueIdSuccess = (response: string): void => {
+      // eslint-disable-next-line no-console
       console.log('round-is-starting', response);
 
       if (!isAdmin) dispatch(selectedIssue(response));
@@ -130,6 +133,7 @@ const GamePage: FC = () => {
 
   useEffect(() => {
     const updateIssuesChatAndStatisticsSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -165,6 +169,7 @@ const GamePage: FC = () => {
   useEffect(() => {
     const setLateUserSuccess = (response: ResponseFromSocket): void => {
       if (isAdmin) {
+        // eslint-disable-next-line no-console
         console.log(response);
         const { eventName, code, error: responseError, data } = response;
 
@@ -186,7 +191,23 @@ const GamePage: FC = () => {
   });
 
   useEffect(() => {
+    const stopRoundSuccess = (response: string): void => {
+      // eslint-disable-next-line no-console
+      console.log('round-is-stoping', response);
+      dispatch(setIsPlayingNow(false));
+      dispatch(setIsShowResultOfVoting(true));
+    };
+
+    socket.on('round-is-stoping', stopRoundSuccess);
+
+    return (): void => {
+      socket.off('round-is-stoping', stopRoundSuccess);
+    };
+  });
+
+  useEffect(() => {
     const setStatisticsSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -209,6 +230,7 @@ const GamePage: FC = () => {
   useEffect(() => {
     if (isShowResultOfVoting && isAdmin) {
       const callback = (response: ResponseFromSocket): void => {
+        // eslint-disable-next-line no-console
         console.log('send-statistics', response);
 
         const { eventName, code, error: responseError } = response;
@@ -264,34 +286,54 @@ const GamePage: FC = () => {
                     }`}</span>
                   </div>
                 )}
-                <TitleSection title={'please, make your choise:'} />
-                <div className={styles.game_cards}>
-                  {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
-                </div>
-                <TitleSection title={'statistics:'} />
-                {statisticsCards.some((card) => card.scoreInPercent > 0) ? (
-                  statisticsCards.map((card) => card.scoreInPercent > 0 && <StatisticsCard key={card.id} card={card} />)
-                ) : (
-                  <p>Statistics will be displayed here</p>
+                {isAdmin && isAdminAsPlayer && (
+                  <>
+                    <TitleSection title={'please, make your choise:'} />
+                    <div className={styles.game_cards}>
+                      {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                    </div>
+                  </>
                 )}
+                {!isAdmin && (
+                  <>
+                    <TitleSection title={'please, make your choise:'} />
+                    <div className={styles.game_cards}>
+                      {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                    </div>
+                  </>
+                )}
+                <TitleSection title={'statistics:'} />
+                <div className={styles.game_stat_card}>
+                  {statisticsCards.some((card) => card.scoreInPercent > 0) ? (
+                    statisticsCards.map(
+                      (card) => card.scoreInPercent > 0 && <StatisticsCard key={card.id} card={card} />,
+                    )
+                  ) : (
+                    <p>Statistics will be displayed here</p>
+                  )}
+                </div>
                 <TitleSection title={'members:'} />
                 <div className={styles.game_users}>
-                  <IssueChatUserCard
-                    userId={admin.userId}
-                    firstName={admin.firstName}
-                    lastName={admin.lastName}
-                    role={admin.role}
-                    job={admin.job}
-                  />
-                  {users.map((user: Member) => (
+                  <div className={styles.game_user_wrapper}>
                     <IssueChatUserCard
-                      key={user.userId}
-                      userId={user.userId}
-                      firstName={user.firstName}
-                      lastName={user.lastName}
-                      role={user.role}
-                      job={user.job}
+                      userId={admin.userId}
+                      firstName={admin.firstName}
+                      lastName={admin.lastName}
+                      role={admin.role}
+                      job={admin.job}
                     />
+                  </div>
+                  {users.map((user: Member) => (
+                    <div className={styles.game_user_wrapper}>
+                      <IssueChatUserCard
+                        key={user.userId}
+                        userId={user.userId}
+                        firstName={user.firstName}
+                        lastName={user.lastName}
+                        role={user.role}
+                        job={user.job}
+                      />
+                    </div>
                   ))}
                 </div>
               </>

@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
@@ -22,21 +22,23 @@ interface Props {
 const Chat: FC<Props> = ({ isVisible, setIsVisible }) => {
   const chat = useSelector(chatMessagesSlice);
   const room = useSelector(currentRoomSlice);
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
   const dispatch = useDispatch();
 
-  const lastMessageRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+  const lastMessageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  React.useEffect(() => {
+  useEffect(() => {
     lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
   }, [chat, lastMessageRef]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
 
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { messages: responseMessages } = data;
@@ -47,11 +49,13 @@ const Chat: FC<Props> = ({ isVisible, setIsVisible }) => {
     socket.emit('get-all-chat', room, callback);
   }, [dispatch, room, socket]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { messages: responseMessages } = data;
@@ -66,12 +70,14 @@ const Chat: FC<Props> = ({ isVisible, setIsVisible }) => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateChatSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
 
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { message: responseMessage } = data;

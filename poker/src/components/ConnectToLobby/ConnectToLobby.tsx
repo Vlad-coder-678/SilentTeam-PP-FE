@@ -7,12 +7,13 @@ import { useHistory } from 'react-router-dom';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import InputComponent from '../InputComponent/InputComponent';
 import Checkbox from '../Checkbox/Checkbox';
+
 import { Member, ResponseFromSocket, ROLES } from '../../types/common';
 import { SocketContext } from '../../socketContext';
 import { isAdminSlice, loginUser, setCurrentRoom, setIsAdmin, setIsLate } from '../../redux/slices/roomSlice';
+import exitToMainPage from '../../utils/exit';
 
 import styles from './ConnectToLobby.module.scss';
-import exitToMainPage from '../../utils/exit';
 
 interface FormState {
   firstName: string;
@@ -41,15 +42,19 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
 
   const room = isAdmin ? `room${socket.id}` : url;
 
+  // eslint-disable-next-line no-console
   console.log('SocketId', socket.id);
 
   const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
 
     if (personalData.firstName.length > 0) {
+      // eslint-disable-next-line no-console
       console.log('send form');
       const { firstName, lastName, jobPosition } = personalData;
+      // eslint-disable-next-line no-console
       console.log('room:', room);
+      // eslint-disable-next-line no-console
       console.log('url', url);
 
       let userRole = ROLES.USER;
@@ -65,12 +70,13 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
       };
 
       const callback = (response: ResponseFromSocket): void => {
+        // eslint-disable-next-line no-console
         console.log(response);
 
         const { eventName, code, error: responseError, data } = response;
 
-        // eslint-disable-next-line no-console
         if (responseError) {
+          // eslint-disable-next-line no-console
           console.log(`${eventName}: ${code}: ${responseError}`);
           history.push('/');
           exitToMainPage();
