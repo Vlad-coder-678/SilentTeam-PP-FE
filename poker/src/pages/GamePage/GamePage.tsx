@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
@@ -10,6 +10,12 @@ import CardIssueGame from '../../components/CardIssueGame/CardIssueGame';
 import CardGame from '../../components/CardGame/CardGame';
 import ChatToVoteOnIssue from '../../components/ChatToVoteOnIssue/ChatToVoteOnIssue';
 import ChatOpenButton from '../../components/ChatOpenButton/ChatOpenButton';
+import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
+import StatisticsCard from '../../components/StatisticsCard/StatisticsCard';
+import RunRoundButton from '../../components/RunRoundButton/RunRoundButton';
+import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
+import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
+import IsLateModal from '../../components/IsLateModal/IsLateModal';
 
 import { selectGameCards } from '../../redux/slices/gameCardsSlice';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
@@ -37,29 +43,22 @@ import {
   isAdminSlice,
   updateMembers,
 } from '../../redux/slices/roomSlice';
+import { initStatistics } from '../../redux/slices/statisticsSlice';
 import { SocketContext } from '../../socketContext';
-import { Member, ResponseFromSocket } from '../../types/common';
-import IssueChatUserCard from '../../components/IssueChatUserCard/IssueChatUserCard';
-import StatisticsCard from '../../components/StatisticsCard/StatisticsCard';
-import RunRoundButton from '../../components/RunRoundButton/RunRoundButton';
-import StopRoundButton from '../../components/StopRoundButton/StopRoundButton';
 import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
+import { Member, ResponseFromSocket } from '../../types/common';
+import exitToMainPage from '../../utils/exit';
 
 import styles from './GamePage.module.scss';
-import exitToMainPage from '../../utils/exit';
-import ShowResultsButton from '../../components/ShowResultsButton/ShowResultsButton';
-import { initStatistics } from '../../redux/slices/statisticsSlice';
-import IsLateModal from '../../components/IsLateModal/IsLateModal';
 
 const GamePage: FC = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
 
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const room = useSelector(currentRoomSlice);
-  const [isVisibleChat, setIsVisibleChat] = React.useState(false);
   const users = useSelector(allUsersSlice);
   const admin = useSelector(adminSlice);
   const isAdmin = useSelector(isAdminSlice);
@@ -73,26 +72,31 @@ const GamePage: FC = () => {
   const isLateModalOpen = useSelector(isLateModalOpenSlice);
   const currentUser = useSelector(currentUserSlice);
 
+  const [isVisibleChat, setIsVisibleChat] = useState(false);
+  const [currentRoundTime, setCurrentRoundTime] = useState(settings.roundTime);
+
   const issueSelected = issues[Number(issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
+  const isAdminAsPlayer = settings.masterIsPlayer;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!admin.firstName) {
       history.push('/');
       exitToMainPage();
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isAdminPlayer = settings.masterIsPlayer;
     const payload = { isAdminPlayer, admin, users };
     dispatch(initIssueChat(payload));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateUsersSuccess = (response: Member): void => {
       if (response.userId !== currentUser.userId) {
+        // eslint-disable-next-line no-console
         console.log('admin-added-later-in-game', response);
 
         dispatch(updateMembers(response));
@@ -106,8 +110,9 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateSelectedIssueIdSuccess = (response: string): void => {
+      // eslint-disable-next-line no-console
       console.log('round-is-starting', response);
 
       if (!isAdmin) dispatch(selectedIssue(response));
@@ -126,8 +131,9 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateIssuesChatAndStatisticsSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -147,7 +153,7 @@ const GamePage: FC = () => {
   });
 
   // eslint-disable-next-line consistent-return
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPlayingNow && isNeedTimer) {
       const timer = setTimeout(() => {
         dispatch(setIsPlayingNow(false));
@@ -160,9 +166,10 @@ const GamePage: FC = () => {
     }
   }, [dispatch, isNeedTimer, isPlayingNow, settings.roundTime]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const setLateUserSuccess = (response: ResponseFromSocket): void => {
       if (isAdmin) {
+        // eslint-disable-next-line no-console
         console.log(response);
         const { eventName, code, error: responseError, data } = response;
 
@@ -183,8 +190,24 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const stopRoundSuccess = (response: string): void => {
+      // eslint-disable-next-line no-console
+      console.log('round-is-stoping', response);
+      dispatch(setIsPlayingNow(false));
+      dispatch(setIsShowResultOfVoting(true));
+    };
+
+    socket.on('round-is-stoping', stopRoundSuccess);
+
+    return (): void => {
+      socket.off('round-is-stoping', stopRoundSuccess);
+    };
+  });
+
+  useEffect(() => {
     const setStatisticsSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -204,9 +227,10 @@ const GamePage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isShowResultOfVoting && isAdmin) {
       const callback = (response: ResponseFromSocket): void => {
+        // eslint-disable-next-line no-console
         console.log('send-statistics', response);
 
         const { eventName, code, error: responseError } = response;
@@ -219,6 +243,14 @@ const GamePage: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowResultOfVoting]);
+
+  useEffect(() => {
+    if (isPlayingNow && currentRoundTime > 0) setTimeout(() => setCurrentRoundTime(currentRoundTime - 1), 1000);
+    else {
+      setIsPlayingNow(false);
+      setCurrentRoundTime(settings.roundTime);
+    }
+  }, [currentRoundTime, isPlayingNow, settings.roundTime]);
 
   return (
     <div className={styles.game_wrap}>
@@ -248,43 +280,60 @@ const GamePage: FC = () => {
                   {isAdmin && <ShowResultsButton />}
                 </div>
                 {isNeedTimer && (
+                  <div className={styles.game_timer}>
+                    <span>{`${Math.floor(currentRoundTime / 60)}:${
+                      currentRoundTime % 60 < 10 ? `0${(currentRoundTime % 60).toString()}` : currentRoundTime % 60
+                    }`}</span>
+                  </div>
+                )}
+                {isAdmin && isAdminAsPlayer && (
                   <>
-                    <span>{Math.floor(settings.roundTime / 60)}</span> :
-                    <span>
-                      {settings.roundTime % 60 < 10
-                        ? `0${(settings.roundTime % 60).toString()}`
-                        : settings.roundTime % 60}
-                    </span>
+                    <TitleSection title={'please, make your choise:'} />
+                    <div className={styles.game_cards}>
+                      {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                    </div>
                   </>
                 )}
-                <TitleSection title={'please, make your choise:'} />
-                <div className={styles.game_cards}>
-                  {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
-                </div>
-                <TitleSection title={'statistics:'} />
-                {statisticsCards.some((card) => card.scoreInPercent > 0) ? (
-                  statisticsCards.map((card) => card.scoreInPercent > 0 && <StatisticsCard key={card.id} card={card} />)
-                ) : (
-                  <p>Statistics will be displayed here</p>
+                {!isAdmin && (
+                  <>
+                    <TitleSection title={'please, make your choise:'} />
+                    <div className={styles.game_cards}>
+                      {cards && cards.map((card) => <CardGame key={card.id} card={card} />)}
+                    </div>
+                  </>
                 )}
+                <TitleSection title={'statistics:'} />
+                <div className={styles.game_stat_card}>
+                  {statisticsCards.some((card) => card.scoreInPercent > 0) ? (
+                    statisticsCards.map(
+                      (card) => card.scoreInPercent > 0 && <StatisticsCard key={card.id} card={card} />,
+                    )
+                  ) : (
+                    <p>Statistics will be displayed here</p>
+                  )}
+                </div>
                 <TitleSection title={'members:'} />
                 <div className={styles.game_users}>
-                  <IssueChatUserCard
-                    userId={admin.userId}
-                    firstName={admin.firstName}
-                    lastName={admin.lastName}
-                    role={admin.role}
-                    job={admin.job}
-                  />
-                  {users.map((user: Member) => (
+                  <div className={styles.game_user_wrapper}>
                     <IssueChatUserCard
-                      key={user.userId}
-                      userId={user.userId}
-                      firstName={user.firstName}
-                      lastName={user.lastName}
-                      role={user.role}
-                      job={user.job}
+                      userId={admin.userId}
+                      firstName={admin.firstName}
+                      lastName={admin.lastName}
+                      role={admin.role}
+                      job={admin.job}
                     />
+                  </div>
+                  {users.map((user: Member) => (
+                    <div className={styles.game_user_wrapper}>
+                      <IssueChatUserCard
+                        key={user.userId}
+                        userId={user.userId}
+                        firstName={user.firstName}
+                        lastName={user.lastName}
+                        role={user.role}
+                        job={user.job}
+                      />
+                    </div>
                   ))}
                 </div>
               </>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import { Socket } from 'socket.io-client';
@@ -17,16 +17,18 @@ import styles from './ChatInput.module.scss';
 const ChatInput: FC = () => {
   const room = useSelector(currentRoomSlice);
   const { userId, firstName, lastName, role } = useSelector(currentUserSlice);
-  const [newMessage, setNewMessage] = React.useState('');
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const [newMessage, setNewMessage] = useState('');
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
   const dispatch = useDispatch();
 
   const handleOnSendMessage = (): void => {
     const callback = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log('send-messge', response);
 
       const { eventName, code, error: responseError, data } = response;
 
+      // eslint-disable-next-line no-console
       if (responseError) console.log(`${eventName}: ${code}: ${responseError}`);
       else {
         const { message: responseMessage } = data;
@@ -47,7 +49,7 @@ const ChatInput: FC = () => {
     }
   };
 
-  const handleOnInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleOnInputChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setNewMessage(event.target.value);
   };
 

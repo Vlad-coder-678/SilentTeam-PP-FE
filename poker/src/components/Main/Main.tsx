@@ -4,7 +4,7 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import MainPage from '../../pages/MainPage/MainPage';
 import LobbyPage from '../../pages/LobbyPage/LobbyPage';
 import GamePage from '../../pages/GamePage/GamePage';
-import GameResultPage from '../../pages/GameResultPage/GameResultPage';
+import GameResultPage from '../../pages/GameResultPage/ResultsPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
 const Main: FC = () => {

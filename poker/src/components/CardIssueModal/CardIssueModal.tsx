@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import GeneralButton from '../GeneralButton/GeneralButton';
@@ -18,7 +18,22 @@ interface Props {
 const CardIssueModal: FC<Props> = ({ setIsOpen, issue, option }) => {
   const dispatch = useDispatch();
 
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
   const handleOnChangeIssueTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const v = e.target.value;
+    const len = v.length;
+    if (len < 3) {
+      setError('*the field "Title" must be at least 3 characters');
+      setIsError(true);
+    } else if (len > 12) {
+      setError('*the field "Title" must be no more than 12 characters');
+      setIsError(true);
+    } else {
+      setError('');
+      setIsError(false);
+    }
     dispatch(fixIs({ ...issue, title: e.target.value }));
   };
 
@@ -27,11 +42,12 @@ const CardIssueModal: FC<Props> = ({ setIsOpen, issue, option }) => {
   };
 
   const handleClickCancel = (): void => {
+    if (issue.title.length === 0) dispatch(removeIs(issue));
     setIsOpen(false);
   };
 
   const handelSubmit = (): void => {
-    if (option === 'remove') dispatch(removeIs(issue));
+    if (issue.title.length === 0) dispatch(removeIs(issue));
     setIsOpen(false);
   };
 
@@ -50,18 +66,19 @@ const CardIssueModal: FC<Props> = ({ setIsOpen, issue, option }) => {
           <>
             <TitleSection title="Enter issue specification" isCapitalLetters />
             <label className={styles.modal_issueTitle} htmlFor="issueTitle">
-              Enter title
+              Title
             </label>
             <InputComponent name="issueTitle" value={issue.title} onChange={handleOnChangeIssueTitle} />
             <label className={styles.modal_issueDesc} htmlFor="issueTitle">
-              Enter description
+              Description
             </label>
             <InputComponent name="issueDesc" value={issue.desc} onChange={handleOnChangeIssueDesc} />
           </>
         )}
 
+        {isError && <p className={styles.issue_error}>{error}</p>}
         <div className={styles.issue_modal_footer}>
-          <GeneralButton type="submit" label={'Accept'} primaryBG />
+          <GeneralButton type="submit" label={'Accept'} primaryBG isDisable={isError} />
           <GeneralButton type="button" label={'Cancel'} onClick={handleClickCancel} />
         </div>
       </form>

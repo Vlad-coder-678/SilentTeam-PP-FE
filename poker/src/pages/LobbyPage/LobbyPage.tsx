@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
@@ -49,19 +49,20 @@ const LobbyPage: FC = () => {
 
   const dispatch = useDispatch();
 
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
+  const [isVisible, setIsVisible] = useState(false);
   const room = useSelector(currentRoomSlice);
   const currentUser = useSelector(currentUserSlice);
   const admin = useSelector(adminSlice);
   const users = useSelector(allUsersSlice);
-  const [isVisible, setIsVisible] = React.useState(false);
   const isKickModalOpen = useSelector(isModalOpenSlice);
   const isAdmin = useSelector(isAdminSlice);
   const isLate = useSelector(isLateSlice);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateAllChatSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
       // eslint-disable-next-line no-console
@@ -81,8 +82,9 @@ const LobbyPage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateMembersSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -101,8 +103,9 @@ const LobbyPage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const callback = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
 
       const { eventName, code, error: responseError, data } = response;
@@ -120,8 +123,9 @@ const LobbyPage: FC = () => {
     socket.emit('get-all-users-in-room', { room }, callback);
   }, [dispatch, history, room, socket]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const kickUserSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
       // eslint-disable-next-line no-console
@@ -143,8 +147,9 @@ const LobbyPage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const moveAllMembersToGamePageSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError, data } = response;
 
@@ -169,8 +174,9 @@ const LobbyPage: FC = () => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const deleteGameSuccess = (response: ResponseFromSocket): void => {
+      // eslint-disable-next-line no-console
       console.log(response);
       const { eventName, code, error: responseError } = response;
 
