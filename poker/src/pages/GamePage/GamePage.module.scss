@@ -37,11 +37,19 @@
   margin: 20px;
 }
 
+.game_timer {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .game_buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 20px;
+
+  button {
+    margin: 10px;
+  }
 }
 
 .game_cards {

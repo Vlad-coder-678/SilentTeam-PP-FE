@@ -259,10 +259,9 @@ const GamePage: FC = () => {
                 </div>
                 {isNeedTimer && (
                   <div className={styles.game_timer}>
-                    <span>{Math.floor(currentRoundTime / 60)}</span> :
-                    <span>
-                      {currentRoundTime % 60 < 10 ? `0${(currentRoundTime % 60).toString()}` : currentRoundTime % 60}
-                    </span>
+                    <span>{`${Math.floor(currentRoundTime / 60)}:${
+                      currentRoundTime % 60 < 10 ? `0${(currentRoundTime % 60).toString()}` : currentRoundTime % 60
+                    }`}</span>
                   </div>
                 )}
                 <TitleSection title={'please, make your choise:'} />

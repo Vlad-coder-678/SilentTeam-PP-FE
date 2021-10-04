@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { CardGameSetting, SIZES } from '../../types/common';
 import { selectGameSetting } from '../../redux/slices/gameSettingSlice';
-import { currentUserCheckCardWithIdSlice } from '../../redux/slices/gameProcessSlice';
 
 import playCardCoverImg from '../../assets/images/png/play-card-cover.jpg';
 import coffeetime from '../../assets/images/svg/cap_of_coffee.svg';
@@ -18,21 +17,16 @@ interface Props {
 
 const Card: FC<Props> = ({ card, isShowCards, size }) => {
   const { storyTypeShort: title } = useSelector(selectGameSetting);
-  const currentUserCheckCardWithId = useSelector(currentUserCheckCardWithIdSlice);
-
-  const isChecked = card.id === currentUserCheckCardWithId;
 
   return (
     <div className={`${styles[size]}`}>
       <div className={isShowCards ? styles.card_content_show : styles.card_content_no_show}>
-        {card.value === 'coffeetime' && (
-          <div className={isChecked ? styles.card_coffeetime_checked : styles.card_coffeetime}>
+        {card.value === 'coffeetime' ? (
+          <div className={styles.card_coffeetime}>
             <img src={coffeetime} alt="cap of coffee" />
           </div>
-        )}
-
-        {card.value !== 'coffeetime' && (
-          <div className={isChecked ? styles.card_value_checked : styles.card_value}>
+        ) : (
+          <div className={styles.card_value}>
             <p className={styles.card_value_top}>{card.value}</p>
             <h3>{title}</h3>
             <p className={styles.card_value_bottom}>{card.value}</p>

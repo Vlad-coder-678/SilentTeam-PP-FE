@@ -4,8 +4,6 @@
 .medium {
   margin: 10px;
   perspective: 200px;
-  cursor: pointer;
-  @include iconHoverWithTransition;
 }
 
 .medium {
@@ -37,8 +35,6 @@
   transition: transform 0.5s;
 }
 
-.card_coffeetime_checked,
-.card_value_checked,
 .card_coffeetime,
 .card_value,
 .card_cover {
@@ -50,11 +46,6 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: 10px;
-}
-
-.card_coffeetime_checked,
-.card_value_checked {
-  background-color: $variable-sky-blue;
 }
 
 .card_coffeetime,
@@ -70,9 +61,7 @@
 }
 
 .card_coffeetime,
-.card_value,
-.card_coffeetime_checked,
-.card_value_checked {
+.card_value {
   display: flex;
   justify-content: center;
   align-items: center;
