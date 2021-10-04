@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, SyntheticEvent } from 'react';
+import React, { FC, useState, ChangeEvent, SyntheticEvent, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client/build/socket';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
@@ -37,7 +37,7 @@ const ConnectToLobby: FC<Props> = ({ setIsVisible, url }) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const dispatch = useDispatch();
-  const socket = React.useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
+  const socket = useContext<Socket<DefaultEventsMap, DefaultEventsMap>>(SocketContext);
 
   const room = isAdmin ? `room${socket.id}` : url;
 

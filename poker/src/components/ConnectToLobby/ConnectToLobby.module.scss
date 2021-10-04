@@ -97,6 +97,7 @@ div.Form_body input {
   .Form_wrap {
     padding-bottom: 370px;
   }
+
   .Form {
     margin-top: 50px;
     width: 90%;
@@ -104,42 +105,51 @@ div.Form_body input {
     justify-content: center;
     align-items: center;
   }
+  
   .Form_header {
     width: 100%;
     justify-content: center;
     text-align: start;
   }
+
   .Form_header h2 {
     font-size: 2rem;
     flex-basis: 100%;
     text-align: center;
   }
+  
   .Form_wrap_checkbox_big_screen {
     display: none;
   }
+  
   .Form_wrap_checkbox_small_screen {
     display: flex;
     align-items: center;
   }
+  
   .Form_body {
     justify-content: center;
     align-items: center;
   }
+  
   div.Form_body > label {
     font-size: 1.2rem;
     line-height: 1.5rem;
     padding-left: 10px;
   }
+  
   div.Form_body input {
     font-size: 1.2rem;
     line-height: 1.5rem;
   }
+  
   .Form_wrap_checkbox_small_screen .Form_is_observer {
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 3rem;
     margin-right: 10px;
   }
+  
   .Form_footer {
     display: flex;
     flex-direction: column;
@@ -147,6 +157,7 @@ div.Form_body input {
     align-items: center;
     gap: 10px;
   }
+  
   .Form_error {
     text-align: center;
   }

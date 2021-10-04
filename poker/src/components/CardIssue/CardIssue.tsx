@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CardIssueModal from '../CardIssueModal/CardIssueModal';
@@ -6,7 +6,7 @@ import { Issue } from '../../types/common';
 import pencil from '../../assets/images/svg/pencil.svg';
 import basket from '../../assets/images/svg/basket.svg';
 import plus from '../../assets/images/svg/plus2.svg';
-import { createIs, selectIssues } from '../../redux/slices/issuesSlice';
+import { createIs, selectIssues, removeIs } from '../../redux/slices/issuesSlice';
 
 import styles from './CardIssue.module.scss';
 
@@ -35,8 +35,7 @@ const CardIssue: FC<Props> = ({ issue, isNew }) => {
   };
 
   const handleRemoveIssue = (): void => {
-    setOption(options.remove);
-    setIsModalOpen(true);
+    dispatch(removeIs(issue));
   };
 
   return (

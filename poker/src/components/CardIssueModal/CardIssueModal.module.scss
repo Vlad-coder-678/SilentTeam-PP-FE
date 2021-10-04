@@ -32,6 +32,11 @@
   }
 }
 
+.issue_error {
+  color: $red-red;
+  font-size: 1.2rem;
+}
+
 .issue_modal_footer {
   width: 100%;
   display: flex;
