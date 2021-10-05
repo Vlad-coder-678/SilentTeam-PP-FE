@@ -324,9 +324,8 @@ const GamePage: FC = () => {
                     />
                   </div>
                   {users.map((user: Member) => (
-                    <div className={styles.game_user_wrapper}>
+                    <div key={user.userId} className={styles.game_user_wrapper}>
                       <IssueChatUserCard
-                        key={user.userId}
                         userId={user.userId}
                         firstName={user.firstName}
                         lastName={user.lastName}

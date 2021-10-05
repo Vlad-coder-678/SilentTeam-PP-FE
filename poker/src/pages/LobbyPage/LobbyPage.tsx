@@ -224,7 +224,9 @@ const LobbyPage: FC = () => {
         </div>
       )}
       {isLate && (
-        <div>You late. Now wait for the admin to decide whether to allow you to play or kick you out of the game</div>
+        <div className={styles.lobby_late}>
+          <p>You late. Now wait for the admin to decide whether to allow you to play or kick you out of the game</p>
+        </div>
       )}
     </>
   );

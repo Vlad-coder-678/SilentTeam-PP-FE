@@ -42,7 +42,7 @@ const ResultsPage: FC = () => {
             {issueStat.statisticsCards
               .filter((cardSelected) => Number(cardSelected.scoreInPercent) > 0)
               .map((cardSelected) => (
-                <div className={styles.results_card_and_result}>
+                <div key={cardSelected.id} className={styles.results_card_and_result}>
                   <Card card={{ id: cardSelected.id, value: cardSelected.value }} isShowCards size={SIZES.SMALL} />
                   <TitleSection title={`${String(cardSelected.scoreInPercent)}%`} />
                 </div>
