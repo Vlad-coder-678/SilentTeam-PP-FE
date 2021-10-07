@@ -75,7 +75,7 @@ const GamePage: FC = () => {
   const [isVisibleChat, setIsVisibleChat] = useState(false);
   const [currentRoundTime, setCurrentRoundTime] = useState(settings.roundTime);
 
-  const issueSelected = issues[Number(issueIdSelected)];
+  const issueSelected = issues[issues.findIndex((issue) => issue.id === issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
   const isAdminAsPlayer = settings.masterIsPlayer;
 
