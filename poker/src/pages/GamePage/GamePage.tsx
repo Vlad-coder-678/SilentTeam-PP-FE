@@ -46,7 +46,7 @@ import {
 import { initStatistics } from '../../redux/slices/statisticsSlice';
 import { SocketContext } from '../../socketContext';
 import { COUNT_MILLISECONDS_IN_SECOND } from '../../constants';
-import { Member, ResponseFromSocket } from '../../types/common';
+import { ROLES, Member, ResponseFromSocket } from '../../types/common';
 import exitToMainPage from '../../utils/exit';
 
 import styles from './GamePage.module.scss';
@@ -78,6 +78,7 @@ const GamePage: FC = () => {
   const issueSelected = issues[issues.findIndex((issue) => issue.id === issueIdSelected)];
   const isNeedTimer = settings.isNeededTimer;
   const isAdminAsPlayer = settings.masterIsPlayer;
+  const isUser = currentUser.role === ROLES.USER;
 
   useEffect(() => {
     if (!admin.firstName) {
@@ -294,7 +295,7 @@ const GamePage: FC = () => {
                     </div>
                   </>
                 )}
-                {!isAdmin && (
+                {isUser && (
                   <>
                     <TitleSection title={'please, make your choise:'} />
                     <div className={styles.game_cards}>
