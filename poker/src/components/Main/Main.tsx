@@ -7,11 +7,13 @@ import GamePage from '../../pages/GamePage/GamePage';
 import GameResultPage from '../../pages/GameResultPage/ResultsPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
+import styles from './Main.module.scss';
+
 const Main: FC = () => {
   const location = useLocation();
 
   return (
-    <main>
+    <main className={styles.main_wrapper}>
       <Switch location={location}>
         <Route path="/" exact>
           <MainPage />
